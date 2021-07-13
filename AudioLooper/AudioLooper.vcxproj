@@ -154,11 +154,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ButtonC.cpp" />
     <ClCompile Include="ControllerC.cpp" />
     <ClCompile Include="LooperC.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ButtonC.h" />
     <ClInclude Include="ControllerC.h" />
     <ClInclude Include="LooperC.h" />
   </ItemGroup>
