@@ -35,6 +35,8 @@ void ControllerC::drawBaseWindow()
 
 void ControllerC::kickOffLooperThread(int iThread)
 {
+	// Prevent us from trying to kick off more threads that we're designed to 
+	// handle. 
 	if (iThread > MAX_THREADS)
 	{
 		std::cout << "Some how we got more threads that we should have." << std::endl;
