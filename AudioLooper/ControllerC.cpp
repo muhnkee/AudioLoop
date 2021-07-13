@@ -1,4 +1,5 @@
 #include "ControllerC.h"
+#include <iostream>
 #include <SFML/Graphics.hpp>
 
 int ControllerC::run()
@@ -25,4 +26,18 @@ int ControllerC::run()
 	}
 
 	return 0;
+}
+
+void ControllerC::drawBaseWindow()
+{
+
+}
+
+void ControllerC::kickOffLooperThread(int iThread)
+{
+	if (iThread > MAX_THREADS)
+	{
+		std::cout << "Some how we got more threads that we should have." << std::endl;
+		return;
+	}
 }
