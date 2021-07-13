@@ -1,4 +1,6 @@
 #pragma once
+#include "LooperC.h"
+
 // Maximum number of looper threads that may be created
 // I prefer this to magic numbers in the code
 #define MAX_THREADS 4
