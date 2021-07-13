@@ -1,27 +1,34 @@
+#include "ButtonC.h"
 #include "ControllerC.h"
 #include <iostream>
 #include <SFML/Graphics.hpp>
 
 int ControllerC::run()
 {
+	// Create a window
+	sf::RenderWindow application(sf::VideoMode(640, 480, 32), "AudioLooper");
+	ButtonC playButton(50, 50);
+	playButton.setButtonColor(255, 0, 255, true);
+	playButton.setButtonPosition(10.f, 50.f);
 
-	sf::RenderWindow window(sf::VideoMode(200, 200), "SFML Works!");
+	application.setMouseCursorVisible(false);
 	sf::CircleShape shape(100.f);
 
 	shape.setFillColor(sf::Color::Green);
 
-	while (window.isOpen())
+	while (application.isOpen())
 	{
 		sf::Event event;
-		while (window.pollEvent(event))
+		while (application.pollEvent(event))
 		{
 			if (event.type == sf::Event::Closed)
-				window.close();
+				application.close();
 		}
 
-		window.clear();
-		window.draw(shape);
-		window.display();
+		application.clear();
+		application.draw(playButton.getButtonSprite());
+		//application.draw(shape);
+		application.display();
 
 	}
 
