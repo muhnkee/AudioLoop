@@ -24,12 +24,18 @@
     <ClCompile Include="LooperC.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ButtonC.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ControllerC.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="LooperC.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ButtonC.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
