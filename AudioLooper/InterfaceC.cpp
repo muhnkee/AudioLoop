@@ -20,15 +20,7 @@ InterfaceC::InterfaceC() {
 	}
 
 	// TODO: for mouse clicking:
-	/*if (slider.getGlobalBounds().contains(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y)
-		&& sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
-	{
-		if (sf::Mouse::getPosition(window).x >= xCord && sf::Mouse::getPosition(window).x <= xCord + axisWidth)
-		{
-			slider.setPosition(sf::Mouse::getPosition(window).x, yCord);
-			sliderValue = (minValue + ((slider.getPosition().x - xCord) / axisWidth * (maxValue - minValue)));
-		}
-	}*/
+	
 
 	trackItem[0].setFont(font);
 	trackItem[0].setFillColor(sf::Color::Red);
@@ -58,7 +50,7 @@ InterfaceC::InterfaceC() {
 	//DEBUG
 	//Loading slider sprite
 	testSlider.setSizeScale(.44);
-	testSlider.setPosition(SCREEN_WIDTH/8, SCREEN_HEIGHT/8); //relative positioning
+	testSlider.setInitialPosition(SCREEN_WIDTH/8, SCREEN_HEIGHT/8); //relative positioning
 }
 
 InterfaceC::~InterfaceC()
@@ -162,7 +154,7 @@ sf::RenderWindow* InterfaceC::getWindow() {
 
 void InterfaceC::handleEvent(sf::Event event)
 {
-	// TODO: add mouseclick event type
+
 	switch (event.type)
 	{
 	case sf::Event::Closed:
@@ -171,7 +163,35 @@ void InterfaceC::handleEvent(sf::Event event)
 	case sf::Event::KeyReleased:
 		selectTrackItem(event); //simplified for now
 		break;
+	case sf::Event::MouseButtonPressed:
+		handleMouseClickEvent();
+		break;
+	case sf::Event::MouseButtonReleased:
+		handleMouseReleaseEvent();
+		break;
 	default:
 		break;
 	}
+}
+
+void InterfaceC::handleMouseClickEvent()
+{
+	//TODO: loop through all clickable elements and check their bounds
+	// 
+	
+	sf::Sprite* slider_sprite = testSlider.getSliderSprite();
+
+	// if mouse is on bounds of testSlider
+	if (slider_sprite->getGlobalBounds().contains(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y)
+		&& sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
+	{
+		testSlider.followMouse();
+	}
+
+}
+
+void InterfaceC::handleMouseReleaseEvent() 
+{
+	//TODO: loop through all clickable elements and check their bounds
+	testSlider.stopFollowingMouse();
 }

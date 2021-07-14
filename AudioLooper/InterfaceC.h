@@ -10,6 +10,8 @@ public:
 	~InterfaceC();
 
 	void selectTrackItem(const sf::Event& keyPress);
+	void handleMouseClickEvent();
+	void handleMouseReleaseEvent();
 	void playPauseTrack(LooperC& looperIn);
 	void stopTrack(LooperC& looperIn);
 	void loopUnloopTrack(LooperC& looperIn);
