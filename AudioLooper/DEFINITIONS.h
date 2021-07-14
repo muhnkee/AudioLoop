@@ -18,5 +18,9 @@
 #define LOOP_ICON "./Assets/Icons/loop-96.png"
 #define PLAY_PAUSE_ICON "./Assets/Icons/resume-60.png"
 
+// Sprites
+#define SLIDE_BAR "./Assets/Icons/Slider_bar.png"
+#define SLIDE "./Assets/Icons/Slide.png"
+
 // Audio Directory
 #define AUDIO_DIR "./Assets/Audio/"

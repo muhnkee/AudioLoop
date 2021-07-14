@@ -54,6 +54,11 @@ InterfaceC::InterfaceC() {
 
 	testLooper.setTrack("melody.wav");
 	window.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "AudioLoop");
+
+	//DEBUG
+	//Loading slider sprite
+	testSlider.setSizeScale(.44);
+	testSlider.setPosition(SCREEN_WIDTH/8, SCREEN_HEIGHT/8); //relative positioning
 }
 
 InterfaceC::~InterfaceC()
@@ -148,6 +153,7 @@ void InterfaceC::draw(sf::RenderWindow& window)
 	{
 		window.draw(trackItem[i]);
 	}
+	testSlider.draw(window);
 }
 
 sf::RenderWindow* InterfaceC::getWindow() {

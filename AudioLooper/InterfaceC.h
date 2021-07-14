@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include "LooperC.h"
+#include "Slider.h"
 
 class InterfaceC {
 public:
@@ -32,6 +33,7 @@ private:
 	//DEBUG: variables used for testing audio
 	std::string audioFile = "melody.wav";
 	LooperC testLooper;
+	Slider testSlider;
 };
 
 
