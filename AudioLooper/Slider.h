@@ -10,8 +10,6 @@ public:
 
 	sf::Sprite* getSliderSprite();
 	void setInitialPosition(double coord_x, double coord_y);
-	void setSliderPosition(double coord_x, double coord_y);
-
 	void setSizeScale(double scale_value);
 	bool isSelected();
 
