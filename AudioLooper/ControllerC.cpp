@@ -1,34 +1,37 @@
 #include "ButtonC.h"
 #include "ControllerC.h"
+#include "DEFINITIONS.h"
 #include <iostream>
 #include <SFML/Graphics.hpp>
 
 int ControllerC::run()
 {
 	// Create a window
-	sf::RenderWindow application(sf::VideoMode(640, 480, 32), "AudioLooper");
-	ButtonC playButton(50, 50);
-	playButton.setButtonColor(255, 0, 255, true);
-	playButton.setButtonPosition(10.f, 50.f);
+	//sf::RenderWindow application(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 32), "AudioLooper");
+	sf::RenderWindow* application = gui_interface.getWindow();
+	// 
+	//ButtonC playButton(50, 50);
+	//playButton.setButtonColor(255, 0, 255, true);
+	//playButton.setButtonPosition(10.f, 50.f);
 
-	application.setMouseCursorVisible(false);
-	sf::CircleShape shape(100.f);
+	application->setMouseCursorVisible(true);
+	//sf::CircleShape shape(100.f);
 
-	shape.setFillColor(sf::Color::Green);
+	//shape.setFillColor(sf::Color::Green);
 
-	while (application.isOpen())
+	while (application->isOpen())
 	{
 		sf::Event event;
-		while (application.pollEvent(event))
+		while (application->pollEvent(event))
 		{
-			if (event.type == sf::Event::Closed)
-				application.close();
+			gui_interface.handleEvent(event);
 		}
 
-		application.clear();
-		application.draw(playButton.getButtonSprite());
+		application->clear();
+		//application.draw(playButton.getButtonSprite());
 		//application.draw(shape);
-		application.display();
+		gui_interface.draw(*application);
+		application->display();
 
 	}
 
