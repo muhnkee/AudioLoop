@@ -74,3 +74,43 @@ bool LooperC::isStopped() {
 bool LooperC::isLooping() {
 	return audioTrack.getLoop();
 }
+
+
+/// <summary>
+/// Return the current pitch level of the track
+/// </summary>
+/// <returns>double -The level of the pitch</returns>
+double LooperC::getCurrentPitch() {
+	return audioTrack.getPitch();
+}
+
+/// <summary>
+/// Adjust the pitch level of the track
+/// </summary>
+/// <param name="pitchLevel"> -The new pitch level</param>
+void LooperC::shiftPitch() {
+#ifdef DEBUG
+	std::cout << "current pitch = " << getCurrentPitch() << std::endl;
+
+#endif // DEBUG
+	//multiply by 2 b/c normal pitch is at 1.0 and slider starts at .5
+	// this allows us to have both high and low ranges
+	audioTrack.setPitch(pitchSlider->getLevel() *2); 
+}
+
+/// <summary>
+/// Ties a slider to this Looper for adjusting its pitch
+/// </summary>
+/// <param name="newPitchSlider"> -Reference to an existing gui slider</param>
+void LooperC::setPitchSlider(Slider* newPitchSlider) {
+	pitchSlider = newPitchSlider;
+	audioTrack.setPitch(pitchSlider->getLevel() * 2);
+}
+
+/// <summary>
+/// Ties a slider to this Looper for adjusting its volume
+/// </summary>
+/// <param name="newVolumeSlider">-Reference to an existing gui slider</param>
+void LooperC::setVolumeSlider(Slider* newVolumeSlider) {
+	volumeSlider = newVolumeSlider;
+}
