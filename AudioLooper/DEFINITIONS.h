@@ -1,15 +1,14 @@
 #pragma once
 #pragma once
 
+//#define DEBUG 1
+
 // Window dimensions
 #define SCREEN_WIDTH 1080
 #define SCREEN_HEIGHT 720
 
 // Component limitations
 #define MAX_NUMBER_OF_TRACKS 4
-
-
-
 
 // Fonts
 #define ARIAL_FONT "./Assets/Fonts/arial.ttf"

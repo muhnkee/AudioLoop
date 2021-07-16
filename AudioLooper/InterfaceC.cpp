@@ -51,6 +51,7 @@ InterfaceC::InterfaceC() {
 	//Loading slider sprite
 	testSlider.setSizeScale(.44);
 	testSlider.setInitialPosition(SCREEN_WIDTH/8, SCREEN_HEIGHT/8); //relative positioning
+	testLooper.setPitchSlider(&testSlider);
 }
 
 InterfaceC::~InterfaceC()
@@ -104,6 +105,8 @@ void InterfaceC::selectTrackItem(const sf::Event& keyPress)
 		loopUnloopTrack(testLooper);
 	case sf::Keyboard::S:
 		stopTrack(testLooper);
+	case sf::Keyboard::P:
+		testLooper.shiftPitch();
 	default:
 		break;
 	}
@@ -176,7 +179,7 @@ void InterfaceC::handleEvent(sf::Event event)
 
 void InterfaceC::handleMouseClickEvent()
 {
-	//TODO: loop through all clickable elements and check their bounds
+	//TODO: loop through all clickable elements for this logic
 	// 
 	
 	sf::Sprite* slider_sprite = testSlider.getSliderSprite();
@@ -186,12 +189,14 @@ void InterfaceC::handleMouseClickEvent()
 		&& sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
 	{
 		testSlider.followMouse();
+		testLooper.shiftPitch();
 	}
 
 }
 
 void InterfaceC::handleMouseReleaseEvent() 
 {
-	//TODO: loop through all clickable elements and check their bounds
+	//TODO: loop through all clickable elements for this logic
 	testSlider.stopFollowingMouse();
+	testLooper.shiftPitch();
 }
