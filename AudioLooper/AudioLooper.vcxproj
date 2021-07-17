@@ -159,6 +159,7 @@
     <ClCompile Include="InterfaceC.cpp" />
     <ClCompile Include="LooperC.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Recorder.cpp" />
     <ClCompile Include="Slider.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -167,6 +168,7 @@
     <ClInclude Include="DEFINITIONS.h" />
     <ClInclude Include="InterfaceC.h" />
     <ClInclude Include="LooperC.h" />
+    <ClInclude Include="Recorder.h" />
     <ClInclude Include="Slider.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
