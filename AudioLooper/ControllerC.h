@@ -10,6 +10,7 @@
 class ControllerC
 {
 public:
+	ControllerC();
 	int run();
 
 private:

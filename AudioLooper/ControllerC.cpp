@@ -2,13 +2,18 @@
 #include "ControllerC.h"
 #include "DEFINITIONS.h"
 #include <iostream>
-#include <SFML/Graphics.hpp>
+
+ControllerC::ControllerC() :
+gui_interface()
+{
+
+}
 
 int ControllerC::run()
 {
 	// Create a window
-	//sf::RenderWindow application(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 32), "AudioLooper");
 	sf::RenderWindow* application = gui_interface.getWindow();
+
 	// 
 	//ButtonC playButton(50, 50);
 	//playButton.setButtonColor(255, 0, 255, true);
