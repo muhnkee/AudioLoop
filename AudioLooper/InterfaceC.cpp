@@ -1,7 +1,5 @@
 #include <SFML/Graphics.hpp>
 #include "InterfaceC.h"
-#include "DEFINITIONS.h"
-
 
 InterfaceC::InterfaceC() {
 	trackCount = 4;
@@ -17,11 +15,12 @@ InterfaceC::InterfaceC() {
 
 		float barWidth = SCREEN_WIDTH * (1. / 3.);
 		float barHeight = SCREEN_HEIGHT / 20.;
+
+		openLooper[i] = false;
+
 	}
 
 	// TODO: for mouse clicking:
-	
-
 	trackItem[0].setFont(font);
 	trackItem[0].setFillColor(sf::Color::Red);
 	trackItem[0].setString("play track 1");
@@ -57,8 +56,6 @@ InterfaceC::InterfaceC() {
 InterfaceC::~InterfaceC()
 {
 }
-
-
 
 void InterfaceC::selectNextTrack()
 {
@@ -99,6 +96,15 @@ void InterfaceC::selectTrackItem(const sf::Event& keyPress)
 		selectNextTrack();
 		break;
 	case sf::Keyboard::Enter:
+		/*if (openLooper[])
+		{
+			openLooper[] = false;
+		}
+		else
+		{
+			openLooper[] = true;
+			}
+		*/
 		playPauseTrack(testLooper);
 		break;
 	case sf::Keyboard::L:
@@ -139,8 +145,6 @@ void InterfaceC::loopUnloopTrack(LooperC& looperIn) {
 		looperIn.loopTrack(true);
 	}
 }
-
-
 
 void InterfaceC::draw(sf::RenderWindow& window)
 {

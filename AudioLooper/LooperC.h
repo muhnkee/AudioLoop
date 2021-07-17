@@ -3,7 +3,7 @@
 #include <SFML/Audio.hpp>;
 #include "Slider.h"
 
-class LooperC
+class LooperC 
 {
 private:
 	sf::Music audioTrack;
