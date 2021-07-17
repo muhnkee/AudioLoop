@@ -18,11 +18,17 @@ int ControllerC::run()
 	while (application->isOpen())
 	{
 		sf::Event event;
-		sf::SoundBuffer *soundBuffer; 
+		sf::SoundBuffer *soundBuffer = new sf::SoundBuffer; 
+
+		for (int i = 0; i < MAX_NUMBER_OF_TRACKS; ++i)
+		{
+			m_Looper[i]->setSoundBuffer(soundBuffer);
+		}
 
 		while (application->pollEvent(event))
 		{
 			m_gui_interface.handleEvent(event);
+
 			//m_Looper[1]->setSoundBuffer(soundBuffer);
 
 			//m_Looper[1].Launch();
@@ -34,6 +40,7 @@ int ControllerC::run()
 		m_gui_interface.draw(*application);
 		application->display();
 
+		delete soundBuffer;
 	}
 
 	return 0;

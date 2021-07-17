@@ -159,8 +159,9 @@ sf::RenderWindow* InterfaceC::getWindow() {
 	return &window;
 }
 
-void InterfaceC::handleEvent(sf::Event event)
+APPLICATION_FUNCTIONS InterfaceC::handleEvent(sf::Event event)
 {
+	APPLICATION_FUNCTIONS retVal = APPLICATION_FUNCTIONS::NO_CHANGE;
 
 	switch (event.type)
 	{
@@ -179,6 +180,8 @@ void InterfaceC::handleEvent(sf::Event event)
 	default:
 		break;
 	}
+
+	return(retVal);
 }
 
 void InterfaceC::handleMouseClickEvent()
