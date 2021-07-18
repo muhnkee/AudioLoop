@@ -26,12 +26,23 @@ int ControllerC::run()
 	while (application->isOpen())
 	{
 		sf::Event event;
+		int* iThread = 0;
 
 		while (application->pollEvent(event))
 		{
 			// TODO, pull back the event being handled and set the appropriate state 
 			// in the corresponding looper
-			m_gui_interface.handleEvent(event);
+			switch (m_gui_interface.handleEvent(event, iThread))
+			{
+			case(APPLICATION_FUNCTIONS::PLAY):
+				m_Looper[*iThread].setLooperState(APPLICATION_FUNCTIONS::PLAY);
+				break;
+			case(APPLICATION_FUNCTIONS::NO_CHANGE):
+				m_Looper[*iThread].setLooperState(APPLICATION_FUNCTIONS::NO_CHANGE);
+				break;
+			default:
+				break;
+			};
 		}
 
 		application->clear();

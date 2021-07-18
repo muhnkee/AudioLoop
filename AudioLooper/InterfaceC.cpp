@@ -159,7 +159,7 @@ sf::RenderWindow* InterfaceC::getWindow() {
 	return &window;
 }
 
-APPLICATION_FUNCTIONS InterfaceC::handleEvent(sf::Event event)
+APPLICATION_FUNCTIONS InterfaceC::handleEvent(sf::Event event, int* iThread)
 {
 	APPLICATION_FUNCTIONS retVal = APPLICATION_FUNCTIONS::NO_CHANGE;
 
