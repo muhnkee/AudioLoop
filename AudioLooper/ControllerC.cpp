@@ -14,35 +14,34 @@ int ControllerC::run()
 	sf::RenderWindow* application = m_gui_interface.getWindow();
 
 	application->setMouseCursorVisible(true);
+	// a common sound buffer to point everyone to
+	sf::SoundBuffer* soundBuffer;
+	soundBuffer = new sf::SoundBuffer[sizeof(sf::SoundBuffer)];
+
+	for (int i = 0; i < MAX_NUMBER_OF_TRACKS; ++i)
+	{
+		m_Looper[i].setSoundBuffer(soundBuffer);
+	}
 
 	while (application->isOpen())
 	{
 		sf::Event event;
-		sf::SoundBuffer *soundBuffer = new sf::SoundBuffer; 
-
-		for (int i = 0; i < MAX_NUMBER_OF_TRACKS; ++i)
-		{
-			m_Looper[i]->setSoundBuffer(soundBuffer);
-		}
 
 		while (application->pollEvent(event))
 		{
+			// TODO, pull back the event being handled and set the appropriate state 
+			// in the corresponding looper
 			m_gui_interface.handleEvent(event);
-
-			//m_Looper[1]->setSoundBuffer(soundBuffer);
-
-			//m_Looper[1].Launch();
 		}
 
 		application->clear();
-		//application.draw(playButton.getButtonSprite());
-		//application.draw(shape);
+
 		m_gui_interface.draw(*application);
 		application->display();
 
-		delete soundBuffer;
 	}
 
+	delete[] soundBuffer;
 	return 0;
 }
 

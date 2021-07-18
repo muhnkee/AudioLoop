@@ -17,6 +17,6 @@ private:
 	void drawBaseWindow();
 
 	InterfaceC m_gui_interface;
-	LooperThreadC *m_Looper[MAX_NUMBER_OF_TRACKS];
+	LooperThreadC m_Looper[MAX_NUMBER_OF_TRACKS];
 };
 

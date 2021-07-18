@@ -90,7 +90,7 @@ void RecorderC::selectDevice()
             cout << " --> userChoice: " << availableDevices[DEVICE] << endl;
         }
 
-        if (!recorder.setDevice(availableDevices[DEVICE]) && DEBUG)
+        if (!recorder->setDevice(availableDevices[DEVICE]) && DEBUG)
         {
             cout << "ERROR: Device setting failed" << endl;
         }
@@ -100,17 +100,17 @@ void RecorderC::selectDevice()
 // Record Audio into recorder buffer
 void RecorderC::Record()
 {
-    recorder.start();
+    recorder->start();
 }
 
 // STOP will automatically save each recorded audio clip after stopping, storing the file's PATH in private class variable 'audioFilePath'
 void RecorderC::Stop()
 {
-    recorder.stop();
+    recorder->stop();
 
-    buffer = recorder.getBuffer();
+    *buffer = recorder->getBuffer();
 
-    sound.setBuffer(buffer);
+    sound.setBuffer(*buffer);
 
     time_t now = time(0);
     struct tm buf;
@@ -129,7 +129,7 @@ void RecorderC::Stop()
 
     // File is saved into Samples/ directory
     audioFilePath = "Samples/" + timestamp + ".wav";
-    buffer.saveToFile(audioFilePath);
+    buffer->saveToFile(audioFilePath);
 }
 
 // This is just for testing, making sure audio is actually where it needs to be

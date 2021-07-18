@@ -9,13 +9,17 @@ private:
 
 	std::string audioFilePath;
 	bool deviceFlag = false;
-	sf::SoundBufferRecorder recorder;
-	sf::SoundBuffer buffer;
+	sf::SoundBufferRecorder* recorder;
+	sf::SoundBuffer* buffer;
 	sf::Sound sound;
 
 public:
 
 	RecorderC();
+
+	void setBuffer(sf::SoundBuffer* bufferIn) { buffer = bufferIn; }
+	void setRecorderBuffer(sf::SoundBufferRecorder* bufferIn) { recorder = bufferIn;  }
+
 	void checkAvailabilty();
 	void selectDevice();
 	void createSamplesDir();
