@@ -22,7 +22,7 @@ public:
 
 	sf::RenderWindow* getWindow();
 	void draw(sf::RenderWindow& window);
-	APPLICATION_FUNCTIONS handleEvent(sf::Event event, int* iThread);
+	APPLICATION_FUNCTIONS handleEvent(sf::Event event, int* iLooper);
 
 private:
 	sf::Font font;
