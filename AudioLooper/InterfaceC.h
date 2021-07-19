@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <string>
+#include "DEFINITIONS.h"
 #include "LooperC.h"
 #include "Slider.h"
 
@@ -21,16 +22,17 @@ public:
 
 	sf::RenderWindow* getWindow();
 	void draw(sf::RenderWindow& window);
-	void handleEvent(sf::Event event);
+	APPLICATION_FUNCTIONS handleEvent(sf::Event event, int* iLooper);
 
 private:
-	
 	sf::Font font;
 	sf::RenderWindow window;
 	std::vector<sf::Text> trackItem;
 	int trackCount;
 
 	int selectedTrackIndex;
+
+	bool openLooper[MAX_NUMBER_OF_TRACKS];
 
 	//DEBUG: variables used for testing audio
 	std::string audioFile = "melody.wav";

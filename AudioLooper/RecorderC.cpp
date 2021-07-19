@@ -7,7 +7,7 @@
 #include <windows.h>
 #include <ctime>
 #include <SFML/Audio.hpp>
-#include "recorder.h"
+#include "RecorderC.h"
 
 using std::cout;
 using std::endl;
@@ -19,7 +19,7 @@ using std::to_string;
 int DEVICE = -1;
 
 // Recorder calls three functions on creation
-Recorder::Recorder()
+RecorderC::RecorderC()
 {
     // Ensure recording device exists and is available
     checkAvailabilty();
@@ -30,7 +30,7 @@ Recorder::Recorder()
 }
 
 // Simple check
-void Recorder::checkAvailabilty()
+void RecorderC::checkAvailabilty()
 {
 
     if (!sf::SoundBufferRecorder::isAvailable())
@@ -56,7 +56,7 @@ void Recorder::checkAvailabilty()
 }
 
 // Select default audio device if device has not yet been set
-void Recorder::selectDevice()
+void RecorderC::selectDevice()
 {
     if (DEVICE == -1) {
         // Get available devices
@@ -90,7 +90,7 @@ void Recorder::selectDevice()
             cout << " --> userChoice: " << availableDevices[DEVICE] << endl;
         }
 
-        if (!recorder.setDevice(availableDevices[DEVICE]) && DEBUG)
+        if (!recorder->setDevice(availableDevices[DEVICE]) && DEBUG)
         {
             cout << "ERROR: Device setting failed" << endl;
         }
@@ -98,19 +98,19 @@ void Recorder::selectDevice()
 }
 
 // Record Audio into recorder buffer
-void Recorder::Record()
+void RecorderC::Record()
 {
-    recorder.start();
+    recorder->start();
 }
 
 // STOP will automatically save each recorded audio clip after stopping, storing the file's PATH in private class variable 'audioFilePath'
-void Recorder::Stop()
+void RecorderC::Stop()
 {
-    recorder.stop();
+    recorder->stop();
 
-    buffer = recorder.getBuffer();
+    *buffer = recorder->getBuffer();
 
-    sound.setBuffer(buffer);
+    sound.setBuffer(*buffer);
 
     time_t now = time(0);
     struct tm buf;
@@ -129,23 +129,23 @@ void Recorder::Stop()
 
     // File is saved into Samples/ directory
     audioFilePath = "Samples/" + timestamp + ".wav";
-    buffer.saveToFile(audioFilePath);
+    buffer->saveToFile(audioFilePath);
 }
 
 // This is just for testing, making sure audio is actually where it needs to be
-void Recorder::Play()
+void RecorderC::Play()
 {
     sound.play();
 }
 
 // Use this function to get the PATH of the most recently recorded audio clip
-std::string Recorder::getAudioFilePath()
+std::string RecorderC::getAudioFilePath()
 {
     return audioFilePath;
 }
 
 // Helper function for checking if Samples/ directory exists
-bool Recorder::dirExists(const std::string& dirName_in)
+bool RecorderC::dirExists(const std::string& dirName_in)
 {
     DWORD ftyp = GetFileAttributesA(dirName_in.c_str());
     if (ftyp == INVALID_FILE_ATTRIBUTES)
@@ -158,7 +158,7 @@ bool Recorder::dirExists(const std::string& dirName_in)
 }
 
 // Creates Samples directory
-void Recorder::createSamplesDir()
+void RecorderC::createSamplesDir()
 {
     if (dirExists("Samples") && DEBUG) {
         cout << "\"Samples\" Directory Exists" << endl;

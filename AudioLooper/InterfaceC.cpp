@@ -1,7 +1,5 @@
 #include <SFML/Graphics.hpp>
 #include "InterfaceC.h"
-#include "DEFINITIONS.h"
-
 
 InterfaceC::InterfaceC() {
 	trackCount = 4;
@@ -17,11 +15,12 @@ InterfaceC::InterfaceC() {
 
 		float barWidth = SCREEN_WIDTH * (1. / 3.);
 		float barHeight = SCREEN_HEIGHT / 20.;
+
+		openLooper[i] = false;
+
 	}
 
 	// TODO: for mouse clicking:
-	
-
 	trackItem[0].setFont(font);
 	trackItem[0].setFillColor(sf::Color::Red);
 	trackItem[0].setString("play track 1");
@@ -57,8 +56,6 @@ InterfaceC::InterfaceC() {
 InterfaceC::~InterfaceC()
 {
 }
-
-
 
 void InterfaceC::selectNextTrack()
 {
@@ -99,6 +96,15 @@ void InterfaceC::selectTrackItem(const sf::Event& keyPress)
 		selectNextTrack();
 		break;
 	case sf::Keyboard::Enter:
+		/*if (openLooper[])
+		{
+			openLooper[] = false;
+		}
+		else
+		{
+			openLooper[] = true;
+			}
+		*/
 		playPauseTrack(testLooper);
 		break;
 	case sf::Keyboard::L:
@@ -140,8 +146,6 @@ void InterfaceC::loopUnloopTrack(LooperC& looperIn) {
 	}
 }
 
-
-
 void InterfaceC::draw(sf::RenderWindow& window)
 {
 	for (int i = 0; i < MAX_NUMBER_OF_TRACKS; i++)
@@ -155,8 +159,9 @@ sf::RenderWindow* InterfaceC::getWindow() {
 	return &window;
 }
 
-void InterfaceC::handleEvent(sf::Event event)
+APPLICATION_FUNCTIONS InterfaceC::handleEvent(sf::Event event, int* iLooper)
 {
+	APPLICATION_FUNCTIONS retVal = APPLICATION_FUNCTIONS::NO_CHANGE;
 
 	switch (event.type)
 	{
@@ -175,6 +180,8 @@ void InterfaceC::handleEvent(sf::Event event)
 	default:
 		break;
 	}
+
+	return(retVal);
 }
 
 void InterfaceC::handleMouseClickEvent()

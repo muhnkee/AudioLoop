@@ -85,9 +85,13 @@
     <LinkIncremental>true</LinkIncremental>
     <ExternalIncludePath>$(SFML_INSTALL_LOCATION)\include;$(ExternalIncludePath)</ExternalIncludePath>
     <LibraryPath>$(SFML_INSTALL_LOCATION)\lib;$(LibraryPath)</LibraryPath>
+    <ExecutablePath>$(VC_ExecutablePath_x64);$(CommonExecutablePath); $(SFML_INSTALL_LOCATION)\bin</ExecutablePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <ExternalIncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SFML_INSTALL_LOCATION)\include;</ExternalIncludePath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64); $(SFML_INSTALL_LOCATION)\lib</LibraryPath>
+    <ExecutablePath>$(VC_ExecutablePath_x64);$(CommonExecutablePath); $(SFML_INSTALL_LOCATION)\bin</ExecutablePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -159,7 +163,7 @@
     <ClCompile Include="InterfaceC.cpp" />
     <ClCompile Include="LooperC.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Recorder.cpp" />
+    <ClCompile Include="RecorderC.cpp" />
     <ClCompile Include="Slider.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -168,7 +172,8 @@
     <ClInclude Include="DEFINITIONS.h" />
     <ClInclude Include="InterfaceC.h" />
     <ClInclude Include="LooperC.h" />
-    <ClInclude Include="Recorder.h" />
+    <ClInclude Include="LooperThreadC.h" />
+    <ClInclude Include="RecorderC.h" />
     <ClInclude Include="Slider.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

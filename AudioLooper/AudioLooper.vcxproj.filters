@@ -33,7 +33,7 @@
     <ClCompile Include="Slider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Recorder.cpp">
+    <ClCompile Include="RecorderC.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -56,7 +56,10 @@
     <ClInclude Include="Slider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Recorder.h">
+    <ClInclude Include="RecorderC.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LooperThreadC.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

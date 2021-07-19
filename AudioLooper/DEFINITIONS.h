@@ -21,3 +21,5 @@
 
 // Audio Directory
 #define AUDIO_DIR "./Assets/Audio/"
+
+enum class APPLICATION_FUNCTIONS { NO_CHANGE, PLAY, RECORD, PAUSE, STOP};
