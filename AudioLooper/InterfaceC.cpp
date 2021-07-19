@@ -109,10 +109,13 @@ void InterfaceC::selectTrackItem(const sf::Event& keyPress)
 		break;
 	case sf::Keyboard::L:
 		loopUnloopTrack(testLooper);
+		break;
 	case sf::Keyboard::S:
 		stopTrack(testLooper);
+		break;
 	case sf::Keyboard::P:
 		testLooper.shiftPitch();
+		break;
 	default:
 		break;
 	}
