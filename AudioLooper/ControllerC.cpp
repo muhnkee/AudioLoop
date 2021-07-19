@@ -22,11 +22,13 @@ int ControllerC::run()
 	{
 		m_Looper[i].setSoundBuffer(soundBuffer);
 	}
+	int* iLooper;
+	iLooper = new int[sizeof(int)];
+	*iLooper = 0;
 
 	while (application->isOpen())
 	{
 		sf::Event event;
-		int* iLooper = 0;
 
 		while (application->pollEvent(event))
 		{
