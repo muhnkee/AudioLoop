@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include "InterfaceC.h"
+#include <iostream>
 
 InterfaceC::InterfaceC() {
 	trackCount = 4;
@@ -20,7 +21,7 @@ InterfaceC::InterfaceC() {
 
 	}
 
-	// TODO: for mouse clicking:
+	//DEBUG
 	trackItem[0].setFont(font);
 	trackItem[0].setFillColor(sf::Color::Red);
 	trackItem[0].setString("play track 1");
@@ -43,27 +44,36 @@ InterfaceC::InterfaceC() {
 
 	selectedTrackIndex = 0;
 
-	testLooper.setTrack("melody.wav");
+
+	
+	testLooper.setTrack("orchestra-mono.wav"); //this is a MONO track == SFML will play well
+	//testLooper.setTrack("melody.wav"); // this is a STEREO track == NO BUENO
 	window.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "AudioLoop");
 
-	//DEBUG
+	
 	//Loading slider sprite
 	testSliderPitch.setName("pitch"); 
-	testSliderPitch.setSizeScale(.30);
+	testSliderPitch.setSizeScale(.20);
 
 	testSliderVolume.setName("volume");
-	testSliderVolume.setSizeScale(.30);
+	testSliderVolume.setSizeScale(.20);
 
-	testSliderPitch.setInitialPosition(SCREEN_WIDTH/8, SCREEN_HEIGHT/8); //relative positioning
-	testSliderVolume.setInitialPosition(SCREEN_WIDTH / 8 + 150, SCREEN_HEIGHT / 8);
+	testSliderPan.setName("pan");
+	testSliderPan.setSizeScale(.40);
+
+	testSliderPitch.setInitialPosition(SCREEN_WIDTH/ 8, SCREEN_HEIGHT/8); //relative positioning
+	testSliderVolume.setInitialPosition(SCREEN_WIDTH / 8 + 100, SCREEN_HEIGHT / 8);
+	testSliderPan.setInitialPosition(SCREEN_WIDTH / 8 + 200, SCREEN_HEIGHT / 8);
 
 	slider_container.push_back(testSliderPitch); //CODE SMELL: accessing sliders from container
 	slider_container.push_back(testSliderVolume);
+	slider_container.push_back(testSliderPan);
 
 	testLooper.setPitchSlider(&slider_container[0]);
 	testLooper.shiftPitch(); //start off the pitch where the slider is at
 	testLooper.setVolumeSlider(&slider_container[1]);
 	testLooper.shiftVolume(); //start off the pitch where the slider is at
+	testLooper.setPanSlider(&slider_container[2]);
 }
 
 InterfaceC::~InterfaceC()
@@ -127,7 +137,7 @@ void InterfaceC::selectTrackItem(const sf::Event& keyPress)
 		stopTrack(testLooper);
 		break;
 	case sf::Keyboard::P:
-		testLooper.shiftPitch();
+		testLooper.shiftPan();
 		break;
 	default:
 		break;
@@ -226,7 +236,11 @@ void InterfaceC::handleMouseClickEvent()
 			}
 			else if (slider_container[i].getName() == "volume")
 			{
-				testLooper.shiftVolume();;
+				testLooper.shiftVolume();
+			}
+			else if (slider_container[i].getName() == "pan")
+			{
+				testLooper.shiftPan();
 			}
 			
 			break;
@@ -253,6 +267,10 @@ void InterfaceC::handleMouseReleaseEvent()
 			else if (slider_container[i].getName() == "volume")
 			{
 				testLooper.shiftVolume();;
+			}
+			else if (slider_container[i].getName() == "pan")
+			{
+				testLooper.shiftPan();
 			}
 		}
 		

@@ -6,7 +6,7 @@ public:
 	Slider();
 	Slider(double widthIn, double heightIn, bool makeLandscape = false);
 
-	void move_slide(double mouse_y);
+	void move_slide(double mouse_x, double mouse_y);
 
 	sf::Sprite* getSliderSprite();
 	void setInitialPosition(double coord_x, double coord_y);
