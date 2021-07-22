@@ -173,8 +173,8 @@ void LooperC::setPanSlider(Slider* newPanSlider)
 /// 
 /// Audio Spacialization works on a 2D grid system with the "Listener" (your speakers)
 /// in the center (0,0) coordinate of a semicircle. Adjusting the slider left and right
-/// has the Listener walk the perimiter of the semi circle, so that the audio track comes
-/// out of the left and/or right speakers at a individual volumes dictated by the position
+/// has the audioTrack walk the perimiter of the semi circle, so that the audio track comes
+/// out of the left and/or right speakers at individual volumes dictated by its position
 /// in the semicircle and with respect to the Listener at the center.
 /// 
 /// 
