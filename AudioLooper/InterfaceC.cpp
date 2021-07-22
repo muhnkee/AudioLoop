@@ -48,9 +48,22 @@ InterfaceC::InterfaceC() {
 
 	//DEBUG
 	//Loading slider sprite
-	testSlider.setSizeScale(.44);
-	testSlider.setInitialPosition(SCREEN_WIDTH/8, SCREEN_HEIGHT/8); //relative positioning
-	testLooper.setPitchSlider(&testSlider);
+	testSliderPitch.setName("pitch"); 
+	testSliderPitch.setSizeScale(.30);
+
+	testSliderVolume.setName("volume");
+	testSliderVolume.setSizeScale(.30);
+
+	testSliderPitch.setInitialPosition(SCREEN_WIDTH/8, SCREEN_HEIGHT/8); //relative positioning
+	testSliderVolume.setInitialPosition(SCREEN_WIDTH / 8 + 150, SCREEN_HEIGHT / 8);
+
+	slider_container.push_back(testSliderPitch); //CODE SMELL: accessing sliders from container
+	slider_container.push_back(testSliderVolume);
+
+	testLooper.setPitchSlider(&slider_container[0]);
+	testLooper.shiftPitch(); //start off the pitch where the slider is at
+	testLooper.setVolumeSlider(&slider_container[1]);
+	testLooper.shiftVolume(); //start off the pitch where the slider is at
 }
 
 InterfaceC::~InterfaceC()
@@ -155,7 +168,12 @@ void InterfaceC::draw(sf::RenderWindow& window)
 	{
 		window.draw(trackItem[i]);
 	}
-	testSlider.draw(window);
+
+	for (int i = 0; i < slider_container.size(); i++)
+	{
+		slider_container[i].draw(window);
+	}
+
 }
 
 sf::RenderWindow* InterfaceC::getWindow() {
@@ -189,24 +207,55 @@ APPLICATION_FUNCTIONS InterfaceC::handleEvent(sf::Event event, int *iLooper)
 
 void InterfaceC::handleMouseClickEvent()
 {
-	//TODO: loop through all clickable elements for this logic
-	// 
-	
-	sf::Sprite* slider_sprite = testSlider.getSliderSprite();
-
-	// if mouse is on bounds of testSlider
-	if (slider_sprite->getGlobalBounds().contains(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y)
-		&& sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
+	for (int i = 0; i < slider_container.size(); i++)
 	{
-		testSlider.followMouse();
-		testLooper.shiftPitch();
+		sf::Sprite* slider_sprite = slider_container[i].getSliderSprite();
+
+		// if mouse is on bounds of testSlider
+		if (slider_sprite->getGlobalBounds().contains(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y)
+			&& sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
+		{
+			slider_container[i].followMouse();
+
+
+			// CODE SMELL: not a very good way to handle this, will need to be refactored once core functionality of Looper
+			// is built out
+			if (slider_container[i].getName() == "pitch")
+			{
+				testLooper.shiftPitch();
+			}
+			else if (slider_container[i].getName() == "volume")
+			{
+				testLooper.shiftVolume();;
+			}
+			
+			break;
+		}
 	}
+	
 
 }
 
 void InterfaceC::handleMouseReleaseEvent() 
 {
-	//TODO: loop through all clickable elements for this logic
-	testSlider.stopFollowingMouse();
-	testLooper.shiftPitch();
+	for (int i = 0; i < slider_container.size(); i++)
+	{
+		if (slider_container[i].isSelected())
+		{
+			slider_container[i].stopFollowingMouse();
+
+			// CODE SMELL: not a very good way to handle this, will need to be refactored once core functionality of Looper
+			// is built out
+			if (slider_container[i].getName() == "pitch")
+			{
+				testLooper.shiftPitch();
+			}
+			else if (slider_container[i].getName() == "volume")
+			{
+				testLooper.shiftVolume();;
+			}
+		}
+		
+	}
+	
 }

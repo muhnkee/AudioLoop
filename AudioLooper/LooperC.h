@@ -28,9 +28,10 @@ public:
 
 	double getCurrentPitch();
 	void shiftPitch();
+	double getCurrentVolume();
+	void shiftVolume();
 	void changeTempo();
 	void reverseTrack();
-	void adjustVolume(double level);
 
 
 	bool isPlaying();

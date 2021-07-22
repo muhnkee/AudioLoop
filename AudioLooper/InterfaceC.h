@@ -37,7 +37,9 @@ private:
 	//DEBUG: variables used for testing audio
 	std::string audioFile = "melody.wav";
 	LooperC testLooper;
-	Slider testSlider;
+	Slider testSliderPitch;
+	Slider testSliderVolume;
+	std::vector<Slider> slider_container;
 };
 
 

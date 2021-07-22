@@ -162,3 +162,21 @@ void Slider::draw(sf::RenderWindow& window) {
 	}
 	window.draw(slide_sprite);
 }
+
+/// <summary>
+/// Identifying information on this slider,  should be some sort of unique key
+/// </summary>
+/// <param name="nameIn">a key name for this Slider</param>
+void Slider::setName(std::string nameIn)
+{
+	name = nameIn;
+}
+
+/// <summary>
+/// Get the name of this slider
+/// </summary>
+/// <returns>string -the name</returns>
+std::string Slider::getName()
+{
+	return name;
+}

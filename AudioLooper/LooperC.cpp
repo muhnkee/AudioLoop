@@ -4,6 +4,7 @@
 #include <iostream>
 #include "LooperC.h"
 #include <SFML/Audio.hpp>;
+#include <cmath>
 
 
 LooperC::LooperC()
@@ -87,7 +88,6 @@ double LooperC::getCurrentPitch() {
 /// <summary>
 /// Adjust the pitch level of the track
 /// </summary>
-/// <param name="pitchLevel"> -The new pitch level</param>
 void LooperC::shiftPitch() {
 #ifdef DEBUG
 	std::cout << "current pitch = " << getCurrentPitch() << std::endl;
@@ -113,4 +113,29 @@ void LooperC::setPitchSlider(Slider* newPitchSlider) {
 /// <param name="newVolumeSlider">-Reference to an existing gui slider</param>
 void LooperC::setVolumeSlider(Slider* newVolumeSlider) {
 	volumeSlider = newVolumeSlider;
+}
+
+/// <summary>
+/// Return the current volume level of the track
+/// </summary>
+/// <returns>double -The level of the volume</returns>
+double LooperC::getCurrentVolume() {
+	return audioTrack.getVolume();
+}
+
+/// <summary>
+/// Adjust the volume level of the track
+/// </summary>
+void LooperC::shiftVolume() {
+#ifdef DEBUG
+	std::cout << "current volume = " << getCurrentVolume() << std::endl;
+
+#endif // DEBUG
+	// this math allows us to have both high and low ranges
+	// TODO: the mathing will need some adjustment, right now it gets really quite really quick on the slider movement
+	//			but for now its acceptable
+	double baseLevel = volumeSlider->getLevel() * 2; // get the volume to 1.0 for a proper exponential base
+	double newVolume = std::pow(baseLevel, 10); // exponentialy grow the volume
+	
+	audioTrack.setVolume(newVolume);
 }

@@ -20,6 +20,9 @@ public:
 	void stopFollowingMouse();
 	void draw(sf::RenderWindow& window);
 
+	void setName(std::string nameIn);
+	std::string getName();
+
 private:
 	bool landscape;
 	bool selected;
@@ -28,6 +31,7 @@ private:
 	sf::Texture slide;
 	sf::Sprite slide_sprite;
 
+	std::string name;
 
 	sf::RectangleShape outerShape;
 
