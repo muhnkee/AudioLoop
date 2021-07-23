@@ -1,6 +1,8 @@
 #pragma once
 #include <SFML/System.hpp>
 #include "LooperC.h"
+#include "RecorderC.h"
+
 class LooperThreadC 
 {
 public:
@@ -33,6 +35,7 @@ public:
 
 private:
 	LooperC* m_looper;
+	RecorderC m_recorder;
 	sf::SoundBuffer* m_soundBuffer;
 	sf::Thread m_thread;
 
@@ -41,10 +44,16 @@ private:
 		switch (m_looperState)
 		{
 		case APPLICATION_FUNCTIONS::PLAY:
+			m_looper->playTrack();
 			break;
 		case APPLICATION_FUNCTIONS::STOP:
+			m_looper->stopTrack();
 			break;
-
+		case APPLICATION_FUNCTIONS::RECORD:
+			break;
+		case APPLICATION_FUNCTIONS::PAUSE:
+			m_looper->pauseTrack();
+			break;
 		default:
 			break;
 		};
