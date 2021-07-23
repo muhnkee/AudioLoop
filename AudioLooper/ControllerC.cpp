@@ -34,17 +34,7 @@ int ControllerC::run()
 		{
 			// TODO, pull back the event being handled and set the appropriate state 
 			// in the corresponding looper
-			switch (m_gui_interface.handleEvent(event, iLooper))
-			{
-			case(APPLICATION_FUNCTIONS::PLAY):
-				m_Looper[*iLooper].setLooperState(APPLICATION_FUNCTIONS::PLAY);
-				break;
-			case(APPLICATION_FUNCTIONS::NO_CHANGE):
-				m_Looper[*iLooper].setLooperState(APPLICATION_FUNCTIONS::NO_CHANGE);
-				break;
-			default:
-				break;
-			};
+			m_Looper[*iLooper].setLooperState(m_gui_interface.handleEvent(event, iLooper));
 		}
 
 		application->clear();
