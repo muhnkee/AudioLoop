@@ -10,15 +10,19 @@ private:
 
 	Slider* pitchSlider;
 	Slider* volumeSlider;
+	Slider* panSlider;
 
 public:
 	LooperC();
 	LooperC(std::string audioFile);
 	~LooperC();
 
+	sf::Music* getMusic();
+
 	void setTrack(std::string fileName);
 	void setPitchSlider(Slider* newPitchSlider);
 	void setVolumeSlider(Slider* newVolumeSlider);
+	void setPanSlider(Slider* newPanSlider);
 
 	void playTrack();
 	void pauseTrack();
@@ -28,9 +32,12 @@ public:
 
 	double getCurrentPitch();
 	void shiftPitch();
+	double getCurrentVolume();
+	void shiftVolume();
+	void shiftPan();
+
 	void changeTempo();
 	void reverseTrack();
-	void adjustVolume(double level);
 
 
 	bool isPlaying();

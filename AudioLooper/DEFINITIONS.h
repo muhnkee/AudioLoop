@@ -18,8 +18,13 @@
 // Sprites
 #define SLIDE_BAR "./Assets/Icons/Slider_bar.png"
 #define SLIDE "./Assets/Icons/Slide.png"
+#define SLIDE_BAR_LANDSCAPE "./Assets/Icons/Slider_bar_landscape.png"
+#define SLIDE_LANDSCAPE "./Assets/Icons/Slide_landscape.png"
 
 // Audio Directory
 #define AUDIO_DIR "./Assets/Audio/"
 
 enum class APPLICATION_FUNCTIONS { NO_CHANGE, PLAY, RECORD, PAUSE, STOP};
+
+// Math
+#define PI 3.14159265

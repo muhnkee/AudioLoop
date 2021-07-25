@@ -6,7 +6,7 @@ public:
 	Slider();
 	Slider(double widthIn, double heightIn, bool makeLandscape = false);
 
-	void move_slide(double mouse_y);
+	void move_slide(double mouse_x, double mouse_y);
 
 	sf::Sprite* getSliderSprite();
 	void setInitialPosition(double coord_x, double coord_y);
@@ -20,6 +20,9 @@ public:
 	void stopFollowingMouse();
 	void draw(sf::RenderWindow& window);
 
+	void setName(std::string nameIn);
+	std::string getName();
+
 private:
 	bool landscape;
 	bool selected;
@@ -28,6 +31,7 @@ private:
 	sf::Texture slide;
 	sf::Sprite slide_sprite;
 
+	std::string name;
 
 	sf::RectangleShape outerShape;
 

@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include "InterfaceC.h"
+#include <iostream>
 
 InterfaceC::InterfaceC() {
 	trackCount = 4;
@@ -20,7 +21,7 @@ InterfaceC::InterfaceC() {
 
 	}
 
-	// TODO: for mouse clicking:
+	//DEBUG
 	trackItem[0].setFont(font);
 	trackItem[0].setFillColor(sf::Color::Red);
 	trackItem[0].setString("play track 1");
@@ -43,14 +44,36 @@ InterfaceC::InterfaceC() {
 
 	selectedTrackIndex = 0;
 
-	testLooper.setTrack("melody.wav");
+
+	
+	testLooper.setTrack("orchestra-mono.wav"); //this is a MONO track == SFML will play well
+	//testLooper.setTrack("melody.wav"); // this is a STEREO track == NO BUENO
 	window.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "AudioLoop");
 
-	//DEBUG
+	
 	//Loading slider sprite
-	testSlider.setSizeScale(.44);
-	testSlider.setInitialPosition(SCREEN_WIDTH/8, SCREEN_HEIGHT/8); //relative positioning
-	testLooper.setPitchSlider(&testSlider);
+	testSliderPitch.setName("pitch"); 
+	testSliderPitch.setSizeScale(.20);
+
+	testSliderVolume.setName("volume");
+	testSliderVolume.setSizeScale(.20);
+
+	testSliderPan.setName("pan");
+	testSliderPan.setSizeScale(.40);
+
+	testSliderPitch.setInitialPosition(SCREEN_WIDTH/ 8, SCREEN_HEIGHT/8); //relative positioning
+	testSliderVolume.setInitialPosition(SCREEN_WIDTH / 8 + 100, SCREEN_HEIGHT / 8);
+	testSliderPan.setInitialPosition(SCREEN_WIDTH / 8 + 200, SCREEN_HEIGHT / 8);
+
+	slider_container.push_back(testSliderPitch); //CODE SMELL: accessing sliders from container
+	slider_container.push_back(testSliderVolume);
+	slider_container.push_back(testSliderPan);
+
+	testLooper.setPitchSlider(&slider_container[0]);
+	testLooper.shiftPitch(); //start off the pitch where the slider is at
+	testLooper.setVolumeSlider(&slider_container[1]);
+	testLooper.shiftVolume(); //start off the pitch where the slider is at
+	testLooper.setPanSlider(&slider_container[2]);
 }
 
 InterfaceC::~InterfaceC()
@@ -114,7 +137,7 @@ void InterfaceC::selectTrackItem(const sf::Event& keyPress)
 		stopTrack(testLooper);
 		break;
 	case sf::Keyboard::P:
-		testLooper.shiftPitch();
+		testLooper.shiftPan();
 		break;
 	default:
 		break;
@@ -155,7 +178,12 @@ void InterfaceC::draw(sf::RenderWindow& window)
 	{
 		window.draw(trackItem[i]);
 	}
-	testSlider.draw(window);
+
+	for (int i = 0; i < slider_container.size(); i++)
+	{
+		slider_container[i].draw(window);
+	}
+
 }
 
 sf::RenderWindow* InterfaceC::getWindow() {
@@ -189,24 +217,63 @@ APPLICATION_FUNCTIONS InterfaceC::handleEvent(sf::Event event, int *iLooper)
 
 void InterfaceC::handleMouseClickEvent()
 {
-	//TODO: loop through all clickable elements for this logic
-	// 
-	
-	sf::Sprite* slider_sprite = testSlider.getSliderSprite();
-
-	// if mouse is on bounds of testSlider
-	if (slider_sprite->getGlobalBounds().contains(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y)
-		&& sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
+	for (int i = 0; i < slider_container.size(); i++)
 	{
-		testSlider.followMouse();
-		testLooper.shiftPitch();
+		sf::Sprite* slider_sprite = slider_container[i].getSliderSprite();
+
+		// if mouse is on bounds of testSlider
+		if (slider_sprite->getGlobalBounds().contains(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y)
+			&& sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
+		{
+			slider_container[i].followMouse();
+
+
+			// CODE SMELL: not a very good way to handle this, will need to be refactored once core functionality of Looper
+			// is built out
+			if (slider_container[i].getName() == "pitch")
+			{
+				testLooper.shiftPitch();
+			}
+			else if (slider_container[i].getName() == "volume")
+			{
+				testLooper.shiftVolume();
+			}
+			else if (slider_container[i].getName() == "pan")
+			{
+				testLooper.shiftPan();
+			}
+			
+			break;
+		}
 	}
+	
 
 }
 
 void InterfaceC::handleMouseReleaseEvent() 
 {
-	//TODO: loop through all clickable elements for this logic
-	testSlider.stopFollowingMouse();
-	testLooper.shiftPitch();
+	for (int i = 0; i < slider_container.size(); i++)
+	{
+		if (slider_container[i].isSelected())
+		{
+			slider_container[i].stopFollowingMouse();
+
+			// CODE SMELL: not a very good way to handle this, will need to be refactored once core functionality of Looper
+			// is built out
+			if (slider_container[i].getName() == "pitch")
+			{
+				testLooper.shiftPitch();
+			}
+			else if (slider_container[i].getName() == "volume")
+			{
+				testLooper.shiftVolume();;
+			}
+			else if (slider_container[i].getName() == "pan")
+			{
+				testLooper.shiftPan();
+			}
+		}
+		
+	}
+	
 }

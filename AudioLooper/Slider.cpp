@@ -28,13 +28,26 @@ Slider::Slider(double widthIn, double heightIn, bool makeLandscape) {
 	landscape = makeLandscape;
 	selected = false;
 
-	bar.loadFromFile(SLIDE_BAR);
-	bar_sprite.setTexture(bar);
-	bar_sprite.setPosition(SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
+	if (!makeLandscape)
+	{
+		bar.loadFromFile(SLIDE_BAR);
+		bar_sprite.setTexture(bar);
+		bar_sprite.setPosition(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
 
-	slide.loadFromFile(SLIDE);
-	slide_sprite.setTexture(slide);
-	slide_sprite.setPosition(SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
+		slide.loadFromFile(SLIDE);
+		slide_sprite.setTexture(slide);
+		slide_sprite.setPosition(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+	}
+	else
+	{
+		bar.loadFromFile(SLIDE_BAR_LANDSCAPE);
+		bar_sprite.setTexture(bar);
+		bar_sprite.setPosition(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+
+		slide.loadFromFile(SLIDE_LANDSCAPE);
+		slide_sprite.setTexture(slide);
+		slide_sprite.setPosition(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+	}
 }
 
 
@@ -62,11 +75,23 @@ void Slider::setSizeScale(double scale_value) {
 /// <param name="coord_y"> -The y-axis coord in the gui where Slider will be placed</param>
 void Slider::setInitialPosition(double coord_x, double coord_y)
 {
-	bar_sprite.setPosition(coord_x, coord_y);
-	// more math so that slider always starts out in the center of the bar, no matter the starting position
-	double slide_position_x = coord_x + bar_sprite.getGlobalBounds().width / 11.5;
-	double slide_position_y = coord_y + bar_sprite.getGlobalBounds().height / 2 - slide_sprite.getGlobalBounds().height / 2;;
-	slide_sprite.setPosition(slide_position_x, slide_position_y);
+	if (!landscape)
+	{
+		bar_sprite.setPosition(coord_x, coord_y);
+		// more math so that slider always starts out in the center of the bar, no matter the starting position
+		double slide_position_x = coord_x + bar_sprite.getGlobalBounds().width / 11.5;
+		double slide_position_y = coord_y + bar_sprite.getGlobalBounds().height / 2 - slide_sprite.getGlobalBounds().height / 2;
+		slide_sprite.setPosition(slide_position_x, slide_position_y);
+	}
+	else
+	{
+		bar_sprite.setPosition(coord_x, coord_y);
+		// more math so that slider always starts out in the center of the bar, no matter the starting position
+		double slide_position_x = coord_x + bar_sprite.getGlobalBounds().width / 2.2;
+		double slide_position_y = coord_y + bar_sprite.getGlobalBounds().height / 2 - slide_sprite.getGlobalBounds().height / 2.07;
+		slide_sprite.setPosition(slide_position_x, slide_position_y);
+	}
+	
 }
 
 
@@ -114,17 +139,38 @@ double Slider::getLevel()
 /// </summary>
 void Slider::setLevel()
 {
-	double relative_position = slide_sprite.getPosition().y - bar_sprite.getPosition().y;
-	// subtract by 1 b/c we want the top of the slidebar to == 1.0 and bottom to be 0.0 
-	// and the y value increase 'downward' in the window
-	level = 1.0 - (relative_position / bar_sprite.getGlobalBounds().height);
+	if (!landscape)
+	{
+		double relative_position = slide_sprite.getPosition().y - bar_sprite.getPosition().y;
+		// subtract by 1 b/c we want the top of the slidebar to == 1.0 and bottom to be 0.0 
+		// and the y value increase 'downward' in the window
+		level = 1.0 - (relative_position / bar_sprite.getGlobalBounds().height);
 
-	// b/c the slider has "mass", it never actually gets to 0
-	// .0876 is the lowest it will go, but can sometimes be .0903 as well
-	if (level < .088) {
-		level = 0;
+		// b/c the slider has "mass", it never actually gets to 0
+		// .0876 is the lowest it will go, but can sometimes be .0903 as well
+		if (level < .088) {
+			level = 0;
+		}
 	}
+	else
+	{
+		double start_coords = bar_sprite.getPosition().x;
+		double end_coords = bar_sprite.getPosition().x + bar_sprite.getGlobalBounds().width;
 
+		double relative_slide_position = slide_sprite.getPosition().x - start_coords;
+		double relative_end_position = end_coords - start_coords;
+
+		level = (relative_slide_position + slide_sprite.getGlobalBounds().width) / bar_sprite.getGlobalBounds().width;
+		// b/c the slider has "mass", it never actually gets to 0
+		// .0876 is the lowest it will go, but can sometimes be .0903 as well
+		if (level < .0882) {
+			level = 0;
+		}
+		// same logic as above, but with upper bound (landscape only)
+		if (level > .995) {
+			level = 1;
+		}
+	}
 #ifdef DEBUG
 	std::cout << "level = " << level << std::endl;
 #endif // DEBUG
@@ -133,11 +179,21 @@ void Slider::setLevel()
 /// <summary>
 /// Ajusts the position of the slide according to the mouse location, y axis only
 /// </summary>
+/// <param name="mouse_x"> -The location of the mouse in the x-axis</param>
 /// <param name="mouse_y"> -The location of the mouse in the y-axis</param>
-void Slider::move_slide(double mouse_y) {
-	// doing this math so that the slider is always in the middle of the bar
-	double slide_position_x = bar_sprite.getPosition().x + bar_sprite.getGlobalBounds().width / 11.5;
-	slide_sprite.setPosition(slide_position_x, mouse_y);
+void Slider::move_slide(double mouse_x, double mouse_y) {
+	if (!landscape)
+	{
+		// doing this math so that the slider is always in the middle of the bar
+		double slide_position_x = bar_sprite.getPosition().x + bar_sprite.getGlobalBounds().width / 11.5;
+		slide_sprite.setPosition(slide_position_x, mouse_y);
+	}
+	else //TODO: DEBUG
+	{
+		// doing this math so that the slider is always in the middle of the bar
+		double slide_position_y = bar_sprite.getPosition().y + bar_sprite.getGlobalBounds().height / 11.5;
+		slide_sprite.setPosition(mouse_x, slide_position_y);
+	}
 	// update the level component to track intensity
 	setLevel();
 }
@@ -150,15 +206,49 @@ void Slider::draw(sf::RenderWindow& window) {
 	window.draw(bar_sprite);
 
 	if (selected) {
-		double upperBound = sf::Mouse::getPosition(window).y;
-		double lowerBound = sf::Mouse::getPosition(window).y + slide_sprite.getGlobalBounds().height;
-		if (bar_sprite.getGlobalBounds().contains(sf::Mouse::getPosition(window).x, upperBound))
+		if (!landscape)
 		{
-			if (bar_sprite.getGlobalBounds().contains(sf::Mouse::getPosition(window).x, lowerBound))
+			double upperBound = sf::Mouse::getPosition(window).y;
+			double lowerBound = sf::Mouse::getPosition(window).y + slide_sprite.getGlobalBounds().height;
+			if (bar_sprite.getGlobalBounds().contains(sf::Mouse::getPosition(window).x, upperBound))
 			{
-				move_slide(sf::Mouse::getPosition(window).y);
+				if (bar_sprite.getGlobalBounds().contains(sf::Mouse::getPosition(window).x, lowerBound))
+				{
+					move_slide(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y);
+				}
 			}
 		}
+		else
+		{
+			double upperBound = sf::Mouse::getPosition(window).x;
+			double lowerBound = sf::Mouse::getPosition(window).x + slide_sprite.getGlobalBounds().width;
+			if (bar_sprite.getGlobalBounds().contains(upperBound, sf::Mouse::getPosition(window).y))
+			{
+				if (bar_sprite.getGlobalBounds().contains(lowerBound, sf::Mouse::getPosition(window).y))
+				{
+					move_slide(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y);
+				}
+			}
+		}
+		
 	}
 	window.draw(slide_sprite);
+}
+
+/// <summary>
+/// Identifying information on this slider,  should be some sort of unique key
+/// </summary>
+/// <param name="nameIn"> -a key name for this Slider</param>
+void Slider::setName(std::string nameIn)
+{
+	name = nameIn;
+}
+
+/// <summary>
+/// Get the name of this slider
+/// </summary>
+/// <returns>string -the name</returns>
+std::string Slider::getName()
+{
+	return name;
 }
