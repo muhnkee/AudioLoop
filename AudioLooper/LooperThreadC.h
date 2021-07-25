@@ -11,6 +11,11 @@ public:
 	{
 
 	}
+	void setVolumeSlider(Slider slider) { m_VolumeSlider = slider;  }
+	Slider getVolumeSlider() { return m_VolumeSlider; }
+
+	void setPitchSlider(Slider slider) { m_PitchSlider = slider; }
+	Slider setPitchSlider() { return m_PitchSlider; }
 
 	void setLooper(LooperC* looper) 
 	{ 
@@ -35,6 +40,8 @@ public:
 
 private:
 	LooperC* m_looper;
+	Slider m_VolumeSlider;
+	Slider m_PitchSlider;
 	RecorderC m_recorder;
 	sf::SoundBuffer* m_soundBuffer;
 	sf::Thread m_thread;
@@ -43,13 +50,26 @@ private:
 	void Run() {
 		switch (m_looperState)
 		{
+		case APPLICATION_FUNCTIONS::LOOP:
+			m_looper->loopTrack();
+			break;
+		case APPLICATION_FUNCTIONS::SET_PITCH:
+			m_looper->setPitchSlider(&m_PitchSlider);
+			break;
+		case APPLICATION_FUNCTIONS::SET_VOLUME:
+			m_looper->setVolumeSlider(&m_VolumeSlider);
+			break;
 		case APPLICATION_FUNCTIONS::PLAY:
 			m_looper->playTrack();
 			break;
 		case APPLICATION_FUNCTIONS::STOP:
 			m_looper->stopTrack();
 			break;
-		case APPLICATION_FUNCTIONS::RECORD:
+		case APPLICATION_FUNCTIONS::RECORD_TO_FILE:
+
+			break;
+		case APPLICATION_FUNCTIONS::RECORD_FROM_FILE:
+
 			break;
 		case APPLICATION_FUNCTIONS::PAUSE:
 			m_looper->pauseTrack();
