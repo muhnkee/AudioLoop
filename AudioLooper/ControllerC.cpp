@@ -43,7 +43,11 @@ int ControllerC::run()
 			{
 				m_Looper[*iLooper].setPitchSlider(m_gui_interface.getPitchSlider());
 			}
+			else if ((applicationState == APPLICATION_FUNCTIONS::RECORD_FROM_FILE) ||
+				(applicationState == APPLICATION_FUNCTIONS::RECORD_TO_FILE))
+			{
 
+			}
 			m_Looper[*iLooper].setLooperState(applicationState);
 		}
 
