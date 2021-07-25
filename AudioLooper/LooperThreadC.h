@@ -12,10 +12,13 @@ public:
 
 	}
 	void setVolumeSlider(Slider* slider) { m_VolumeSlider = slider;  }
-	Slider *getVolumeSlider() { return m_VolumeSlider; }
+	Slider* getVolumeSlider() { return m_VolumeSlider; }
 
 	void setPitchSlider(Slider* slider) { m_PitchSlider = slider; }
-	Slider *setPitchSlider() { return m_PitchSlider; }
+	Slider* getPitchSlider() { return m_PitchSlider; }
+
+	void setPanSlider(Slider* slider) { m_PanSlider = slider; }
+	Slider* getPanSlider() { return m_PanSlider; }
 
 	void setLooper(LooperC* looper) 
 	{ 
@@ -42,6 +45,8 @@ private:
 	LooperC* m_looper;
 	Slider* m_VolumeSlider;
 	Slider* m_PitchSlider;
+	Slider* m_PanSlider;
+
 	RecorderC* m_recorder;
 	sf::SoundBuffer* m_soundBuffer;
 	sf::Thread m_thread;
@@ -61,6 +66,9 @@ private:
 			m_looper->setVolumeSlider(m_VolumeSlider);
 			m_looper->shiftVolume();
 			break;
+		case APPLICATION_FUNCTIONS::SET_PAN:
+			m_looper->setPanSlider(m_PanSlider);
+			m_looper->shiftPan();
 		case APPLICATION_FUNCTIONS::PLAY:
 			m_looper->playTrack();
 			break;

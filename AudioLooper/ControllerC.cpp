@@ -43,6 +43,10 @@ int ControllerC::run()
 			{
 				m_Looper[*iLooper].setPitchSlider(m_gui_interface.getPitchSlider());
 			}
+			else if (applicationState == APPLICATION_FUNCTIONS::SET_PAN)
+			{
+				m_Looper[*iLooper].setPanSlider(m_gui_interface.getPanSlider());
+			}
 			else if ((applicationState == APPLICATION_FUNCTIONS::RECORD_FROM_FILE) ||
 				     (applicationState == APPLICATION_FUNCTIONS::RECORD_TO_FILE))
 			{

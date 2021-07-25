@@ -12,6 +12,7 @@ public:
 	int run();
 
 private:
+
 	void kickOffLooperThread(int iThread);
 	void drawBaseWindow();
 

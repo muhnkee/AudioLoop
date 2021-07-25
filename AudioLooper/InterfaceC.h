@@ -11,6 +11,7 @@ public:
 	~InterfaceC();
 
 	void selectTrackItem(const sf::Event& keyPress, APPLICATION_FUNCTIONS *userSelection);
+
 	void handleMouseClickEvent(APPLICATION_FUNCTIONS* retVal);
 	void handleMouseReleaseEvent();
 	void playPauseTrack(LooperC& looperIn);
@@ -43,7 +44,6 @@ private:
 	Slider* m_VolumeSlider; 
 	Slider* m_PitchSlider;
 	Slider* m_PanSlider;
-
 	//DEBUG: variables used for testing audio
 	std::string audioFile = "melody.wav";
 	LooperC testLooper;
