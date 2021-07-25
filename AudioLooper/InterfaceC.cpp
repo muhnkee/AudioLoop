@@ -107,7 +107,7 @@ void InterfaceC::selectPrevTrack()
 	trackItem[selectedTrackIndex].setFillColor(sf::Color::Red);
 }
 
-void InterfaceC::selectTrackItem(const sf::Event& keyPress)
+void InterfaceC::selectTrackItem(const sf::Event& keyPress, APPLICATION_FUNCTIONS* userSelection)
 {
 
 	switch (keyPress.key.code)
@@ -192,7 +192,8 @@ sf::RenderWindow* InterfaceC::getWindow() {
 
 APPLICATION_FUNCTIONS InterfaceC::handleEvent(sf::Event event, int *iLooper)
 {
-	APPLICATION_FUNCTIONS retVal = APPLICATION_FUNCTIONS::NO_CHANGE;
+	APPLICATION_FUNCTIONS* retVal;
+	retVal = new APPLICATION_FUNCTIONS[sizeof(APPLICATION_FUNCTIONS)];
 
 	switch (event.type)
 	{
@@ -200,7 +201,7 @@ APPLICATION_FUNCTIONS InterfaceC::handleEvent(sf::Event event, int *iLooper)
 		window.close();
 		break;
 	case sf::Event::KeyReleased:
-		selectTrackItem(event); //simplified for now
+		selectTrackItem(event, retVal); //simplified for now
 		break;
 	case sf::Event::MouseButtonPressed:
 		handleMouseClickEvent();
@@ -212,7 +213,7 @@ APPLICATION_FUNCTIONS InterfaceC::handleEvent(sf::Event event, int *iLooper)
 		break;
 	}
 
-	return(retVal);
+	return(*retVal);
 }
 
 void InterfaceC::handleMouseClickEvent()
