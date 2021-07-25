@@ -1,7 +1,7 @@
 #pragma once
 #include <SFML/System.hpp>
 #include "LooperC.h"
-#include "RecorderC.h"
+//#include "RecorderC.h"
 
 class LooperThreadC 
 {
@@ -42,7 +42,7 @@ private:
 	LooperC* m_looper;
 	Slider m_VolumeSlider;
 	Slider m_PitchSlider;
-	RecorderC m_recorder;
+	//RecorderC m_recorder;
 	sf::SoundBuffer* m_soundBuffer;
 	sf::Thread m_thread;
 
