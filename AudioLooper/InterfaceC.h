@@ -27,6 +27,9 @@ public:
 	Slider* getPanSlider () { return m_PanSlider; };
 	void setPanSlider(Slider* slider) { m_PanSlider = slider; }
 
+	std::string getAudioFile() { return m_audioFile;  }
+	void setAudioFile(std::string audioFile) { m_audioFile = audioFile; }
+
 	sf::RenderWindow* getWindow();
 	void draw(sf::RenderWindow& window);
 	APPLICATION_FUNCTIONS handleEvent(sf::Event event, int *iLooper);
@@ -45,7 +48,7 @@ private:
 	Slider* m_PitchSlider;
 	Slider* m_PanSlider;
 	//DEBUG: variables used for testing audio
-	std::string audioFile = "melody.wav";
+	std::string m_audioFile = "melody.wav";
 	LooperC testLooper;
 	Slider testSliderPitch;
 	Slider testSliderVolume;

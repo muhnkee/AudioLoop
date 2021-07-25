@@ -20,6 +20,9 @@ public:
 	void setPanSlider(Slider* slider) { m_PanSlider = slider; }
 	Slider* getPanSlider() { return m_PanSlider; }
 
+	void setAudioFile(std::string audioFile) { m_audioFile = audioFile;  }
+	std::string getAudioFile() { return m_audioFile;  }
+
 	void setLooper(LooperC* looper) 
 	{ 
 		if (m_looper == nullptr)
@@ -50,6 +53,8 @@ private:
 	RecorderC* m_recorder;
 	sf::SoundBuffer* m_soundBuffer;
 	sf::Thread m_thread;
+
+	std::string m_audioFile;
 
 	// Virtual function we override that handles everything the Looper thread needs to do.  
 	void Run() {
