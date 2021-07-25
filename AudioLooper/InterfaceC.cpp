@@ -5,6 +5,10 @@
 InterfaceC::InterfaceC() {
 	trackCount = 4;
 
+	m_PitchSlider  = new Slider[sizeof(Slider)];
+	m_PanSlider    = new Slider[sizeof(Slider)];
+	m_VolumeSlider = new Slider[sizeof(Slider)];
+
 	if (!font.loadFromFile(ARIAL_FONT))
 	{
 		// TODO: handle error
@@ -44,30 +48,27 @@ InterfaceC::InterfaceC() {
 
 	selectedTrackIndex = 0;
 
-
-	
 	testLooper.setTrack("orchestra-mono.wav"); //this is a MONO track == SFML will play well
 	//testLooper.setTrack("melody.wav"); // this is a STEREO track == NO BUENO
 	window.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "AudioLoop");
 
-	
 	//Loading slider sprite
-	testSliderPitch.setName("pitch"); 
-	testSliderPitch.setSizeScale(.20);
+	m_PitchSlider->setName("Pitch");
+	m_PitchSlider->setSizeScale(.20);
 
-	testSliderVolume.setName("volume");
-	testSliderVolume.setSizeScale(.20);
+	m_VolumeSlider->setName("Volume");
+	m_VolumeSlider->setSizeScale(.20);
 
-	testSliderPan.setName("pan");
-	testSliderPan.setSizeScale(.40);
+	m_PanSlider->setName("Pan");
+	m_PanSlider->setSizeScale(.40);
 
-	testSliderPitch.setInitialPosition(SCREEN_WIDTH/ 8, SCREEN_HEIGHT/8); //relative positioning
-	testSliderVolume.setInitialPosition(SCREEN_WIDTH / 8 + 100, SCREEN_HEIGHT / 8);
-	testSliderPan.setInitialPosition(SCREEN_WIDTH / 8 + 200, SCREEN_HEIGHT / 8);
+	m_PitchSlider->setInitialPosition(SCREEN_WIDTH/ 8, SCREEN_HEIGHT/8); //relative positioning
+	m_VolumeSlider->setInitialPosition(SCREEN_WIDTH / 8 + 100, SCREEN_HEIGHT / 8);
+	m_PanSlider->setInitialPosition(SCREEN_WIDTH / 8 + 200, SCREEN_HEIGHT / 8);
 
-	slider_container.push_back(testSliderPitch); //CODE SMELL: accessing sliders from container
-	slider_container.push_back(testSliderVolume);
-	slider_container.push_back(testSliderPan);
+	slider_container.push_back(*m_PitchSlider); //CODE SMELL: accessing sliders from container
+	slider_container.push_back(*m_VolumeSlider);
+	slider_container.push_back(*m_PanSlider);
 
 	testLooper.setPitchSlider(&slider_container[0]);
 	testLooper.shiftPitch(); //start off the pitch where the slider is at
@@ -78,6 +79,9 @@ InterfaceC::InterfaceC() {
 
 InterfaceC::~InterfaceC()
 {
+	delete[] m_PanSlider;
+	delete[] m_PitchSlider;
+	delete[] m_VolumeSlider;
 }
 
 void InterfaceC::selectNextTrack()
@@ -204,7 +208,7 @@ APPLICATION_FUNCTIONS InterfaceC::handleEvent(sf::Event event, int *iLooper)
 		selectTrackItem(event, retVal); //simplified for now
 		break;
 	case sf::Event::MouseButtonPressed:
-		handleMouseClickEvent();
+		handleMouseClickEvent(retVal);
 		break;
 	case sf::Event::MouseButtonReleased:
 		handleMouseReleaseEvent();
@@ -216,7 +220,7 @@ APPLICATION_FUNCTIONS InterfaceC::handleEvent(sf::Event event, int *iLooper)
 	return(*retVal);
 }
 
-void InterfaceC::handleMouseClickEvent()
+void InterfaceC::handleMouseClickEvent(APPLICATION_FUNCTIONS* retVal)
 {
 	for (int i = 0; i < slider_container.size(); i++)
 	{
@@ -228,20 +232,19 @@ void InterfaceC::handleMouseClickEvent()
 		{
 			slider_container[i].followMouse();
 
-
-			// CODE SMELL: not a very good way to handle this, will need to be refactored once core functionality of Looper
-			// is built out
+			// Figure out which slider they're playing with for the controller
 			if (slider_container[i].getName() == "pitch")
 			{
-				testLooper.shiftPitch();
+				*retVal = APPLICATION_FUNCTIONS::SET_PITCH;
+				
 			}
 			else if (slider_container[i].getName() == "volume")
 			{
-				testLooper.shiftVolume();
+				*retVal = APPLICATION_FUNCTIONS::SET_VOLUME;
 			}
 			else if (slider_container[i].getName() == "pan")
 			{
-				testLooper.shiftPan();
+				*retVal = APPLICATION_FUNCTIONS::SET_PAN;
 			}
 			
 			break;

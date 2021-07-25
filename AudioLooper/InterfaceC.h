@@ -11,7 +11,7 @@ public:
 	~InterfaceC();
 
 	void selectTrackItem(const sf::Event& keyPress, APPLICATION_FUNCTIONS *userSelection);
-	void handleMouseClickEvent();
+	void handleMouseClickEvent(APPLICATION_FUNCTIONS* retVal);
 	void handleMouseReleaseEvent();
 	void playPauseTrack(LooperC& looperIn);
 	void stopTrack(LooperC& looperIn);
@@ -20,7 +20,11 @@ public:
 	void selectPrevTrack();
 
 	Slider* getVolumeSlider() { return m_VolumeSlider; };
+	void setVolumeSlider(Slider* slider) { m_VolumeSlider = slider;  }
 	Slider* getPitchSlider() { return m_PitchSlider; };
+	void setPitchSlider(Slider* slider) { m_PitchSlider = slider; }
+	Slider* getPanSlider () { return m_PanSlider; };
+	void setPanSlider(Slider* slider) { m_PanSlider = slider; }
 
 	sf::RenderWindow* getWindow();
 	void draw(sf::RenderWindow& window);
@@ -38,6 +42,7 @@ private:
 
 	Slider* m_VolumeSlider; 
 	Slider* m_PitchSlider;
+	Slider* m_PanSlider;
 
 	//DEBUG: variables used for testing audio
 	std::string audioFile = "melody.wav";

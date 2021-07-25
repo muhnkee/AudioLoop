@@ -55,9 +55,11 @@ private:
 			break;
 		case APPLICATION_FUNCTIONS::SET_PITCH:
 			m_looper->setPitchSlider(m_PitchSlider);
+			m_looper->shiftPitch();
 			break;
 		case APPLICATION_FUNCTIONS::SET_VOLUME:
 			m_looper->setVolumeSlider(m_VolumeSlider);
+			m_looper->shiftVolume();
 			break;
 		case APPLICATION_FUNCTIONS::PLAY:
 			m_looper->playTrack();
