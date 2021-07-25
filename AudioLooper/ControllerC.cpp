@@ -32,9 +32,19 @@ int ControllerC::run()
 
 		while (application->pollEvent(event))
 		{
-			// TODO, pull back the event being handled and set the appropriate state 
-			// in the corresponding looper
-			m_Looper[*iLooper].setLooperState(m_gui_interface.handleEvent(event, iLooper));
+			APPLICATION_FUNCTIONS applicationState = APPLICATION_FUNCTIONS::NO_CHANGE;
+			applicationState = m_gui_interface.handleEvent(event, iLooper);
+
+			if (applicationState == APPLICATION_FUNCTIONS::SET_VOLUME)
+			{
+				m_Looper[*iLooper].setVolumeSlider(m_gui_interface.getVolumeSlider());
+			}
+			else if (applicationState == APPLICATION_FUNCTIONS::SET_PITCH)
+			{
+				m_Looper[*iLooper].setPitchSlider(m_gui_interface.getPitchSlider());
+			}
+
+			m_Looper[*iLooper].setLooperState(applicationState);
 		}
 
 		application->clear();
@@ -43,7 +53,7 @@ int ControllerC::run()
 		application->display();
 
 	}
-
+	delete[] iLooper;
 	delete[] soundBuffer;
 	return 0;
 }

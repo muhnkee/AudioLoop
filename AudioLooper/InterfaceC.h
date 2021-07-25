@@ -19,6 +19,8 @@ public:
 	void selectNextTrack();
 	void selectPrevTrack();
 
+	Slider* getVolumeSlider() { return m_VolumeSlider; };
+	Slider* getPitchSlider() { return m_PitchSlider; };
 
 	sf::RenderWindow* getWindow();
 	void draw(sf::RenderWindow& window);
@@ -33,6 +35,9 @@ private:
 	int selectedTrackIndex;
 
 	bool openLooper[MAX_NUMBER_OF_TRACKS];
+
+	Slider* m_VolumeSlider; 
+	Slider* m_PitchSlider;
 
 	//DEBUG: variables used for testing audio
 	std::string audioFile = "melody.wav";

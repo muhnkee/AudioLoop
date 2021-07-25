@@ -11,7 +11,10 @@ public:
 	ControllerC();
 	int run();
 
+	void SetSlider(Slider* slider) { slider = m_slider;  }
+
 private:
+	Slider* m_slider;
 
 	void kickOffLooperThread(int iThread);
 	void drawBaseWindow();
