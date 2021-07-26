@@ -111,7 +111,7 @@ void InterfaceC::selectPrevTrack()
 	trackItem[selectedTrackIndex].setFillColor(sf::Color::Red);
 }
 
-void InterfaceC::selectTrackItem(const sf::Event& keyPress, APPLICATION_FUNCTIONS* userSelection)
+void InterfaceC::selectTrackItem(const sf::Event& keyPress, APPLICATION_FUNCTIONS* userSelection, int* iLooper)
 {
 
 	switch (keyPress.key.code)
@@ -205,10 +205,10 @@ APPLICATION_FUNCTIONS InterfaceC::handleEvent(sf::Event event, int *iLooper)
 		window.close();
 		break;
 	case sf::Event::KeyReleased:
-		selectTrackItem(event, retVal); //simplified for now
+		selectTrackItem(event, retVal, iLooper); //simplified for now
 		break;
 	case sf::Event::MouseButtonPressed:
-		handleMouseClickEvent(retVal);
+		handleMouseClickEvent(retVal, iLooper);
 		break;
 	case sf::Event::MouseButtonReleased:
 		handleMouseReleaseEvent();
@@ -220,7 +220,7 @@ APPLICATION_FUNCTIONS InterfaceC::handleEvent(sf::Event event, int *iLooper)
 	return(*retVal);
 }
 
-void InterfaceC::handleMouseClickEvent(APPLICATION_FUNCTIONS* retVal)
+void InterfaceC::handleMouseClickEvent(APPLICATION_FUNCTIONS* functionType, int* iLooper)
 {
 	for (int i = 0; i < slider_container.size(); i++)
 	{
@@ -235,23 +235,20 @@ void InterfaceC::handleMouseClickEvent(APPLICATION_FUNCTIONS* retVal)
 			// Figure out which slider they're playing with for the controller
 			if (slider_container[i].getName() == "pitch")
 			{
-				*retVal = APPLICATION_FUNCTIONS::SET_PITCH;
-				
+				*functionType = APPLICATION_FUNCTIONS::SET_PITCH;
 			}
 			else if (slider_container[i].getName() == "volume")
 			{
-				*retVal = APPLICATION_FUNCTIONS::SET_VOLUME;
+				*functionType = APPLICATION_FUNCTIONS::SET_VOLUME;
 			}
 			else if (slider_container[i].getName() == "pan")
 			{
-				*retVal = APPLICATION_FUNCTIONS::SET_PAN;
+				*functionType = APPLICATION_FUNCTIONS::SET_PAN;
 			}
-			
 			break;
 		}
 	}
 	
-
 }
 
 void InterfaceC::handleMouseReleaseEvent() 

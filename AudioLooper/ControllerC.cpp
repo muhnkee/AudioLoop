@@ -52,6 +52,11 @@ int ControllerC::run()
 			{
 
 			}
+			// Placeholder - TODO add file processing
+			if (m_gui_interface.getAudioFile() != "NONE")
+			{
+				m_Looper[*iLooper].setAudioFile(m_gui_interface.getAudioFile());
+			}
 			m_Looper[*iLooper].setLooperState(applicationState);
 		}
 

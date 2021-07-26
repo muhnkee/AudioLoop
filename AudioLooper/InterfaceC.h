@@ -10,9 +10,9 @@ public:
 	InterfaceC();
 	~InterfaceC();
 
-	void selectTrackItem(const sf::Event& keyPress, APPLICATION_FUNCTIONS *userSelection);
+	void selectTrackItem(const sf::Event& keyPress, APPLICATION_FUNCTIONS *userSelection, int* iLooper);
 
-	void handleMouseClickEvent(APPLICATION_FUNCTIONS* retVal);
+	void handleMouseClickEvent(APPLICATION_FUNCTIONS* retVal, int* iLooper);
 	void handleMouseReleaseEvent();
 	void playPauseTrack(LooperC& looperIn);
 	void stopTrack(LooperC& looperIn);
@@ -32,7 +32,7 @@ public:
 
 	sf::RenderWindow* getWindow();
 	void draw(sf::RenderWindow& window);
-	APPLICATION_FUNCTIONS handleEvent(sf::Event event, int *iLooper);
+	APPLICATION_FUNCTIONS handleEvent(sf::Event event, int* iLooper);
 
 private:
 	sf::Font font;
