@@ -28,6 +28,11 @@ int ControllerC::run()
 
 	while (application->isOpen())
 	{
+
+		for (int i = 0; i < MAX_NUMBER_OF_TRACKS; ++i)
+		{
+			m_Looper[i].launchThread();
+		}
 		sf::Event event;
 
 		while (application->pollEvent(event))
@@ -65,6 +70,11 @@ int ControllerC::run()
 		m_gui_interface.draw(*application);
 		application->display();
 
+	}
+
+	for (int i = 0; i < MAX_NUMBER_OF_TRACKS; ++i)
+	{
+		m_Looper[i].terminateThread();
 	}
 	delete[] iLooper;
 	delete[] soundBuffer;

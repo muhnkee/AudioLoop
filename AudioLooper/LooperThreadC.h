@@ -44,6 +44,10 @@ public:
 	void setLooperState(APPLICATION_FUNCTIONS looperState) { m_looperState = looperState;  }
 	APPLICATION_FUNCTIONS getLooperState() { return m_looperState; }
 
+	void launchThread() { m_thread.launch();  }
+	void terminateThread() { m_thread.terminate(); }
+	void pauseThread() { m_thread.wait(); }
+
 private:
 	LooperC* m_looper;
 	Slider* m_VolumeSlider;
