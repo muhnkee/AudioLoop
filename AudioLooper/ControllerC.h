@@ -12,10 +12,6 @@ public:
 	int run();
 
 private:
-
-	void kickOffLooperThread(int iThread);
-	void drawBaseWindow();
-
 	InterfaceC m_gui_interface;
 	LooperThreadC m_Looper[MAX_NUMBER_OF_TRACKS];
 };
