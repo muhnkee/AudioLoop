@@ -23,7 +23,7 @@ Slider::Slider() {
 	slide_sprite.setPosition(slide_position_x, slide_position_y);
 }
 
-Slider::Slider(double widthIn, double heightIn, bool makeLandscape) {
+Slider::Slider(bool makeLandscape) {
 	level = .5;
 	landscape = makeLandscape;
 	selected = false;

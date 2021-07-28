@@ -38,6 +38,9 @@ private:
 	sf::Font font;
 	sf::RenderWindow window;
 	std::vector<sf::Text> trackItem;
+	sf::Texture background_texture;
+	sf::Sprite background_sprite;
+
 	int trackCount;
 
 	int selectedTrackIndex;
@@ -52,7 +55,7 @@ private:
 	LooperC testLooper;
 	Slider testSliderPitch;
 	Slider testSliderVolume;
-	Slider testSliderPan = Slider(1, 1, true); //landscape slider
+	Slider testSliderPan = Slider(true); //landscape slider
 	std::vector<Slider> slider_container;
 };
 
