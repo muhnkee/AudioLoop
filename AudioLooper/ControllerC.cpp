@@ -80,4 +80,3 @@ int ControllerC::run()
 	delete[] soundBuffer;
 	return 0;
 }
-}
