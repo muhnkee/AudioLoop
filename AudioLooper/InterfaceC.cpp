@@ -4,6 +4,8 @@
 
 InterfaceC::InterfaceC() {
 	trackCount = 4;
+	background_texture.loadFromFile(BACKGROUND);
+	background_sprite.setTexture(background_texture);
 
 	m_PitchSlider  = new Slider[sizeof(Slider)];
 	m_PanSlider    = new Slider[sizeof(Slider)];
@@ -69,6 +71,7 @@ InterfaceC::InterfaceC() {
 	slider_container.push_back(*m_PitchSlider); //CODE SMELL: accessing sliders from container
 	slider_container.push_back(*m_VolumeSlider);
 	slider_container.push_back(*m_PanSlider);
+
 
 	testLooper.setPitchSlider(&slider_container[0]);
 	testLooper.shiftPitch(); //start off the pitch where the slider is at
@@ -178,6 +181,7 @@ void InterfaceC::loopUnloopTrack(LooperC& looperIn) {
 
 void InterfaceC::draw(sf::RenderWindow& window)
 {
+	window.draw(background_sprite);
 	for (int i = 0; i < MAX_NUMBER_OF_TRACKS; i++)
 	{
 		window.draw(trackItem[i]);
@@ -233,15 +237,15 @@ void InterfaceC::handleMouseClickEvent(APPLICATION_FUNCTIONS* functionType, int*
 			slider_container[i].followMouse();
 
 			// Figure out which slider they're playing with for the controller
-			if (slider_container[i].getName() == "pitch")
+			if (slider_container[i].getName() == "Pitch")
 			{
 				*functionType = APPLICATION_FUNCTIONS::SET_PITCH;
 			}
-			else if (slider_container[i].getName() == "volume")
+			else if (slider_container[i].getName() == "Volume")
 			{
 				*functionType = APPLICATION_FUNCTIONS::SET_VOLUME;
 			}
-			else if (slider_container[i].getName() == "pan")
+			else if (slider_container[i].getName() == "Pan")
 			{
 				*functionType = APPLICATION_FUNCTIONS::SET_PAN;
 			}
@@ -261,15 +265,15 @@ void InterfaceC::handleMouseReleaseEvent()
 
 			// CODE SMELL: not a very good way to handle this, will need to be refactored once core functionality of Looper
 			// is built out
-			if (slider_container[i].getName() == "pitch")
+			if (slider_container[i].getName() == "Pitch")
 			{
 				testLooper.shiftPitch();
 			}
-			else if (slider_container[i].getName() == "volume")
+			else if (slider_container[i].getName() == "Volume")
 			{
 				testLooper.shiftVolume();;
 			}
-			else if (slider_container[i].getName() == "pan")
+			else if (slider_container[i].getName() == "Pan")
 			{
 				testLooper.shiftPan();
 			}

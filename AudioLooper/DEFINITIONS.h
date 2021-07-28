@@ -2,8 +2,8 @@
 //#define DEBUG 1
 
 // Window dimensions
-#define SCREEN_WIDTH 1080
-#define SCREEN_HEIGHT 720
+#define SCREEN_WIDTH 1920 
+#define SCREEN_HEIGHT 1080
 
 // Component limitations
 #define MAX_NUMBER_OF_TRACKS 4
@@ -20,6 +20,11 @@
 #define SLIDE "./Assets/Icons/Slide.png"
 #define SLIDE_BAR_LANDSCAPE "./Assets/Icons/Slider_bar_landscape.png"
 #define SLIDE_LANDSCAPE "./Assets/Icons/Slide_landscape.png"
+
+#define PROGRESS_BAR_EMPTY "progress_bar_empty.png" // TODO: make
+#define PROGRESS_SLIDE "progress_bar_slide.png" // TODO: make
+
+#define BACKGROUND "./Assets/Icons/background.png"
 
 // Audio Directory
 #define AUDIO_DIR "./Assets/Audio/"
