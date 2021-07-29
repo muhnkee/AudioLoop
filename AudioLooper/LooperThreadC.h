@@ -3,35 +3,25 @@
 #include "LooperC.h"
 #include "RecorderC.h"
 
-class LooperThreadC 
+class LooperThreadC: public LooperC
 {
 public:
 	LooperThreadC() :
 		m_thread(&LooperThreadC::Run, this)
 	{
-
 	}
-	void setVolumeSlider(Slider* slider) { m_VolumeSlider = slider;  }
-	Slider* getVolumeSlider() { return m_VolumeSlider; }
 
-	void setPitchSlider(Slider* slider) { m_PitchSlider = slider; }
-	Slider* getPitchSlider() { return m_PitchSlider; }
+	//void setVolumeSlider(Slider* slider) { m_VolumeSlider = slider;  }
+	//Slider* getVolumeSlider() { return m_VolumeSlider; }
 
-	void setPanSlider(Slider* slider) { m_PanSlider = slider; }
-	Slider* getPanSlider() { return m_PanSlider; }
+	//void setPitchSlider(Slider* slider) { m_PitchSlider = slider; }
+	//Slider* getPitchSlider() { return m_PitchSlider; }
+
+	//void setPanSlider(Slider* slider) { m_PanSlider = slider; }
+	//Slider* getPanSlider() { return m_PanSlider; }
 
 	void setAudioFile(std::string audioFile) { m_audioFile = audioFile;  }
 	std::string getAudioFile() { return m_audioFile;  }
-
-	void setLooper(LooperC* looper) 
-	{ 
-		if (m_looper == nullptr)
-		{
-			m_looper = new LooperC[sizeof(LooperC)];
-		}
-		m_looper = looper;
-	}
-	LooperC* getLooper() { return m_looper; }
 
 	void setSoundBuffer(sf::SoundBuffer* soundBuffer) 
 	{ 
@@ -41,7 +31,10 @@ public:
 	}
 	sf::SoundBuffer* getSoundBuffer() { return m_soundBuffer;  }
 
-	void setLooperState(APPLICATION_FUNCTIONS looperState) { m_looperState = looperState;  }
+	void setLooperState(APPLICATION_FUNCTIONS looperState) { 
+		m_looperState = looperState;  
+	}
+
 	APPLICATION_FUNCTIONS getLooperState() { return m_looperState; }
 
 	void launchThread() { m_thread.launch();  }
@@ -49,11 +42,6 @@ public:
 	void pauseThread() { m_thread.wait(); }
 
 private:
-	LooperC* m_looper;
-	Slider* m_VolumeSlider;
-	Slider* m_PitchSlider;
-	Slider* m_PanSlider;
-
 	RecorderC* m_recorder;
 	sf::SoundBuffer* m_soundBuffer;
 	sf::Thread m_thread;
@@ -68,21 +56,18 @@ private:
 			//m_looper->loopTrack();
 			break;
 		case APPLICATION_FUNCTIONS::SET_PITCH:
-			m_looper->setPitchSlider(m_PitchSlider);
-			m_looper->shiftPitch();
+			shiftPitch();
 			break;
 		case APPLICATION_FUNCTIONS::SET_VOLUME:
-			m_looper->setVolumeSlider(m_VolumeSlider);
-			m_looper->shiftVolume();
+			shiftVolume();
 			break;
 		case APPLICATION_FUNCTIONS::SET_PAN:
-			m_looper->setPanSlider(m_PanSlider);
-			m_looper->shiftPan();
+			shiftPan();
 		case APPLICATION_FUNCTIONS::PLAY:
-			m_looper->playTrack();
+			playTrack();
 			break;
 		case APPLICATION_FUNCTIONS::STOP:
-			m_looper->stopTrack();
+			stopTrack();
 			break;
 		case APPLICATION_FUNCTIONS::RECORD_TO_FILE:
 
@@ -91,7 +76,7 @@ private:
 
 			break;
 		case APPLICATION_FUNCTIONS::PAUSE:
-			m_looper->pauseTrack();
+			pauseTrack();
 			break;
 		default:
 			break;
