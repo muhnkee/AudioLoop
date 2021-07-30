@@ -86,6 +86,7 @@ InterfaceC::InterfaceC() {
 	//Music seek sprite
 	testMusicSeek.setSizeScale(.60);
 	testMusicSeek.setInitialPosition(SCREEN_WIDTH / 4, SCREEN_HEIGHT / 4);
+	testMusicSeek.setMusicTrack(testLooper.getMusic());
 }
 
 InterfaceC::~InterfaceC()
