@@ -52,16 +52,22 @@ int ControllerC::run()
 			{
 				m_Looper[*iLooper].setPanSlider(m_gui_interface.getPanSlider());
 			}
+			else if (applicationState == APPLICATION_FUNCTIONS::SET_TRACK)
+			{
+				if (m_gui_interface.getAudioFile() != "NONE")
+				{
+					m_Looper[*iLooper].setAudioFile(m_gui_interface.getAudioFile());
+				}
+			}
 			else if ((applicationState == APPLICATION_FUNCTIONS::RECORD_FROM_FILE) ||
 				     (applicationState == APPLICATION_FUNCTIONS::RECORD_TO_FILE))
 			{
+				if (m_gui_interface.getAudioFile() != "NONE")
+				{
+					m_Looper[*iLooper].setAudioFile(m_gui_interface.getAudioFile());
+				}
+			}
 
-			}
-			// Placeholder - TODO add file processing
-			if (m_gui_interface.getAudioFile() != "NONE")
-			{
-				m_Looper[*iLooper].setAudioFile(m_gui_interface.getAudioFile());
-			}
 			m_Looper[*iLooper].setLooperState(applicationState);
 		}
 
