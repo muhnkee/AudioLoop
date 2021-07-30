@@ -6,6 +6,7 @@ public:
 	Slider();
 	Slider(bool makeLandscape);
 
+	void setOrientation(bool makeLandscape = false);
 	void move_slide(double mouse_x, double mouse_y);
 
 	sf::Sprite* getSliderSprite();

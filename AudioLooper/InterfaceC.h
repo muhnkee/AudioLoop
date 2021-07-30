@@ -55,7 +55,7 @@ private:
 	LooperC testLooper;
 	Slider testSliderPitch;
 	Slider testSliderVolume;
-	Slider testSliderPan = Slider(true); //landscape slider
+	//Slider testSliderPan = Slider(true); //landscape slider
 	std::vector<Slider> slider_container;
 };
 

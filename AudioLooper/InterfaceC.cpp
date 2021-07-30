@@ -56,12 +56,15 @@ InterfaceC::InterfaceC() {
 
 	//Loading slider sprite
 	m_PitchSlider->setName("Pitch");
+	m_PitchSlider->setOrientation(false); // verticle
 	m_PitchSlider->setSizeScale(.20);
 
 	m_VolumeSlider->setName("Volume");
+	m_VolumeSlider->setOrientation(false); //verticle
 	m_VolumeSlider->setSizeScale(.20);
 
 	m_PanSlider->setName("Pan");
+	m_PanSlider->setOrientation(true); // horizontal
 	m_PanSlider->setSizeScale(.40);
 
 	m_PitchSlider->setInitialPosition(SCREEN_WIDTH/ 8, SCREEN_HEIGHT/8); //relative positioning
