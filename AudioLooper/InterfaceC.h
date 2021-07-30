@@ -50,12 +50,13 @@ private:
 	Slider* m_VolumeSlider; 
 	Slider* m_PitchSlider;
 	Slider* m_PanSlider;
-	//DEBUG: variables used for testing audio
-	std::string m_audioFile = "melody.wav";
+	std::string m_audioFile;
+	//DEBUG: variables used for testing audio <----- what is depreciated???
+	//Slider testSliderPitch;
+	//Slider testSliderVolume;
+	//Slider testSliderPan = Slider(true); //landscape slider, depreciated 
+
 	LooperC testLooper;
-	Slider testSliderPitch;
-	Slider testSliderVolume;
-	//Slider testSliderPan = Slider(true); //landscape slider
 	std::vector<Slider> slider_container;
 };
 
