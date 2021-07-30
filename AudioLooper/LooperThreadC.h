@@ -63,6 +63,10 @@ private:
 			break;
 		case APPLICATION_FUNCTIONS::SET_PAN:
 			shiftPan();
+			break;
+		case APPLICATION_FUNCTIONS::SET_TRACK:
+			setTrack(m_audioFile);
+			break;
 		case APPLICATION_FUNCTIONS::PLAY:
 			playTrack();
 			break;

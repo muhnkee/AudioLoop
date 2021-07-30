@@ -136,15 +136,24 @@ void InterfaceC::selectTrackItem(const sf::Event& keyPress, APPLICATION_FUNCTION
 			}
 		*/
 		playPauseTrack(testLooper);
+		*userSelection = APPLICATION_FUNCTIONS::PLAY;
 		break;
 	case sf::Keyboard::L:
 		loopUnloopTrack(testLooper);
 		break;
 	case sf::Keyboard::S:
 		stopTrack(testLooper);
+		*userSelection = APPLICATION_FUNCTIONS::STOP;
 		break;
 	case sf::Keyboard::P:
 		testLooper.shiftPan();
+		break;
+	case sf::Keyboard::W:
+		*userSelection = APPLICATION_FUNCTIONS::SET_TRACK;
+		testLooper.setTrack("orchestra-mono.wav");
+		break;
+	case sf::Keyboard::E:
+		*userSelection = APPLICATION_FUNCTIONS::PLAY;
 		break;
 	default:
 		break;
