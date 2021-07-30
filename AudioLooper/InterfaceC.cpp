@@ -81,6 +81,11 @@ InterfaceC::InterfaceC() {
 	testLooper.setVolumeSlider(&slider_container[1]);
 	testLooper.shiftVolume(); //start off the pitch where the slider is at
 	testLooper.setPanSlider(&slider_container[2]);
+
+
+	//Music seek sprite
+	testMusicSeek.setSizeScale(.60);
+	testMusicSeek.setInitialPosition(SCREEN_WIDTH / 4, SCREEN_HEIGHT / 4);
 }
 
 InterfaceC::~InterfaceC()
@@ -204,7 +209,8 @@ void InterfaceC::draw(sf::RenderWindow& window)
 		slider_container[i].draw(window);
 	}
 
-}
+	testMusicSeek.draw(window);
+}	
 
 sf::RenderWindow* InterfaceC::getWindow() {
 	return &window;

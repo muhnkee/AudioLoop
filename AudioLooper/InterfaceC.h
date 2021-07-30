@@ -4,6 +4,7 @@
 #include "DEFINITIONS.h"
 #include "LooperC.h"
 #include "Slider.h"
+#include "MusicSeek.h"
 
 class InterfaceC {
 public:
@@ -55,6 +56,8 @@ private:
 	//Slider testSliderPitch;
 	//Slider testSliderVolume;
 	//Slider testSliderPan = Slider(true); //landscape slider, depreciated 
+	
+	MusicSeek testMusicSeek;
 
 	LooperC testLooper;
 	std::vector<Slider> slider_container;

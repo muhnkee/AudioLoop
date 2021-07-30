@@ -21,8 +21,8 @@
 #define SLIDE_BAR_LANDSCAPE "./Assets/Icons/Slider_bar_landscape.png"
 #define SLIDE_LANDSCAPE "./Assets/Icons/Slide_landscape.png"
 
-#define PROGRESS_BAR_EMPTY "progress_bar_empty.png" // TODO: make
-#define PROGRESS_SLIDE "progress_bar_slide.png" // TODO: make
+#define MUSIC_SEEK_BAR "./Assets/Icons/music_seek_bar.png"
+#define MUSIC_SEEK_SLIDE "./Assets/Icons/music_seek_slide.png"
 
 #define BACKGROUND "./Assets/Icons/background.png"
 
