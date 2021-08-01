@@ -64,7 +64,7 @@ private:
 			stopTrack();
 			break;
 		case APPLICATION_FUNCTIONS::RECORD_TO_FILE:
-
+			m_recorder->Record();
 			break;
 		case APPLICATION_FUNCTIONS::RECORD_FROM_FILE:
 
