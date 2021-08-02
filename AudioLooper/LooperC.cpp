@@ -211,3 +211,8 @@ void LooperC::shiftPan()
 	std::cout << "angle: " << angle << std::endl;
 #endif // DEBUG
 }
+
+void LooperC::reverseTrack()
+{
+	reverse(m_audioFile);
+}

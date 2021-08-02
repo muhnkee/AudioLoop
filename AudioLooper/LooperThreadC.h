@@ -11,9 +11,6 @@ public:
 	{
 	}
 
-	void setAudioFile(std::string audioFile) { m_audioFile = audioFile;  }
-	std::string getAudioFile() { return m_audioFile;  }
-
 	void setSoundBuffer(sf::SoundBuffer* soundBuffer) 
 	{ 
 		if (!m_soundBuffer)
@@ -37,8 +34,6 @@ private:
 	sf::SoundBuffer* m_soundBuffer;
 	sf::Thread m_thread;
 
-	std::string m_audioFile;
-
 	// Virtual function we override that handles everything the Looper thread needs to do.  
 	void Run() {
 		switch (m_looperState)
@@ -55,7 +50,7 @@ private:
 			shiftPan();
 			break;
 		case APPLICATION_FUNCTIONS::SET_TRACK:
-			setTrack(m_audioFile);
+			setTrack(getAudioFile());
 			break;
 		case APPLICATION_FUNCTIONS::PLAY:
 			playTrack();
