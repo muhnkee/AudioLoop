@@ -4,10 +4,11 @@
 
 InterfaceC::InterfaceC() {
 	trackCount = 4;
+	background_texture.loadFromFile(BACKGROUND);
+	background_sprite.setTexture(background_texture);
 
-	m_PitchSlider  = new Slider[sizeof(Slider)];
-	m_PanSlider    = new Slider[sizeof(Slider)];
-	m_VolumeSlider = new Slider[sizeof(Slider)];
+	// Debug item - this should be loaded at some point
+	m_audioFile[0] = "melody.wav";
 
 	if (!font.loadFromFile(ARIAL_FONT))
 	{
@@ -16,15 +17,45 @@ InterfaceC::InterfaceC() {
 
 	for (int i = 0; i < MAX_NUMBER_OF_TRACKS; i++)
 	{
+		m_PitchSlider[i] = new Slider[sizeof(Slider)];
+		m_PanSlider[i] = new Slider[sizeof(Slider)];
+		m_VolumeSlider[i] = new Slider[sizeof(Slider)];
+
+		//Loading slider sprite
+		m_PitchSlider[i]->setName("Pitch");
+		m_PitchSlider[i]->setSizeScale(.20);
+
+		m_VolumeSlider[i]->setName("Volume");
+		m_VolumeSlider[i]->setSizeScale(.20);
+
+		m_PanSlider[i]->setName("Pan");
+		m_PanSlider[i]->setSizeScale(.40);
+		
+		m_PitchSlider[i]->setInitialPosition(SCREEN_WIDTH / 8 + (150 *i), SCREEN_HEIGHT / 8); //relative positioning
+		m_VolumeSlider[i]->setInitialPosition(SCREEN_WIDTH / 8 + (150 * i), SCREEN_HEIGHT / 8 + 200);
+		m_PanSlider[i]->setInitialPosition(SCREEN_WIDTH / 8 + (200 * i), SCREEN_HEIGHT / 8 + 400);
 		trackItem.push_back(sf::Text());
 
 		float barWidth = SCREEN_WIDTH * (1. / 3.);
 		float barHeight = SCREEN_HEIGHT / 20.;
 
 		openLooper[i] = false;
-
 	}
 
+	for (int i = 0; i < MAX_NUMBER_OF_TRACKS; ++i)
+	{
+		slider_container.push_back(m_PitchSlider[i]); //CODE SMELL: accessing sliders from container
+	}
+
+	for (int i = 0; i < MAX_NUMBER_OF_TRACKS; ++i)
+	{
+		slider_container.push_back(m_VolumeSlider[i]);
+	}
+
+	for (int i = 0; i < MAX_NUMBER_OF_TRACKS; ++i)
+	{
+		slider_container.push_back(m_PanSlider[i]);
+	}
 	//DEBUG
 	trackItem[0].setFont(font);
 	trackItem[0].setFillColor(sf::Color::Red);
@@ -52,36 +83,21 @@ InterfaceC::InterfaceC() {
 	//testLooper.setTrack("melody.wav"); // this is a STEREO track == NO BUENO
 	window.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "AudioLoop");
 
-	//Loading slider sprite
-	m_PitchSlider->setName("Pitch");
-	m_PitchSlider->setSizeScale(.20);
-
-	m_VolumeSlider->setName("Volume");
-	m_VolumeSlider->setSizeScale(.20);
-
-	m_PanSlider->setName("Pan");
-	m_PanSlider->setSizeScale(.40);
-
-	m_PitchSlider->setInitialPosition(SCREEN_WIDTH/ 8, SCREEN_HEIGHT/8); //relative positioning
-	m_VolumeSlider->setInitialPosition(SCREEN_WIDTH / 8 + 100, SCREEN_HEIGHT / 8);
-	m_PanSlider->setInitialPosition(SCREEN_WIDTH / 8 + 200, SCREEN_HEIGHT / 8);
-
-	slider_container.push_back(*m_PitchSlider); //CODE SMELL: accessing sliders from container
-	slider_container.push_back(*m_VolumeSlider);
-	slider_container.push_back(*m_PanSlider);
-
-	testLooper.setPitchSlider(&slider_container[0]);
+	testLooper.setPitchSlider(slider_container[0]);
 	testLooper.shiftPitch(); //start off the pitch where the slider is at
-	testLooper.setVolumeSlider(&slider_container[1]);
+	testLooper.setVolumeSlider(slider_container[1]);
 	testLooper.shiftVolume(); //start off the pitch where the slider is at
-	testLooper.setPanSlider(&slider_container[2]);
+	testLooper.setPanSlider(slider_container[2]);
 }
 
 InterfaceC::~InterfaceC()
 {
-	delete[] m_PanSlider;
-	delete[] m_PitchSlider;
-	delete[] m_VolumeSlider;
+	for (int i = 0; i < MAX_NUMBER_OF_TRACKS; i++)
+	{
+		delete[] m_PanSlider[i];
+		delete[] m_PitchSlider[i];
+		delete[] m_VolumeSlider[i];
+	}
 }
 
 void InterfaceC::selectNextTrack()
@@ -133,15 +149,24 @@ void InterfaceC::selectTrackItem(const sf::Event& keyPress, APPLICATION_FUNCTION
 			}
 		*/
 		playPauseTrack(testLooper);
+		*userSelection = APPLICATION_FUNCTIONS::PLAY;
 		break;
 	case sf::Keyboard::L:
 		loopUnloopTrack(testLooper);
 		break;
 	case sf::Keyboard::S:
 		stopTrack(testLooper);
+		*userSelection = APPLICATION_FUNCTIONS::STOP;
 		break;
 	case sf::Keyboard::P:
 		testLooper.shiftPan();
+		break;
+	case sf::Keyboard::W:
+		*userSelection = APPLICATION_FUNCTIONS::SET_TRACK;
+		testLooper.setTrack("orchestra-mono.wav");
+		break;
+	case sf::Keyboard::E:
+		*userSelection = APPLICATION_FUNCTIONS::PLAY;
 		break;
 	default:
 		break;
@@ -178,6 +203,7 @@ void InterfaceC::loopUnloopTrack(LooperC& looperIn) {
 
 void InterfaceC::draw(sf::RenderWindow& window)
 {
+	window.draw(background_sprite);
 	for (int i = 0; i < MAX_NUMBER_OF_TRACKS; i++)
 	{
 		window.draw(trackItem[i]);
@@ -185,7 +211,7 @@ void InterfaceC::draw(sf::RenderWindow& window)
 
 	for (int i = 0; i < slider_container.size(); i++)
 	{
-		slider_container[i].draw(window);
+		slider_container[i]->draw(window);
 	}
 
 }
@@ -198,6 +224,7 @@ APPLICATION_FUNCTIONS InterfaceC::handleEvent(sf::Event event, int *iLooper)
 {
 	APPLICATION_FUNCTIONS* retVal;
 	retVal = new APPLICATION_FUNCTIONS[sizeof(APPLICATION_FUNCTIONS)];
+	*retVal = APPLICATION_FUNCTIONS::NO_CHANGE;
 
 	switch (event.type)
 	{
@@ -222,28 +249,65 @@ APPLICATION_FUNCTIONS InterfaceC::handleEvent(sf::Event event, int *iLooper)
 
 void InterfaceC::handleMouseClickEvent(APPLICATION_FUNCTIONS* functionType, int* iLooper)
 {
+	// I started with allocating sliders for channels, but instead we 
+	// should do them for function
+	// Sliders 0-3 are for Pitch
+	// Sliders 4-7 are for Volume
+	// Sliders 8-11 are for Pan
+	// This allows for expansion based upon function, which is more likely
+	// than expansion based upon channel.
 	for (int i = 0; i < slider_container.size(); i++)
 	{
-		sf::Sprite* slider_sprite = slider_container[i].getSliderSprite();
+		sf::Sprite* slider_sprite = slider_container[i]->getSliderSprite();
 
 		// if mouse is on bounds of testSlider
 		if (slider_sprite->getGlobalBounds().contains(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y)
 			&& sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
 		{
-			slider_container[i].followMouse();
+			slider_container[i]->followMouse();
 
 			// Figure out which slider they're playing with for the controller
-			if (slider_container[i].getName() == "pitch")
+			if (slider_container[i]->getName() == "Pitch")
 			{
 				*functionType = APPLICATION_FUNCTIONS::SET_PITCH;
 			}
-			else if (slider_container[i].getName() == "volume")
+			else if (slider_container[i]->getName() == "Volume")
 			{
 				*functionType = APPLICATION_FUNCTIONS::SET_VOLUME;
 			}
-			else if (slider_container[i].getName() == "pan")
+			else if (slider_container[i]->getName() == "Pan")
 			{
 				*functionType = APPLICATION_FUNCTIONS::SET_PAN;
+			}
+			switch (i)
+			{
+			case 0:
+			case 4:
+			case 8:
+			case 12:
+				*iLooper = 0;
+				break;
+			case 1:
+			case 5:
+			case 9:
+			case 13:
+				*iLooper = 1;
+				break;
+			case 2:
+			case 6:
+			case 10:
+			case 14:
+				*iLooper = 2;
+				break;
+			case 3:
+			case 7:
+			case 11:
+			case 15:
+				*iLooper = 3;
+				break;
+			default:
+				*iLooper = 0;
+				break;
 			}
 			break;
 		}
@@ -255,21 +319,21 @@ void InterfaceC::handleMouseReleaseEvent()
 {
 	for (int i = 0; i < slider_container.size(); i++)
 	{
-		if (slider_container[i].isSelected())
+		if (slider_container[i]->isSelected())
 		{
-			slider_container[i].stopFollowingMouse();
+			slider_container[i]->stopFollowingMouse();
 
 			// CODE SMELL: not a very good way to handle this, will need to be refactored once core functionality of Looper
 			// is built out
-			if (slider_container[i].getName() == "pitch")
+			if (slider_container[i]->getName() == "Pitch")
 			{
 				testLooper.shiftPitch();
 			}
-			else if (slider_container[i].getName() == "volume")
+			else if (slider_container[i]->getName() == "Volume")
 			{
 				testLooper.shiftVolume();;
 			}
-			else if (slider_container[i].getName() == "pan")
+			else if (slider_container[i]->getName() == "Pan")
 			{
 				testLooper.shiftPan();
 			}

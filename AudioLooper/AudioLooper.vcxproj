@@ -164,6 +164,7 @@
     <ClCompile Include="LooperC.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="RecorderC.cpp" />
+    <ClCompile Include="Reverse.cpp" />
     <ClCompile Include="Slider.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -174,6 +175,7 @@
     <ClInclude Include="LooperC.h" />
     <ClInclude Include="LooperThreadC.h" />
     <ClInclude Include="RecorderC.h" />
+    <ClInclude Include="Reverse.h" />
     <ClInclude Include="Slider.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -42,26 +42,32 @@ int ControllerC::run()
 
 			if (applicationState == APPLICATION_FUNCTIONS::SET_VOLUME)
 			{
-				m_Looper[*iLooper].setVolumeSlider(m_gui_interface.getVolumeSlider());
+				m_Looper[*iLooper].setVolumeSlider(m_gui_interface.getVolumeSlider(*iLooper));
 			}
 			else if (applicationState == APPLICATION_FUNCTIONS::SET_PITCH)
 			{
-				m_Looper[*iLooper].setPitchSlider(m_gui_interface.getPitchSlider());
+				m_Looper[*iLooper].setPitchSlider(m_gui_interface.getPitchSlider(*iLooper));
 			}
 			else if (applicationState == APPLICATION_FUNCTIONS::SET_PAN)
 			{
-				m_Looper[*iLooper].setPanSlider(m_gui_interface.getPanSlider());
+				m_Looper[*iLooper].setPanSlider(m_gui_interface.getPanSlider(*iLooper));
+			}
+			else if (applicationState == APPLICATION_FUNCTIONS::SET_TRACK)
+			{
+				if (m_gui_interface.getAudioFile(*iLooper) != "NONE")
+				{
+					m_Looper[*iLooper].setAudioFile(m_gui_interface.getAudioFile(*iLooper));
+				}
 			}
 			else if ((applicationState == APPLICATION_FUNCTIONS::RECORD_FROM_FILE) ||
 				     (applicationState == APPLICATION_FUNCTIONS::RECORD_TO_FILE))
 			{
+				if (m_gui_interface.getAudioFile(*iLooper) != "NONE")
+				{
+					m_Looper[*iLooper].setAudioFile(m_gui_interface.getAudioFile(*iLooper));
+				}
+			}
 
-			}
-			// Placeholder - TODO add file processing
-			if (m_gui_interface.getAudioFile() != "NONE")
-			{
-				m_Looper[*iLooper].setAudioFile(m_gui_interface.getAudioFile());
-			}
 			m_Looper[*iLooper].setLooperState(applicationState);
 		}
 

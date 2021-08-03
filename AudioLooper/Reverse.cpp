@@ -1,6 +1,8 @@
 #include <string>
 #include <iostream>
-#include <reverse.h>
+
+#include "Reverse.h"
+
 #include <SFML/Audio.hpp>
 
 using std::string;

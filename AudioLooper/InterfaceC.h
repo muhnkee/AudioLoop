@@ -20,15 +20,15 @@ public:
 	void selectNextTrack();
 	void selectPrevTrack();
 
-	Slider* getVolumeSlider() { return m_VolumeSlider; };
-	void setVolumeSlider(Slider* slider) { m_VolumeSlider = slider;  }
-	Slider* getPitchSlider() { return m_PitchSlider; };
-	void setPitchSlider(Slider* slider) { m_PitchSlider = slider; }
-	Slider* getPanSlider () { return m_PanSlider; };
-	void setPanSlider(Slider* slider) { m_PanSlider = slider; }
+	Slider* getVolumeSlider(int iChannel) { return m_VolumeSlider[iChannel]; };
+	void setVolumeSlider(Slider* slider, int iChannel) { m_VolumeSlider[iChannel] = slider;  }
+	Slider* getPitchSlider(int iChannel) { return m_PitchSlider[iChannel]; };
+	void setPitchSlider(Slider* slider, int iChannel) { m_PitchSlider[iChannel] = slider; }
+	Slider* getPanSlider (int iChannel) { return m_PanSlider[iChannel]; };
+	void setPanSlider(Slider* slider, int iChannel) { m_PanSlider[iChannel] = slider; }
 
-	std::string getAudioFile() { return m_audioFile;  }
-	void setAudioFile(std::string audioFile) { m_audioFile = audioFile; }
+	std::string getAudioFile(int iChannel) { return m_audioFile[iChannel];  }
+	void setAudioFile(std::string audioFile, int iChannel) { m_audioFile[iChannel] = audioFile; }
 
 	sf::RenderWindow* getWindow();
 	void draw(sf::RenderWindow& window);
@@ -38,22 +38,26 @@ private:
 	sf::Font font;
 	sf::RenderWindow window;
 	std::vector<sf::Text> trackItem;
+	sf::Texture background_texture;
+	sf::Sprite background_sprite;
+
 	int trackCount;
 
 	int selectedTrackIndex;
 
 	bool openLooper[MAX_NUMBER_OF_TRACKS];
 
-	Slider* m_VolumeSlider; 
-	Slider* m_PitchSlider;
-	Slider* m_PanSlider;
+	Slider* m_VolumeSlider[MAX_NUMBER_OF_TRACKS];
+	Slider* m_PitchSlider[MAX_NUMBER_OF_TRACKS];
+	Slider* m_PanSlider[MAX_NUMBER_OF_TRACKS];
+	std::string m_audioFile[MAX_NUMBER_OF_TRACKS];
+
 	//DEBUG: variables used for testing audio
-	std::string m_audioFile = "melody.wav";
 	LooperC testLooper;
 	Slider testSliderPitch;
 	Slider testSliderVolume;
-	Slider testSliderPan = Slider(1, 1, true); //landscape slider
-	std::vector<Slider> slider_container;
+	Slider testSliderPan = Slider(true); //landscape slider
+	std::vector<Slider*> slider_container;
 };
 
 

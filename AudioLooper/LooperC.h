@@ -2,11 +2,13 @@
 #include <string>
 #include <SFML/Audio.hpp>;
 #include "Slider.h"
+#include "Reverse.h"
 
 class LooperC 
 {
 private:
 	sf::Music audioTrack;
+	std::string m_audioFile;
 
 	Slider* pitchSlider;
 	Slider* volumeSlider;
@@ -39,10 +41,12 @@ public:
 	void changeTempo();
 	void reverseTrack();
 
-
 	bool isPlaying();
 	bool isPaused();
 	bool isStopped();
 	bool isLooping();
+
+	void setAudioFile(std::string audioFile) { m_audioFile = audioFile; }
+	std::string getAudioFile() { return m_audioFile; }
 };
 

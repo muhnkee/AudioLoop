@@ -4,7 +4,7 @@
 class Slider {
 public:
 	Slider();
-	Slider(double widthIn, double heightIn, bool makeLandscape = false);
+	Slider(bool makeLandscape);
 
 	void move_slide(double mouse_x, double mouse_y);
 
