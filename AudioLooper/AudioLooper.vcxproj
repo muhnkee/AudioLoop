@@ -165,6 +165,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MusicSeek.cpp" />
     <ClCompile Include="RecorderC.cpp" />
+    <ClCompile Include="Reverse.cpp" />
     <ClCompile Include="Slider.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -176,6 +177,7 @@
     <ClInclude Include="LooperThreadC.h" />
     <ClInclude Include="MusicSeek.h" />
     <ClInclude Include="RecorderC.h" />
+    <ClInclude Include="Reverse.h" />
     <ClInclude Include="Slider.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

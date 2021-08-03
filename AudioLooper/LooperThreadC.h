@@ -11,18 +11,6 @@ public:
 	{
 	}
 
-	//void setVolumeSlider(Slider* slider) { m_VolumeSlider = slider;  }
-	//Slider* getVolumeSlider() { return m_VolumeSlider; }
-
-	//void setPitchSlider(Slider* slider) { m_PitchSlider = slider; }
-	//Slider* getPitchSlider() { return m_PitchSlider; }
-
-	//void setPanSlider(Slider* slider) { m_PanSlider = slider; }
-	//Slider* getPanSlider() { return m_PanSlider; }
-
-	void setAudioFile(std::string audioFile) { m_audioFile = audioFile;  }
-	std::string getAudioFile() { return m_audioFile;  }
-
 	void setSoundBuffer(sf::SoundBuffer* soundBuffer) 
 	{ 
 		if (!m_soundBuffer)
@@ -46,14 +34,11 @@ private:
 	sf::SoundBuffer* m_soundBuffer;
 	sf::Thread m_thread;
 
-	std::string m_audioFile;
-
 	// Virtual function we override that handles everything the Looper thread needs to do.  
 	void Run() {
 		switch (m_looperState)
 		{
 		case APPLICATION_FUNCTIONS::LOOP:
-			//m_looper->loopTrack();
 			break;
 		case APPLICATION_FUNCTIONS::SET_PITCH:
 			shiftPitch();
@@ -65,7 +50,7 @@ private:
 			shiftPan();
 			break;
 		case APPLICATION_FUNCTIONS::SET_TRACK:
-			setTrack(m_audioFile);
+			setTrack(getAudioFile());
 			break;
 		case APPLICATION_FUNCTIONS::PLAY:
 			playTrack();
@@ -74,7 +59,7 @@ private:
 			stopTrack();
 			break;
 		case APPLICATION_FUNCTIONS::RECORD_TO_FILE:
-
+			m_recorder->Record();
 			break;
 		case APPLICATION_FUNCTIONS::RECORD_FROM_FILE:
 
@@ -82,9 +67,15 @@ private:
 		case APPLICATION_FUNCTIONS::PAUSE:
 			pauseTrack();
 			break;
+		case APPLICATION_FUNCTIONS::NEXT:
+			break;
+		case APPLICATION_FUNCTIONS::PREVIOUS:
+			break;
 		default:
 			break;
 		};
+
+		m_looperState = APPLICATION_FUNCTIONS::NO_CHANGE;
 	};
 
 	APPLICATION_FUNCTIONS m_looperState;
