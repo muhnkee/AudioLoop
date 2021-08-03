@@ -83,11 +83,19 @@ InterfaceC::InterfaceC() {
 	//testLooper.setTrack("melody.wav"); // this is a STEREO track == NO BUENO
 	window.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "AudioLoop");
 
+
 	testLooper.setPitchSlider(slider_container[0]);
-	testLooper.shiftPitch(); //start off the pitch where the slider is at
+
+  testLooper.shiftPitch(); //start off the pitch where the slider is at
 	testLooper.setVolumeSlider(slider_container[1]);
 	testLooper.shiftVolume(); //start off the pitch where the slider is at
-	testLooper.setPanSlider(slider_container[2]);
+
+  //Music seek sprite
+	testMusicSeek.setSizeScale(.60);
+	testMusicSeek.setInitialPosition(SCREEN_WIDTH / 4, SCREEN_HEIGHT / 4);
+	testMusicSeek.setMusicTrack(testLooper.getMusic());
+
+  testLooper.setPanSlider(slider_container[2]);
 }
 
 InterfaceC::~InterfaceC()
@@ -214,7 +222,8 @@ void InterfaceC::draw(sf::RenderWindow& window)
 		slider_container[i]->draw(window);
 	}
 
-}
+	testMusicSeek.draw(window);
+}	
 
 sf::RenderWindow* InterfaceC::getWindow() {
 	return &window;

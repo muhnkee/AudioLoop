@@ -4,6 +4,7 @@
 #include "DEFINITIONS.h"
 #include "LooperC.h"
 #include "Slider.h"
+#include "MusicSeek.h"
 
 class InterfaceC {
 public:
@@ -46,7 +47,8 @@ private:
 	int selectedTrackIndex;
 
 	bool openLooper[MAX_NUMBER_OF_TRACKS];
-
+	
+	MusicSeek testMusicSeek;
 	Slider* m_VolumeSlider[MAX_NUMBER_OF_TRACKS];
 	Slider* m_PitchSlider[MAX_NUMBER_OF_TRACKS];
 	Slider* m_PanSlider[MAX_NUMBER_OF_TRACKS];

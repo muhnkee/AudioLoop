@@ -8,26 +8,14 @@ Slider::Slider() {
 	level = .5;
 	landscape = false;
 	selected = false;
-
-	bar.loadFromFile(SLIDE_BAR);
-	bar_sprite.setTexture(bar);
-	bar_sprite.setPosition(SCREEN_WIDTH / 4, SCREEN_HEIGHT / 4);
-
-	slide.loadFromFile(SLIDE);
-	slide_sprite.setTexture(slide);
-	slide_sprite.setScale(sf::Vector2f(0.44f, 0.44f));
-
-
-	double slide_position_x = bar_sprite.getPosition().x;
-	double slide_position_y = bar_sprite.getPosition().y + bar_sprite.getGlobalBounds().height / 2 - slide_sprite.getGlobalBounds().height / 2;
-	slide_sprite.setPosition(slide_position_x, slide_position_y);
 }
 
-Slider::Slider(bool makeLandscape) {
-	level = .5;
+/// <summary>
+/// Sets the orientation for this slider and loads in the correct textures
+/// </summary>
+/// <param name="makeLandscape"> -true/false if we want a horizontal slider</param>
+void Slider::setOrientation(bool makeLandscape) {
 	landscape = makeLandscape;
-	selected = false;
-
 	if (!makeLandscape)
 	{
 		bar.loadFromFile(SLIDE_BAR);
@@ -49,7 +37,6 @@ Slider::Slider(bool makeLandscape) {
 		slide_sprite.setPosition(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
 	}
 }
-
 
 /// <summary>
 /// Indicate the desired size, relative to the gui window size, of this Slider

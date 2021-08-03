@@ -163,6 +163,7 @@
     <ClCompile Include="InterfaceC.cpp" />
     <ClCompile Include="LooperC.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MusicSeek.cpp" />
     <ClCompile Include="RecorderC.cpp" />
     <ClCompile Include="Reverse.cpp" />
     <ClCompile Include="Slider.cpp" />
@@ -174,6 +175,7 @@
     <ClInclude Include="InterfaceC.h" />
     <ClInclude Include="LooperC.h" />
     <ClInclude Include="LooperThreadC.h" />
+    <ClInclude Include="MusicSeek.h" />
     <ClInclude Include="RecorderC.h" />
     <ClInclude Include="Reverse.h" />
     <ClInclude Include="Slider.h" />

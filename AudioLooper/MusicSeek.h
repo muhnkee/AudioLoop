@@ -1,12 +1,11 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>;
 
-class Slider {
+class MusicSeek {
 public:
-	Slider();
-	Slider(bool makeLandscape);
+	MusicSeek();
 
-	void setOrientation(bool makeLandscape = false);
 	void move_slide(double mouse_x, double mouse_y);
 
 	sf::Sprite* getSliderSprite();
@@ -21,8 +20,8 @@ public:
 	void stopFollowingMouse();
 	void draw(sf::RenderWindow& window);
 
-	void setName(std::string nameIn);
-	std::string getName();
+	void setMusicTrack(sf::Music* audioTrackPtr);
+
 
 private:
 	bool landscape;
@@ -35,6 +34,8 @@ private:
 	std::string name;
 
 	sf::RectangleShape outerShape;
+
+	sf::Music *looperAudioTrack;
 
 	// the indicator of where the slide is on the bar
 	// ranges from 0.0 to 1.0
