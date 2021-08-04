@@ -55,7 +55,7 @@ InterfaceC::InterfaceC() {
 		m_RecordButton[i]->setSizeScale(1.0);
 		m_RecordButton[i]->setButtonPosition(SCREEN_WIDTH / 2 + 170 - 40, SCREEN_HEIGHT / (MAX_NUMBER_OF_TRACKS + 1) * (i + 1));
 		
-		m_PlayPauseButton[i]->setName("Play");
+		m_PlayPauseButton[i]->setName("PlayPause");
 		m_PlayPauseButton[i]->setTexture(PLAY_PAUSE_ICON);
 		m_PlayPauseButton[i]->setSizeScale(.9);
 		m_PlayPauseButton[i]->setButtonPosition(SCREEN_WIDTH / 2 + 240 - 40, SCREEN_HEIGHT / (MAX_NUMBER_OF_TRACKS + 1) * (i + 1));
@@ -83,7 +83,7 @@ InterfaceC::InterfaceC() {
 
 	for (int i = 0; i < MAX_NUMBER_OF_TRACKS; ++i)
 	{
-		slider_container.push_back(m_PitchSlider[i]); //CODE SMELL: accessing sliders from container
+		slider_container.push_back(m_PitchSlider[i]);
 	}
 
 	for (int i = 0; i < MAX_NUMBER_OF_TRACKS; ++i)
@@ -96,6 +96,7 @@ InterfaceC::InterfaceC() {
 		slider_container.push_back(m_PanSlider[i]);
 	}
 
+	// packing away the MusicSeek's
 	for (int i = 0; i < MAX_NUMBER_OF_TRACKS; ++i)
 	{
 		seek_container.push_back(m_MusicSeek[i]);
@@ -148,7 +149,7 @@ InterfaceC::InterfaceC() {
 
 	selectedTrackIndex = 0;
 
-	//DEBUG: testing objects/sprites
+	//DEBUG: testing objects/sprites, this stuff should not be loaded or used.
 	//testLooper.setTrack("orchestra-mono.wav"); //this is a MONO track == SFML will play well
 	//testLooper.setTrack("melody.wav"); // this is a STEREO track == NO BUENO
 
@@ -163,10 +164,8 @@ InterfaceC::InterfaceC() {
 	//testMusicSeek.setInitialPosition(SCREEN_WIDTH / 4, SCREEN_HEIGHT / 4);
 	//testMusicSeek.setMusicTrack(testLooper.getMusic());
 
-
-
 	//Button testing positioning and size
-	testRecordButton.setTexture(RECORD_ICON);
+	/*testRecordButton.setTexture(RECORD_ICON);
 	testRecordButton.setSizeScale(1.0);
 	testRecordButton.setButtonPosition(SCREEN_WIDTH / 2 + 170-40, SCREEN_HEIGHT / (MAX_NUMBER_OF_TRACKS + 1) * 1);
 	testRecordButton.setName("Record");
@@ -190,15 +189,9 @@ InterfaceC::InterfaceC() {
 	testReverseButton.setTexture(REVERSE_ICON);
 	testReverseButton.setSizeScale(.9);
 	testReverseButton.setButtonPosition(SCREEN_WIDTH / 2 + 450 - 40, SCREEN_HEIGHT / (MAX_NUMBER_OF_TRACKS + 1) * 1);
-	testReverseButton.setName("Reverse");
-
-	
-
-	
-
+	testReverseButton.setName("Reverse");*/
 
 	window.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "AudioLoop");
-
 }
 
 InterfaceC::~InterfaceC()
@@ -259,22 +252,22 @@ void InterfaceC::selectTrackItem(const sf::Event& keyPress, APPLICATION_FUNCTION
 			openLooper[] = true;
 			}
 		*/
-		playPauseTrack(testLooper);
+		//playPauseTrack(testLooper); //depreciated
 		*userSelection = APPLICATION_FUNCTIONS::PLAY;
 		break;
 	case sf::Keyboard::L:
-		loopUnloopTrack(testLooper);
+		//loopUnloopTrack(testLooper); //depreciated
 		break;
 	case sf::Keyboard::S:
-		stopTrack(testLooper);
+		//stopTrack(testLooper); //depreciated
 		*userSelection = APPLICATION_FUNCTIONS::STOP;
 		break;
 	case sf::Keyboard::P:
-		testLooper.shiftPan();
+		//testLooper.shiftPan(); //depreciated
 		break;
 	case sf::Keyboard::W:
 		*userSelection = APPLICATION_FUNCTIONS::SET_TRACK;
-		testLooper.setTrack("orchestra-mono.wav");
+		//testLooper.setTrack("orchestra-mono.wav"); //depreciated
 		break;
 	case sf::Keyboard::E:
 		*userSelection = APPLICATION_FUNCTIONS::PLAY;
@@ -377,6 +370,7 @@ void InterfaceC::handleMouseClickEvent(APPLICATION_FUNCTIONS* functionType, int*
 	for (int i = 0; i < slider_container.size(); i++)
 	{
 		sf::Sprite* slider_sprite = slider_container[i]->getSliderSprite();
+		sf::Sprite* button_sprite = button_container[i]->getButtonSprite();
 
 		// if mouse is on bounds of testSlider
 		if (slider_sprite->getGlobalBounds().contains(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y)
@@ -429,6 +423,89 @@ void InterfaceC::handleMouseClickEvent(APPLICATION_FUNCTIONS* functionType, int*
 			}
 			break;
 		}
+
+		//Will, again I'm follow your lead <----------------------
+		else if (button_sprite->getGlobalBounds().contains(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y)
+			&& sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
+		{
+			// Figure out which slider they're playing with for the controller
+			if (button_container[i]->getName() == "Record")
+			{
+				//TODO: safegaurds against something that is already playing??????????
+
+				*functionType = APPLICATION_FUNCTIONS::RECORD_TO_FILE;
+				// OR IS IT
+				//*functionType = APPLICATION_FUNCTIONS::RECORD_FROM_FILE; ?????????????????????????????????????
+			}
+			else if (button_container[i]->getName() == "PlayPause")
+			{
+				// my crack at this, feel free to scrap if you had a different idea
+				if (button_container[i]->isActive())
+				{
+					*functionType = APPLICATION_FUNCTIONS::PAUSE;
+					button_container[i]->setActive(false);
+				}
+				else
+				{
+					*functionType = APPLICATION_FUNCTIONS::PLAY;
+					button_container[i]->setActive(true);
+				}	
+			}
+			else if (button_container[i]->getName() == "Stop")
+			{
+				*functionType = APPLICATION_FUNCTIONS::STOP;
+			}
+			else if (button_container[i]->getName() == "Loop")
+			{
+				if (button_container[i]->isActive())
+				{
+					*functionType = APPLICATION_FUNCTIONS::NO_CHANGE; // not sure what state to set to stop looping?????
+					button_container[i]->setActive(false);
+				}
+				else
+				{
+					*functionType = APPLICATION_FUNCTIONS::LOOP;
+					button_container[i]->setActive(true);
+				}
+			}
+			else if (button_container[i]->getName() == "Reverse")
+			{
+				//*functionType = APPLICATION_FUNCTIONS::REVERSE; not sure what state to set to reverse the track???
+			}
+
+
+			switch (i)
+			{
+			case 0:
+			case 4:
+			case 8:
+			case 12:
+				*iLooper = 0;
+				break;
+			case 1:
+			case 5:
+			case 9:
+			case 13:
+				*iLooper = 1;
+				break;
+			case 2:
+			case 6:
+			case 10:
+			case 14:
+				*iLooper = 2;
+				break;
+			case 3:
+			case 7:
+			case 11:
+			case 15:
+				*iLooper = 3;
+				break;
+			default:
+				*iLooper = 0;
+				break;
+			}
+			break;
+		}
 	}
 	
 }
@@ -441,19 +518,18 @@ void InterfaceC::handleMouseReleaseEvent()
 		{
 			slider_container[i]->stopFollowingMouse();
 
-			// CODE SMELL: not a very good way to handle this, will need to be refactored once core functionality of Looper
-			// is built out
+
 			if (slider_container[i]->getName() == "Pitch")
 			{
-				testLooper.shiftPitch();
+				//testLooper.shiftPitch(); // this looper is depreciated, not sure if this is even needed anymore???
 			}
 			else if (slider_container[i]->getName() == "Volume")
 			{
-				testLooper.shiftVolume();;
+				//testLooper.shiftVolume();;
 			}
 			else if (slider_container[i]->getName() == "Pan")
 			{
-				testLooper.shiftPan();
+				//testLooper.shiftPan();
 			}
 		}
 		

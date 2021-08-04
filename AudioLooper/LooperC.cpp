@@ -25,6 +25,11 @@ LooperC::LooperC(std::string audioFile)
 	audioTrack.setMinDistance(1.f);
 	audioTrack.setAttenuation(1.f);
 	audioTrack.setRelativeToListener(true);
+
+	if (musicSeekBar)
+	{
+		musicSeekBar->setMusicTrack(&audioTrack);
+	}
 }
 
 void LooperC::setTrack(std::string fileName)
@@ -35,17 +40,30 @@ void LooperC::setTrack(std::string fileName)
 	audioTrack.setMinDistance(1.f);
 	audioTrack.setAttenuation(1.f);
 	audioTrack.setRelativeToListener(true);
+
+	if (musicSeekBar)
+	{
+		musicSeekBar->setMusicTrack(&audioTrack);
+	}
 }
 
 // track manipulation
 void LooperC::playTrack() {
 	audioTrack.play();
+	if (reverseButton) {
+		reverseButton->setTexture(DISABLED_REVERSE_ICON);
+		reverseButton->setEnabled(false);
+	}
 }
 void LooperC::pauseTrack() {
 	audioTrack.pause();
 }
 void LooperC::stopTrack() {
 	audioTrack.stop();
+	if (reverseButton) {
+		reverseButton->setTexture(REVERSE_ICON);
+		reverseButton->setEnabled(true);
+	}
 }
 void LooperC::loopTrack(bool toggle) {
 	audioTrack.setLoop(toggle);
@@ -215,4 +233,29 @@ void LooperC::shiftPan()
 void LooperC::reverseTrack()
 {
 	reverse(m_audioFile);
+}
+
+void LooperC::setMusicSeekBar(MusicSeek* newMusicSeek)
+{
+	musicSeekBar = newMusicSeek;
+}
+void LooperC::setRecordButton(ButtonC* newRecordButton)
+{
+	recordButton = newRecordButton;
+}
+void LooperC::setPlayPauseButton(ButtonC* newPlayPauseButton)
+{
+	playPauseButton = newPlayPauseButton;
+}
+void LooperC::setStopButton(ButtonC* newStopButton)
+{
+	stopButton = newStopButton;
+}
+void LooperC::setLoopButton(ButtonC* newLoopButton)
+{
+	loopButton = newLoopButton;
+}
+void LooperC::setReverseButton(ButtonC* newReverseButton)
+{
+	reverseButton = newReverseButton;
 }

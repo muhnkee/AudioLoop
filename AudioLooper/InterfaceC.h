@@ -66,18 +66,7 @@ private:
 	std::vector<MusicSeek*> seek_container;
 
 	//DEBUG: variables used for testing audio
-	LooperC testLooper;
-	Slider testSliderPitch;
-	Slider testSliderVolume;
-	//Slider testSliderPan = Slider(true); // DEPRECIATED landscape slider
-	MusicSeek testMusicSeek;
-
-	//DEBUG: buttons testing objects: create 4x of each and hook into each looper
-	ButtonC testPlayPauseButton;
-	ButtonC testLoopButton;
-	ButtonC testRecordButton;
-	ButtonC testReverseButton;
-	ButtonC testStopButton;
+	//LooperC testLooper; // depreciated
 };
 
 

@@ -16,7 +16,7 @@ public:
 	void setTexture(std::string fileName);
 	void setName(std::string nameIn);
 	void setEnabled(bool toggle);
-
+	void setActive(bool isActive);
 	void draw(sf::RenderWindow& window);
 
 	//void isClicked();

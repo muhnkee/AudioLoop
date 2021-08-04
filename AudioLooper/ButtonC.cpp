@@ -43,6 +43,11 @@ void ButtonC::setEnabled(bool toggle)
 	enabled = toggle;
 }
 
+void ButtonC::setActive(bool isActive)
+{
+	active = isActive;
+}
+
 void ButtonC::draw(sf::RenderWindow& window) {
 
 	window.draw(buttonSprite);
