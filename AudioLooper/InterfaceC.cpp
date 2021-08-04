@@ -37,12 +37,12 @@ InterfaceC::InterfaceC() {
 		m_VolumeSlider[i]->setOrientation();
 
 		m_PanSlider[i]->setName("Pan");
-		m_PanSlider[i]->setSizeScale(.40);
+		m_PanSlider[i]->setSizeScale(.30);
 		m_PanSlider[i]->setOrientation(true); //horizontal
 		
-		m_PitchSlider[i]->setInitialPosition(SCREEN_WIDTH / 8 + (150 *i), SCREEN_HEIGHT / 8); //relative positioning
-		m_VolumeSlider[i]->setInitialPosition(SCREEN_WIDTH / 8 + (150 * i), SCREEN_HEIGHT / 8 + 200);
-		m_PanSlider[i]->setInitialPosition(SCREEN_WIDTH / 8 + (200 * i), SCREEN_HEIGHT / 8 + 400);
+		m_PitchSlider[i]->setInitialPosition(SCREEN_WIDTH / 1.5 + (200), SCREEN_HEIGHT / (MAX_NUMBER_OF_TRACKS + 1) * (i + 1)-55); //relative positioning
+		m_VolumeSlider[i]->setInitialPosition(SCREEN_WIDTH / 1.5 + (300), SCREEN_HEIGHT / (MAX_NUMBER_OF_TRACKS + 1) * (i + 1)-55);
+		m_PanSlider[i]->setInitialPosition(SCREEN_WIDTH / 2 + 170 - 20, SCREEN_HEIGHT / (MAX_NUMBER_OF_TRACKS + 1) * (i + 1) + 70);
 		trackItem.push_back(sf::Text());
 
 		//Loading MusicSeek sprites
@@ -127,22 +127,22 @@ InterfaceC::InterfaceC() {
 	/*******************************************************/
 
 	trackItem[0].setFont(font);
-	trackItem[0].setFillColor(sf::Color::White);
+	trackItem[0].setFillColor(sf::Color::Red);
 	trackItem[0].setString("Track 1");
 	trackItem[0].setPosition(sf::Vector2f(SCREEN_WIDTH / 2, SCREEN_HEIGHT / (MAX_NUMBER_OF_TRACKS + 1) * 1));
 
 	trackItem[1].setFont(font);
-	trackItem[1].setFillColor(sf::Color::White);
+	trackItem[1].setFillColor(sf::Color::Red);
 	trackItem[1].setString("Track 2");
 	trackItem[1].setPosition(sf::Vector2f(SCREEN_WIDTH / 2, SCREEN_HEIGHT / (MAX_NUMBER_OF_TRACKS + 1) * 2));
 
 	trackItem[2].setFont(font);
-	trackItem[2].setFillColor(sf::Color::White);
+	trackItem[2].setFillColor(sf::Color::Red);
 	trackItem[2].setString("Track 3");
 	trackItem[2].setPosition(sf::Vector2f(SCREEN_WIDTH / 2, SCREEN_HEIGHT / (MAX_NUMBER_OF_TRACKS + 1) * 3));
 
 	trackItem[3].setFont(font);
-	trackItem[3].setFillColor(sf::Color::White);
+	trackItem[3].setFillColor(sf::Color::Red);
 	trackItem[3].setString("Track 4");
 	trackItem[3].setPosition(sf::Vector2f(SCREEN_WIDTH / 2, SCREEN_HEIGHT / (MAX_NUMBER_OF_TRACKS + 1) * 4));
 
