@@ -3,6 +3,8 @@
 #include <SFML/Audio.hpp>;
 #include "Slider.h"
 #include "Reverse.h"
+#include "ButtonC.h"
+#include "MusicSeek.h"
 
 class LooperC 
 {
@@ -10,9 +12,15 @@ private:
 	sf::Music audioTrack;
 	std::string m_audioFile;
 
+	MusicSeek* musicSeekBar;
 	Slider* pitchSlider;
 	Slider* volumeSlider;
 	Slider* panSlider;
+	ButtonC* recordButton;
+	ButtonC* playPauseButton;
+	ButtonC* stopButton;
+	ButtonC* loopButton;
+	ButtonC* reverseButton;
 
 public:
 	LooperC();
@@ -25,6 +33,12 @@ public:
 	void setPitchSlider(Slider* newPitchSlider);
 	void setVolumeSlider(Slider* newVolumeSlider);
 	void setPanSlider(Slider* newPanSlider);
+	void setMusicSeekBar(MusicSeek* newMusicSeek);
+	void setRecordButton(ButtonC* newRecordButton);
+	void setPlayPauseButton(ButtonC* newPlayPauseButton);
+	void setStopButton(ButtonC* newStopButton);
+	void setLoopButton(ButtonC* newLoopButton);
+	void setReverseButton(ButtonC* newReverseButton);
 
 	void playTrack();
 	void pauseTrack();
@@ -38,7 +52,6 @@ public:
 	void shiftVolume();
 	void shiftPan();
 
-	void changeTempo();
 	void reverseTrack();
 
 	bool isPlaying();

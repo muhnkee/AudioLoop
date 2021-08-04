@@ -2,34 +2,53 @@
 #include <SFML/Graphics.hpp>
 
 
-ButtonC::ButtonC(int sizeX, int sizeY)
+ButtonC::ButtonC()
 {
-	sf::Texture buttonTexture;
-	if (!(buttonTexture.create(sizeX, sizeY)))
-	{
-		// error handling tbd
-	}
-	// Pixels have 4 components, RGBA
-	sf::Uint8 *pixels = new sf::Uint8[sizeX * sizeY * 4];
-	buttonTexture.update(pixels);
+	active = false;
+	enabled = true;
+}
 
+void ButtonC::setTexture(std::string fileName)
+{
+	buttonTexture.loadFromFile(fileName);
 	buttonSprite.setTexture(buttonTexture);
 }
 
-void ButtonC::setButtonColor(int Red, int Blue, int Green, bool isTransparent)
+void ButtonC::setName(std::string nameIn)
 {
-	if (isTransparent)
-	{
-		buttonSprite.setColor(sf::Color(Red, Blue, Green, 128));
-	}
-	else
-	{
-		buttonSprite.setColor(sf::Color(Red, Blue, Green, 0));
-
-	}
+	name = nameIn;
 }
+
 
 void ButtonC::setButtonPosition(float xPosition, float yPosition)
 {
 	buttonSprite.setPosition(sf::Vector2f(xPosition, yPosition));
+}
+
+void ButtonC::setSizeScale(double scaleValue) {
+	buttonSprite.setScale(sf::Vector2f(scaleValue, scaleValue));
+}
+
+bool ButtonC::IsClicked(const sf::Mouse Mouse, const float X, const float Y)
+{
+	if (!Mouse.isButtonPressed(sf::Mouse::Left))
+	{
+		return false;
+	}
+	return buttonSprite.getGlobalBounds().contains(X, Y);
+}
+
+void ButtonC::setEnabled(bool toggle)
+{
+	enabled = toggle;
+}
+
+void ButtonC::setActive(bool isActive)
+{
+	active = isActive;
+}
+
+void ButtonC::draw(sf::RenderWindow& window) {
+
+	window.draw(buttonSprite);
 }

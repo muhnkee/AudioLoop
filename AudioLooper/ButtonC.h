@@ -4,25 +4,29 @@
 class ButtonC
 {
 public:
-	ButtonC(int sizeX, int sizeY);
+	ButtonC();
 
-	sf::Sprite getButtonSprite() { return buttonSprite; };
-
-	sf::IntRect Box; 
-
-	void setButtonColor(int Red, int Green, int Blue, bool isTransparent);
+	sf::Sprite* getButtonSprite() { return &buttonSprite; };
+	std::string getName() { return name; };
+	bool isActive() { return active; };
+	bool IsClicked(const sf::Mouse Mouse, const float X, const float Y);
+	bool isEnabled() { return enabled; };
+	void setSizeScale(double scaleValue);
 	void setButtonPosition(float xPosition, float yPosition);
+	void setTexture(std::string fileName);
+	void setName(std::string nameIn);
+	void setEnabled(bool toggle);
+	void setActive(bool isActive);
+	void draw(sf::RenderWindow& window);
 
-	const bool IsClicked(const sf::Mouse Mouse, const float X, const float Y)
-	{
-		if (!Mouse.isButtonPressed(sf::Mouse::Left))
-		{
-			return false;
-		}
-		return Box.contains(X, Y);
-	}
+	//void isClicked();
+	
 
 private:
+	bool active;
+	bool enabled;
 	sf::Sprite buttonSprite;
+	sf::Texture buttonTexture;
+	std::string name;
 };
 

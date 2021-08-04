@@ -5,6 +5,7 @@
 #include "LooperC.h"
 #include "Slider.h"
 #include "MusicSeek.h"
+#include "ButtonC.h"
 
 class InterfaceC {
 public:
@@ -48,18 +49,24 @@ private:
 
 	bool openLooper[MAX_NUMBER_OF_TRACKS];
 	
-	MusicSeek testMusicSeek;
+	
 	Slider* m_VolumeSlider[MAX_NUMBER_OF_TRACKS];
 	Slider* m_PitchSlider[MAX_NUMBER_OF_TRACKS];
 	Slider* m_PanSlider[MAX_NUMBER_OF_TRACKS];
+	MusicSeek* m_MusicSeek[MAX_NUMBER_OF_TRACKS];
+	ButtonC* m_RecordButton[MAX_NUMBER_OF_TRACKS];
+	ButtonC* m_PlayPauseButton[MAX_NUMBER_OF_TRACKS];
+	ButtonC* m_StopButton[MAX_NUMBER_OF_TRACKS];
+	ButtonC* m_LoopButton[MAX_NUMBER_OF_TRACKS];
+	ButtonC* m_ReverseButton[MAX_NUMBER_OF_TRACKS];
 	std::string m_audioFile[MAX_NUMBER_OF_TRACKS];
 
-	//DEBUG: variables used for testing audio
-	LooperC testLooper;
-	Slider testSliderPitch;
-	Slider testSliderVolume;
-	//Slider testSliderPan = Slider(true); //landscape slider
 	std::vector<Slider*> slider_container;
+	std::vector<ButtonC*> button_container;
+	std::vector<MusicSeek*> seek_container;
+
+	//DEBUG: variables used for testing audio
+	//LooperC testLooper; // depreciated
 };
 
 
