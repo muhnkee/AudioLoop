@@ -12,8 +12,13 @@
 #define ARIAL_FONT "./Assets/Fonts/arial.ttf"
 
 // Icons
-#define LOOP_ICON "./Assets/Icons/loop-96.png"
+#define LOOP_ICON "./Assets/Icons/loop-48.png"
 #define PLAY_PAUSE_ICON "./Assets/Icons/resume-60.png"
+#define RECORD_ICON "./Assets/Icons/record-50.png"
+#define REVERSE_ICON "./Assets/Icons/reverse-60.png"
+#define DISABLED_REVERSE_ICON "./Assets/Icons/disabled_reverse-60.png"
+#define RECORD_ICON "./Assets/Icons/record-50.png"
+#define STOP_ICON "./Assets/Icons/stop-50.png"
 
 // Sprites
 #define SLIDE_BAR "./Assets/Icons/Slider_bar.png"

@@ -20,6 +20,12 @@ InterfaceC::InterfaceC() {
 		m_PitchSlider[i] = new Slider[sizeof(Slider)];
 		m_PanSlider[i] = new Slider[sizeof(Slider)];
 		m_VolumeSlider[i] = new Slider[sizeof(Slider)];
+		m_MusicSeek[i] = new MusicSeek[sizeof(MusicSeek)];
+		m_RecordButton[i] = new ButtonC[sizeof(ButtonC)];
+		m_PlayPauseButton[i] = new ButtonC[sizeof(ButtonC)];
+		m_StopButton[i] = new ButtonC[sizeof(ButtonC)];
+		m_LoopButton[i] = new ButtonC[sizeof(ButtonC)];
+		m_ReverseButton[i] = new ButtonC[sizeof(ButtonC)];
 
 		//Loading slider sprite
 		m_PitchSlider[i]->setName("Pitch");
@@ -38,6 +44,36 @@ InterfaceC::InterfaceC() {
 		m_VolumeSlider[i]->setInitialPosition(SCREEN_WIDTH / 8 + (150 * i), SCREEN_HEIGHT / 8 + 200);
 		m_PanSlider[i]->setInitialPosition(SCREEN_WIDTH / 8 + (200 * i), SCREEN_HEIGHT / 8 + 400);
 		trackItem.push_back(sf::Text());
+
+		//Loading MusicSeek sprites
+		m_MusicSeek[i]->setSizeScale(.60);
+		m_MusicSeek[i]->setInitialPosition(SCREEN_WIDTH / 20, SCREEN_HEIGHT / (MAX_NUMBER_OF_TRACKS + 1) * (i + 1) - 20);
+		
+		//Loading ButtonC sprites
+		m_RecordButton[i]->setName("Record");
+		m_RecordButton[i]->setTexture(RECORD_ICON);
+		m_RecordButton[i]->setSizeScale(1.0);
+		m_RecordButton[i]->setButtonPosition(SCREEN_WIDTH / 2 + 170 - 40, SCREEN_HEIGHT / (MAX_NUMBER_OF_TRACKS + 1) * (i + 1));
+		
+		m_PlayPauseButton[i]->setName("Play");
+		m_PlayPauseButton[i]->setTexture(PLAY_PAUSE_ICON);
+		m_PlayPauseButton[i]->setSizeScale(.9);
+		m_PlayPauseButton[i]->setButtonPosition(SCREEN_WIDTH / 2 + 240 - 40, SCREEN_HEIGHT / (MAX_NUMBER_OF_TRACKS + 1) * (i + 1));
+
+		m_StopButton[i]->setName("Stop");
+		m_StopButton[i]->setTexture(STOP_ICON);
+		m_StopButton[i]->setSizeScale(1.1);
+		m_StopButton[i]->setButtonPosition(SCREEN_WIDTH / 2 + 310 - 40, SCREEN_HEIGHT / (MAX_NUMBER_OF_TRACKS + 1) * (i + 1));
+
+		m_LoopButton[i]->setName("Loop");
+		m_LoopButton[i]->setTexture(LOOP_ICON);
+		m_LoopButton[i]->setSizeScale(1.0);
+		m_LoopButton[i]->setButtonPosition(SCREEN_WIDTH / 2 + 380 - 40, SCREEN_HEIGHT / (MAX_NUMBER_OF_TRACKS + 1) * (i + 1));
+
+		m_ReverseButton[i]->setName("Reverse");
+		m_ReverseButton[i]->setTexture(REVERSE_ICON);
+		m_ReverseButton[i]->setSizeScale(.9);
+		m_ReverseButton[i]->setButtonPosition(SCREEN_WIDTH / 2 + 450 - 40, SCREEN_HEIGHT / (MAX_NUMBER_OF_TRACKS + 1) * (i + 1));
 
 		float barWidth = SCREEN_WIDTH * (1. / 3.);
 		float barHeight = SCREEN_HEIGHT / 20.;
@@ -59,46 +95,110 @@ InterfaceC::InterfaceC() {
 	{
 		slider_container.push_back(m_PanSlider[i]);
 	}
-	//DEBUG
+
+	for (int i = 0; i < MAX_NUMBER_OF_TRACKS; ++i)
+	{
+		seek_container.push_back(m_MusicSeek[i]);
+	}
+
+	/*******************************************************/
+	// Packing away the buttons
+	// Will, I'm going to follow the same convention with the ordering of the buttons <------------
+	for (int i = 0; i < MAX_NUMBER_OF_TRACKS; ++i)
+	{
+		button_container.push_back(m_RecordButton[i]);
+	}
+	for (int i = 0; i < MAX_NUMBER_OF_TRACKS; ++i)
+	{
+		button_container.push_back(m_PlayPauseButton[i]);
+	}
+	for (int i = 0; i < MAX_NUMBER_OF_TRACKS; ++i)
+	{
+		button_container.push_back(m_StopButton[i]);
+	}
+	for (int i = 0; i < MAX_NUMBER_OF_TRACKS; ++i)
+	{
+		button_container.push_back(m_LoopButton[i]);
+	}
+	for (int i = 0; i < MAX_NUMBER_OF_TRACKS; ++i)
+	{
+		button_container.push_back(m_ReverseButton[i]);
+	}
+	/*******************************************************/
+
 	trackItem[0].setFont(font);
-	trackItem[0].setFillColor(sf::Color::Red);
-	trackItem[0].setString("play track 1");
+	trackItem[0].setFillColor(sf::Color::White);
+	trackItem[0].setString("Track 1");
 	trackItem[0].setPosition(sf::Vector2f(SCREEN_WIDTH / 2, SCREEN_HEIGHT / (MAX_NUMBER_OF_TRACKS + 1) * 1));
 
 	trackItem[1].setFont(font);
 	trackItem[1].setFillColor(sf::Color::White);
-	trackItem[1].setString("play track 2");
+	trackItem[1].setString("Track 2");
 	trackItem[1].setPosition(sf::Vector2f(SCREEN_WIDTH / 2, SCREEN_HEIGHT / (MAX_NUMBER_OF_TRACKS + 1) * 2));
 
 	trackItem[2].setFont(font);
 	trackItem[2].setFillColor(sf::Color::White);
-	trackItem[2].setString("play track 3");
+	trackItem[2].setString("Track 3");
 	trackItem[2].setPosition(sf::Vector2f(SCREEN_WIDTH / 2, SCREEN_HEIGHT / (MAX_NUMBER_OF_TRACKS + 1) * 3));
 
 	trackItem[3].setFont(font);
 	trackItem[3].setFillColor(sf::Color::White);
-	trackItem[3].setString("play track 4");
+	trackItem[3].setString("Track 4");
 	trackItem[3].setPosition(sf::Vector2f(SCREEN_WIDTH / 2, SCREEN_HEIGHT / (MAX_NUMBER_OF_TRACKS + 1) * 4));
 
 	selectedTrackIndex = 0;
 
-	testLooper.setTrack("orchestra-mono.wav"); //this is a MONO track == SFML will play well
+	//DEBUG: testing objects/sprites
+	//testLooper.setTrack("orchestra-mono.wav"); //this is a MONO track == SFML will play well
 	//testLooper.setTrack("melody.wav"); // this is a STEREO track == NO BUENO
+
+	//testLooper.setPitchSlider(slider_container[0]);
+
+	//testLooper.shiftPitch(); //start off the pitch where the slider is at
+	//testLooper.setVolumeSlider(slider_container[1]);
+	//testLooper.shiftVolume(); //start off the pitch where the slider is at
+	//testLooper.setPanSlider(slider_container[2]);
+  //Music seek sprit
+	//testMusicSeek.setSizeScale(.60);
+	//testMusicSeek.setInitialPosition(SCREEN_WIDTH / 4, SCREEN_HEIGHT / 4);
+	//testMusicSeek.setMusicTrack(testLooper.getMusic());
+
+
+
+	//Button testing positioning and size
+	testRecordButton.setTexture(RECORD_ICON);
+	testRecordButton.setSizeScale(1.0);
+	testRecordButton.setButtonPosition(SCREEN_WIDTH / 2 + 170-40, SCREEN_HEIGHT / (MAX_NUMBER_OF_TRACKS + 1) * 1);
+	testRecordButton.setName("Record");
+
+
+	testPlayPauseButton.setTexture(PLAY_PAUSE_ICON);
+	testPlayPauseButton.setSizeScale(.9);
+	testPlayPauseButton.setButtonPosition(SCREEN_WIDTH / 2 + 240-40, SCREEN_HEIGHT / (MAX_NUMBER_OF_TRACKS + 1) * 1);
+	testPlayPauseButton.setName("Play");
+
+	testStopButton.setTexture(STOP_ICON);
+	testStopButton.setSizeScale(1.1);
+	testStopButton.setButtonPosition(SCREEN_WIDTH / 2 + 310 - 40, SCREEN_HEIGHT / (MAX_NUMBER_OF_TRACKS + 1) * 1);
+	testStopButton.setName("Stop");
+
+	testLoopButton.setTexture(LOOP_ICON);
+	testLoopButton.setSizeScale(1.0);
+	testLoopButton.setButtonPosition(SCREEN_WIDTH / 2 + 380 - 40, SCREEN_HEIGHT / (MAX_NUMBER_OF_TRACKS + 1) * 1);
+	testLoopButton.setName("Loop");
+
+	testReverseButton.setTexture(REVERSE_ICON);
+	testReverseButton.setSizeScale(.9);
+	testReverseButton.setButtonPosition(SCREEN_WIDTH / 2 + 450 - 40, SCREEN_HEIGHT / (MAX_NUMBER_OF_TRACKS + 1) * 1);
+	testReverseButton.setName("Reverse");
+
+	
+
+	
+
+
 	window.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "AudioLoop");
 
-
-	testLooper.setPitchSlider(slider_container[0]);
-
-  testLooper.shiftPitch(); //start off the pitch where the slider is at
-	testLooper.setVolumeSlider(slider_container[1]);
-	testLooper.shiftVolume(); //start off the pitch where the slider is at
-
-  //Music seek sprite
-	testMusicSeek.setSizeScale(.60);
-	testMusicSeek.setInitialPosition(SCREEN_WIDTH / 4, SCREEN_HEIGHT / 4);
-	testMusicSeek.setMusicTrack(testLooper.getMusic());
-
-  testLooper.setPanSlider(slider_container[2]);
 }
 
 InterfaceC::~InterfaceC()
@@ -224,8 +324,14 @@ void InterfaceC::draw(sf::RenderWindow& window)
 	{
 		slider_container[i]->draw(window);
 	}
-
-	testMusicSeek.draw(window);
+	for (int i = 0; i < button_container.size(); i++)
+	{
+		button_container[i]->draw(window);
+	}
+	for (int i = 0; i < seek_container.size(); i++)
+	{
+		seek_container[i]->draw(window);
+	}
 }	
 
 sf::RenderWindow* InterfaceC::getWindow() {
