@@ -19,6 +19,12 @@ public:
 	}
 	sf::SoundBuffer* getSoundBuffer() { return m_soundBuffer;  }
 
+	void setRecorder(RecorderC* recorder)
+	{
+		m_recorder = recorder;
+	}
+	RecorderC* getRecorder() { return m_recorder; }
+
 	void setLooperState(APPLICATION_FUNCTIONS looperState) { 
 		m_looperState = looperState;  
 	}
@@ -33,6 +39,8 @@ private:
 	RecorderC* m_recorder;
 	sf::SoundBuffer* m_soundBuffer;
 	sf::Thread m_thread;
+	APPLICATION_FUNCTIONS m_looperState;
+	APPLICATION_FUNCTIONS m_lastLooperState;
 
 	// Virtual function we override that handles everything the Looper thread needs to do.  
 	void Run() {
@@ -56,16 +64,28 @@ private:
 			playTrack();
 			break;
 		case APPLICATION_FUNCTIONS::STOP:
-			stopTrack();
+			if (m_lastLooperState == APPLICATION_FUNCTIONS::RECORD_TO_FILE)
+			{
+				m_recorder->Stop();
+			}
+			else
+			{
+				stopTrack();
+			}
 			break;
 		case APPLICATION_FUNCTIONS::RECORD_TO_FILE:
-			m_recorder->Record();
+			if (getAudioFile() != "NONE") {
+				m_recorder->Record();
+			}
 			break;
 		case APPLICATION_FUNCTIONS::RECORD_FROM_FILE:
-
+			setTrack(getAudioFile());
 			break;
 		case APPLICATION_FUNCTIONS::PAUSE:
-			pauseTrack();
+			if (m_lastLooperState == APPLICATION_FUNCTIONS::PLAY)
+			{
+				pauseTrack();
+			}
 			break;
 		case APPLICATION_FUNCTIONS::NEXT:
 			break;
@@ -74,11 +94,10 @@ private:
 		default:
 			break;
 		};
-
+		if (m_looperState != APPLICATION_FUNCTIONS::NO_CHANGE) {
+			m_lastLooperState = m_looperState;
+		}
 		m_looperState = APPLICATION_FUNCTIONS::NO_CHANGE;
 	};
-
-	APPLICATION_FUNCTIONS m_looperState;
-
 };
 

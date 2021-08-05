@@ -60,6 +60,11 @@ public:
 	bool isLooping();
 
 	void setAudioFile(std::string audioFile) { m_audioFile = audioFile; }
-	std::string getAudioFile() { return m_audioFile; }
+	std::string getAudioFile() {
+		if (m_audioFile != "")
+			return m_audioFile;
+		
+		return "NONE";
+	}
 };
 

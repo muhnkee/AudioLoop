@@ -149,48 +149,6 @@ InterfaceC::InterfaceC() {
 
 	selectedTrackIndex = 0;
 
-	//DEBUG: testing objects/sprites, this stuff should not be loaded or used.
-	//testLooper.setTrack("orchestra-mono.wav"); //this is a MONO track == SFML will play well
-	//testLooper.setTrack("melody.wav"); // this is a STEREO track == NO BUENO
-
-	//testLooper.setPitchSlider(slider_container[0]);
-
-	//testLooper.shiftPitch(); //start off the pitch where the slider is at
-	//testLooper.setVolumeSlider(slider_container[1]);
-	//testLooper.shiftVolume(); //start off the pitch where the slider is at
-	//testLooper.setPanSlider(slider_container[2]);
-  //Music seek sprit
-	//testMusicSeek.setSizeScale(.60);
-	//testMusicSeek.setInitialPosition(SCREEN_WIDTH / 4, SCREEN_HEIGHT / 4);
-	//testMusicSeek.setMusicTrack(testLooper.getMusic());
-
-	//Button testing positioning and size
-	/*testRecordButton.setTexture(RECORD_ICON);
-	testRecordButton.setSizeScale(1.0);
-	testRecordButton.setButtonPosition(SCREEN_WIDTH / 2 + 170-40, SCREEN_HEIGHT / (MAX_NUMBER_OF_TRACKS + 1) * 1);
-	testRecordButton.setName("Record");
-
-
-	testPlayPauseButton.setTexture(PLAY_PAUSE_ICON);
-	testPlayPauseButton.setSizeScale(.9);
-	testPlayPauseButton.setButtonPosition(SCREEN_WIDTH / 2 + 240-40, SCREEN_HEIGHT / (MAX_NUMBER_OF_TRACKS + 1) * 1);
-	testPlayPauseButton.setName("Play");
-
-	testStopButton.setTexture(STOP_ICON);
-	testStopButton.setSizeScale(1.1);
-	testStopButton.setButtonPosition(SCREEN_WIDTH / 2 + 310 - 40, SCREEN_HEIGHT / (MAX_NUMBER_OF_TRACKS + 1) * 1);
-	testStopButton.setName("Stop");
-
-	testLoopButton.setTexture(LOOP_ICON);
-	testLoopButton.setSizeScale(1.0);
-	testLoopButton.setButtonPosition(SCREEN_WIDTH / 2 + 380 - 40, SCREEN_HEIGHT / (MAX_NUMBER_OF_TRACKS + 1) * 1);
-	testLoopButton.setName("Loop");
-
-	testReverseButton.setTexture(REVERSE_ICON);
-	testReverseButton.setSizeScale(.9);
-	testReverseButton.setButtonPosition(SCREEN_WIDTH / 2 + 450 - 40, SCREEN_HEIGHT / (MAX_NUMBER_OF_TRACKS + 1) * 1);
-	testReverseButton.setName("Reverse");*/
-
 	window.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "AudioLoop");
 }
 

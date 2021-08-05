@@ -19,8 +19,10 @@ using std::to_string;
 int DEVICE = -1;
 
 // Recorder calls three functions on creation
-RecorderC::RecorderC()
+RecorderC::RecorderC(sf::SoundBufferRecorder* recorder, sf::SoundBuffer* buffer)
 {
+    setRecorderBuffer(recorder);
+    setBuffer(buffer);
     // Ensure recording device exists and is available
     checkAvailabilty();
     // Select windows default audio device

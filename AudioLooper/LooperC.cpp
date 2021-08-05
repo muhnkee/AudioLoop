@@ -9,6 +9,7 @@
 
 LooperC::LooperC()
 {
+	m_audioFile = "";
 
 }
 

@@ -15,7 +15,7 @@ private:
 
 public:
 
-	RecorderC();
+	RecorderC(sf::SoundBufferRecorder* recorder, sf::SoundBuffer* buffer);
 
 	void setBuffer(sf::SoundBuffer* bufferIn) { buffer = bufferIn; }
 	void setRecorderBuffer(sf::SoundBufferRecorder* bufferIn) { recorder = bufferIn;  }
