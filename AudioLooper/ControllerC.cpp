@@ -27,6 +27,7 @@ int ControllerC::run()
 	for (int i = 0; i < MAX_NUMBER_OF_TRACKS; ++i)
 	{
 		m_Looper[i].setSoundBuffer(soundBuffer);
+		// This should point everyone towards the same recorder/buffer.
 		m_Looper[i].setRecorder(recorder);
 	}
 	int* iLooper;

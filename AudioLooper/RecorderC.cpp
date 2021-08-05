@@ -102,6 +102,7 @@ void RecorderC::selectDevice()
 // Record Audio into recorder buffer
 void RecorderC::Record()
 {
+    m_isRecording = true;
     recorder->start();
 }
 
@@ -109,6 +110,7 @@ void RecorderC::Record()
 void RecorderC::Stop()
 {
     recorder->stop();
+    m_isRecording = false;
 
     *buffer = recorder->getBuffer();
 
@@ -172,4 +174,9 @@ void RecorderC::createSamplesDir()
         LPCWSTR sampDir = L"Samples";
         CreateDirectory(sampDir, NULL);
     }
+}
+
+bool RecorderC::isRecording()
+{
+    return m_isRecording;
 }

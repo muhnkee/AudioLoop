@@ -13,6 +13,8 @@ private:
 	sf::SoundBuffer* buffer;
 	sf::Sound sound;
 
+	bool m_isRecording = false;
+
 public:
 
 	RecorderC(sf::SoundBufferRecorder* recorder, sf::SoundBuffer* buffer);
@@ -28,6 +30,8 @@ public:
 	void Record();
 	void Stop();
 	void Play();
+	
+	bool isRecording();
 
 	std::string getAudioFilePath();
 };
