@@ -69,7 +69,7 @@ private:
 			{
 				m_recorder->Stop();
 			}
-			else
+			else if (isPlaying())
 			{
 				stopTrack();
 			}
