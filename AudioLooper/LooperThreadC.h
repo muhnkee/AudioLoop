@@ -35,13 +35,16 @@ public:
 	void terminateThread() { m_thread.terminate(); }
 	void pauseThread() { m_thread.wait(); }
 
-	void setAudioFileName(std::string playAudioFile) { setAudioFile(playAudioFile); }
+	void setAudioFileName(int iLooper) { setAudioFile(iLooper); }
+
+	void setThreadNumber(int iThread) { m_iThreadNumber = iThread; }
 
 private:
 	RecorderC* m_recorder;
 	sf::SoundBuffer* m_soundBuffer;
 	sf::Thread m_thread;
 	APPLICATION_FUNCTIONS m_looperState;
+	int m_iThreadNumber;
 
 	// Virtual function we override that handles everything the Looper thread needs to do.  
 	void Run() {
@@ -77,12 +80,11 @@ private:
 			}
 			break;
 		case APPLICATION_FUNCTIONS::RECORD_TO_FILE:
-			if (getAudioFile() != "NONE") {
-				m_recorder->Record();
+			if (getAudioFile() == "NONE") {
+				setAudioFileName(m_iThreadNumber);
+				m_recorder->setAudioFilePath(getAudioFile());
 			}
-			else {
-				m_recorder->setAudioFilePath();
-			}
+			m_recorder->Record(getAudioFile());
 			break;
 		case APPLICATION_FUNCTIONS::PAUSE:
 			if (isPlaying())
