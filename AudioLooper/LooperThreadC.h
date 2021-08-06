@@ -35,6 +35,8 @@ public:
 	void terminateThread() { m_thread.terminate(); }
 	void pauseThread() { m_thread.wait(); }
 
+	void setAudioFileName() { setAudioFile(m_recorder->getAudioFilePath()); }
+
 private:
 	RecorderC* m_recorder;
 	sf::SoundBuffer* m_soundBuffer;
@@ -78,9 +80,6 @@ private:
 			if (getAudioFile() != "NONE") {
 				m_recorder->Record();
 			}
-			break;
-		case APPLICATION_FUNCTIONS::RECORD_FROM_FILE:
-			setTrack(getAudioFile());
 			break;
 		case APPLICATION_FUNCTIONS::PAUSE:
 			if (isPlaying())

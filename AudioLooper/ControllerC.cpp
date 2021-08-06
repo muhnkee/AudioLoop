@@ -67,22 +67,9 @@ int ControllerC::run()
 					m_Looper[*iLooper].setAudioFile(m_gui_interface.getAudioFile(*iLooper));
 				}
 			}
-			else if (applicationState == APPLICATION_FUNCTIONS::RECORD_FROM_FILE)			{
-				if (m_gui_interface.getAudioFile(*iLooper) != "NONE")
-				{
-					m_Looper[*iLooper].setAudioFile(m_gui_interface.getAudioFile(*iLooper));
-				}
-			}
 			else if (applicationState == APPLICATION_FUNCTIONS::RECORD_TO_FILE)
 			{
-				if (m_gui_interface.getAudioFile(*iLooper) != "NONE")
-				{
-					m_Looper[*iLooper].setAudioFile(m_gui_interface.getAudioFile(*iLooper));
-				}
-				else
-				{
-					m_Looper[*iLooper].setAudioFile("OutputFileName.wav");
-				}
+				m_Looper[*iLooper].setAudioFileName();
 			}
 
 			m_Looper[*iLooper].setLooperState(applicationState);
