@@ -35,7 +35,7 @@ public:
 	void terminateThread() { m_thread.terminate(); }
 	void pauseThread() { m_thread.wait(); }
 
-	void setAudioFileName() { setAudioFile(m_recorder->getAudioFilePath()); }
+	void setAudioFileName(std::string playAudioFile) { setAudioFile(playAudioFile); }
 
 private:
 	RecorderC* m_recorder;
@@ -82,7 +82,6 @@ private:
 			}
 			else {
 				m_recorder->setAudioFilePath();
-				setAudioFileName();
 			}
 			break;
 		case APPLICATION_FUNCTIONS::PAUSE:

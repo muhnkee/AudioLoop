@@ -69,7 +69,7 @@ int ControllerC::run()
 			}
 			else if (applicationState == APPLICATION_FUNCTIONS::RECORD_TO_FILE)
 			{
-				m_Looper[*iLooper].setAudioFileName();
+				m_Looper[*iLooper].getRecorder()->setAudioFilePath();
 			}
 
 			m_Looper[*iLooper].setLooperState(applicationState);
