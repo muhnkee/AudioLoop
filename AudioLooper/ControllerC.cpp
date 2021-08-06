@@ -18,9 +18,17 @@ int ControllerC::run()
 	sf::SoundBuffer* soundBuffer;
 	soundBuffer = new sf::SoundBuffer[sizeof(sf::SoundBuffer)];
 
+	sf::SoundBufferRecorder* soundBufferRecorder;
+	soundBufferRecorder = new sf::SoundBufferRecorder[sizeof(sf::SoundBufferRecorder)];
+
+	RecorderC* recorder;
+	recorder = new RecorderC(soundBufferRecorder, soundBuffer);
+
 	for (int i = 0; i < MAX_NUMBER_OF_TRACKS; ++i)
 	{
 		m_Looper[i].setSoundBuffer(soundBuffer);
+		// This should point everyone towards the same recorder/buffer.
+		m_Looper[i].setRecorder(recorder);
 	}
 	int* iLooper;
 	iLooper = new int[sizeof(int)];
@@ -31,6 +39,7 @@ int ControllerC::run()
 
 		for (int i = 0; i < MAX_NUMBER_OF_TRACKS; ++i)
 		{
+			m_Looper[i].setThreadNumber(i);
 			m_Looper[i].launchThread();
 		}
 		sf::Event event;
@@ -56,16 +65,12 @@ int ControllerC::run()
 			{
 				if (m_gui_interface.getAudioFile(*iLooper) != "NONE")
 				{
-					m_Looper[*iLooper].setAudioFile(m_gui_interface.getAudioFile(*iLooper));
+					m_Looper[*iLooper].setAudioFile(*iLooper);
 				}
 			}
-			else if ((applicationState == APPLICATION_FUNCTIONS::RECORD_FROM_FILE) ||
-				     (applicationState == APPLICATION_FUNCTIONS::RECORD_TO_FILE))
+			else if (applicationState == APPLICATION_FUNCTIONS::RECORD_TO_FILE)
 			{
-				if (m_gui_interface.getAudioFile(*iLooper) != "NONE")
-				{
-					m_Looper[*iLooper].setAudioFile(m_gui_interface.getAudioFile(*iLooper));
-				}
+				m_Looper[*iLooper].getRecorder()->setAudioFilePath(m_Looper[*iLooper].getAudioFile());
 			}
 
 			m_Looper[*iLooper].setLooperState(applicationState);
@@ -82,6 +87,7 @@ int ControllerC::run()
 	{
 		m_Looper[i].terminateThread();
 	}
+
 	delete[] iLooper;
 	delete[] soundBuffer;
 	return 0;

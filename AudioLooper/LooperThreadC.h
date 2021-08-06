@@ -19,6 +19,12 @@ public:
 	}
 	sf::SoundBuffer* getSoundBuffer() { return m_soundBuffer;  }
 
+	void setRecorder(RecorderC* recorder)
+	{
+		m_recorder = recorder;
+	}
+	RecorderC* getRecorder() { return m_recorder; }
+
 	void setLooperState(APPLICATION_FUNCTIONS looperState) { 
 		m_looperState = looperState;  
 	}
@@ -29,10 +35,16 @@ public:
 	void terminateThread() { m_thread.terminate(); }
 	void pauseThread() { m_thread.wait(); }
 
+	void setAudioFileName(int iLooper) { setAudioFile(iLooper); }
+
+	void setThreadNumber(int iThread) { m_iThreadNumber = iThread; }
+
 private:
 	RecorderC* m_recorder;
 	sf::SoundBuffer* m_soundBuffer;
 	sf::Thread m_thread;
+	APPLICATION_FUNCTIONS m_looperState;
+	int m_iThreadNumber;
 
 	// Virtual function we override that handles everything the Looper thread needs to do.  
 	void Run() {
@@ -53,19 +65,32 @@ private:
 			setTrack(getAudioFile());
 			break;
 		case APPLICATION_FUNCTIONS::PLAY:
-			playTrack();
+			if (!(m_recorder->isRecording())) {
+				playTrack();
+			}
 			break;
 		case APPLICATION_FUNCTIONS::STOP:
-			stopTrack();
+			if (m_recorder->isRecording())
+			{
+				m_recorder->Stop();
+			}
+			else if (isPlaying())
+			{
+				stopTrack();
+			}
 			break;
 		case APPLICATION_FUNCTIONS::RECORD_TO_FILE:
-			m_recorder->Record();
-			break;
-		case APPLICATION_FUNCTIONS::RECORD_FROM_FILE:
-
+			if (getAudioFile() == "NONE") {
+				setAudioFileName(m_iThreadNumber);
+				m_recorder->setAudioFilePath(getAudioFile());
+			}
+			m_recorder->Record(getAudioFile());
 			break;
 		case APPLICATION_FUNCTIONS::PAUSE:
-			pauseTrack();
+			if (isPlaying())
+			{
+				pauseTrack();
+			}
 			break;
 		case APPLICATION_FUNCTIONS::NEXT:
 			break;
@@ -74,11 +99,7 @@ private:
 		default:
 			break;
 		};
-
 		m_looperState = APPLICATION_FUNCTIONS::NO_CHANGE;
 	};
-
-	APPLICATION_FUNCTIONS m_looperState;
-
 };
 

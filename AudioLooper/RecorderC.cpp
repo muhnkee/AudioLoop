@@ -19,8 +19,10 @@ using std::to_string;
 int DEVICE = -1;
 
 // Recorder calls three functions on creation
-RecorderC::RecorderC()
+RecorderC::RecorderC(sf::SoundBufferRecorder* recorder, sf::SoundBuffer* buffer)
 {
+    setRecorderBuffer(recorder);
+    setBuffer(buffer);
     // Ensure recording device exists and is available
     checkAvailabilty();
     // Select windows default audio device
@@ -98,8 +100,10 @@ void RecorderC::selectDevice()
 }
 
 // Record Audio into recorder buffer
-void RecorderC::Record()
+void RecorderC::Record(std::string fileName)
 {
+    setAudioFilePath(fileName);
+    m_isRecording = true;
     recorder->start();
 }
 
@@ -107,29 +111,18 @@ void RecorderC::Record()
 void RecorderC::Stop()
 {
     recorder->stop();
+    m_isRecording = false;
 
     *buffer = recorder->getBuffer();
 
     sound.setBuffer(*buffer);
-
-    time_t now = time(0);
-    struct tm buf;
-    localtime_s(&buf, &now);
-
-    // filename is timestamped for unique ID
-    string timestamp;
-    timestamp = timestamp + to_string(1900 + buf.tm_year) + "-" + to_string(1 + buf.tm_mon) + \
-        "-" + to_string(buf.tm_mday) + " " + to_string(buf.tm_hour) + to_string(buf.tm_min) + \
-        to_string(buf.tm_sec);
-
-    if (DEBUG)
-    {
-        cout << timestamp << endl;
-    }
-
-    // File is saved into Samples/ directory
-    audioFilePath = "Samples/" + timestamp + ".wav";
+    
     buffer->saveToFile(audioFilePath);
+}
+
+void RecorderC::setAudioFilePath(std::string newAudioFilePath)
+{
+    audioFilePath = newAudioFilePath;
 }
 
 // This is just for testing, making sure audio is actually where it needs to be
@@ -170,4 +163,9 @@ void RecorderC::createSamplesDir()
         LPCWSTR sampDir = L"Samples";
         CreateDirectory(sampDir, NULL);
     }
+}
+
+bool RecorderC::isRecording()
+{
+    return m_isRecording;
 }

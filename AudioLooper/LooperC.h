@@ -6,6 +6,8 @@
 #include "ButtonC.h"
 #include "MusicSeek.h"
 
+using std::to_string;
+
 class LooperC 
 {
 private:
@@ -59,7 +61,12 @@ public:
 	bool isStopped();
 	bool isLooping();
 
-	void setAudioFile(std::string audioFile) { m_audioFile = audioFile; }
-	std::string getAudioFile() { return m_audioFile; }
+	void setAudioFile(int iLooper) { m_audioFile = "Samples/Looper_" + to_string(iLooper) + ".wav"; }
+	std::string getAudioFile() {
+		if (m_audioFile != "")
+			return m_audioFile;
+		
+		return "NONE";
+	}
 };
 

@@ -13,21 +13,27 @@ private:
 	sf::SoundBuffer* buffer;
 	sf::Sound sound;
 
+	bool m_isRecording = false;
+
 public:
 
-	RecorderC();
+	RecorderC(sf::SoundBufferRecorder* recorder, sf::SoundBuffer* buffer);
 
 	void setBuffer(sf::SoundBuffer* bufferIn) { buffer = bufferIn; }
 	void setRecorderBuffer(sf::SoundBufferRecorder* bufferIn) { recorder = bufferIn;  }
+
+	void setAudioFilePath(std::string newAudioFilePath);
 
 	void checkAvailabilty();
 	void selectDevice();
 	void createSamplesDir();
 	bool dirExists(const std::string& dirName_in);
 
-	void Record();
+	void Record(std::string fileName);
 	void Stop();
 	void Play();
+	
+	bool isRecording();
 
 	std::string getAudioFilePath();
 };
