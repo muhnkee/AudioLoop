@@ -80,6 +80,10 @@ private:
 			if (getAudioFile() != "NONE") {
 				m_recorder->Record();
 			}
+			else {
+				m_recorder->setAudioFilePath();
+				setAudioFileName();
+			}
 			break;
 		case APPLICATION_FUNCTIONS::PAUSE:
 			if (isPlaying())

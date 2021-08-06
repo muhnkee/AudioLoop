@@ -22,6 +22,8 @@ public:
 	void setBuffer(sf::SoundBuffer* bufferIn) { buffer = bufferIn; }
 	void setRecorderBuffer(sf::SoundBufferRecorder* bufferIn) { recorder = bufferIn;  }
 
+	void setAudioFilePath();
+
 	void checkAvailabilty();
 	void selectDevice();
 	void createSamplesDir();

@@ -115,7 +115,14 @@ void RecorderC::Stop()
     *buffer = recorder->getBuffer();
 
     sound.setBuffer(*buffer);
+    
+    setAudioFilePath();
 
+    buffer->saveToFile(audioFilePath);
+}
+
+void RecorderC::setAudioFilePath()
+{
     time_t now = time(0);
     struct tm buf;
     localtime_s(&buf, &now);
@@ -133,7 +140,6 @@ void RecorderC::Stop()
 
     // File is saved into Samples/ directory
     audioFilePath = "Samples/" + timestamp + ".wav";
-    buffer->saveToFile(audioFilePath);
 }
 
 // This is just for testing, making sure audio is actually where it needs to be
