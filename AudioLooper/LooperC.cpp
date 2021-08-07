@@ -20,7 +20,7 @@ LooperC::~LooperC()
 
 LooperC::LooperC(std::string audioFile)
 {
-	audioTrack.openFromFile(AUDIO_DIR + audioFile);
+	audioTrack.openFromFile(audioFile);
 
 	// set spacial audio properties for panning
 	audioTrack.setMinDistance(1.f);
@@ -35,7 +35,7 @@ LooperC::LooperC(std::string audioFile)
 
 void LooperC::setTrack(std::string fileName)
 {
-	audioTrack.openFromFile(AUDIO_DIR + fileName);
+	audioTrack.openFromFile(fileName);
 
 	// set spacial audio properties for panning
 	audioTrack.setMinDistance(1.f);
