@@ -328,8 +328,6 @@ void InterfaceC::handleMouseClickEvent(APPLICATION_FUNCTIONS* functionType, int*
 	for (int i = 0; i < slider_container.size(); i++)
 	{
 		sf::Sprite* slider_sprite = slider_container[i]->getSliderSprite();
-		sf::Sprite* button_sprite = button_container[i]->getButtonSprite();
-
 		// if mouse is on bounds of testSlider
 		if (slider_sprite->getGlobalBounds().contains(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y)
 			&& sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
@@ -381,9 +379,12 @@ void InterfaceC::handleMouseClickEvent(APPLICATION_FUNCTIONS* functionType, int*
 			}
 			break;
 		}
-
+	}
+	for (int i = 0; i < button_container.size(); i++)
+	{
+		sf::Sprite* button_sprite = button_container[i]->getButtonSprite();
 		//Will, again I'm follow your lead <----------------------
-		else if (button_sprite->getGlobalBounds().contains(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y)
+		if (button_sprite->getGlobalBounds().contains(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y)
 			&& sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
 		{
 			// Figure out which slider they're playing with for the controller
@@ -402,7 +403,7 @@ void InterfaceC::handleMouseClickEvent(APPLICATION_FUNCTIONS* functionType, int*
 				{
 					*functionType = APPLICATION_FUNCTIONS::PLAY;
 					button_container[i]->setActive(true);
-				}	
+				}
 			}
 			else if (button_container[i]->getName() == "Stop")
 			{
@@ -422,7 +423,7 @@ void InterfaceC::handleMouseClickEvent(APPLICATION_FUNCTIONS* functionType, int*
 			}
 			else if (button_container[i]->getName() == "Reverse")
 			{
-				*functionType = APPLICATION_FUNCTIONS::REVERSE; 
+				*functionType = APPLICATION_FUNCTIONS::REVERSE;
 			}
 
 
@@ -456,10 +457,8 @@ void InterfaceC::handleMouseClickEvent(APPLICATION_FUNCTIONS* functionType, int*
 				*iLooper = 0;
 				break;
 			}
-			break;
 		}
 	}
-	
 }
 
 void InterfaceC::handleMouseReleaseEvent() 
