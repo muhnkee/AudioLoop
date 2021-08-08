@@ -323,6 +323,7 @@ void InterfaceC::handleMouseClickEvent(APPLICATION_FUNCTIONS* functionType, int*
 	// Sliders 0-3 are for Pitch
 	// Sliders 4-7 are for Volume
 	// Sliders 8-11 are for Pan
+	// Sliders 12-15 are for Seek
 	// This allows for expansion based upon function, which is more likely
 	// than expansion based upon channel.
 	int iLoops = 0;
@@ -365,24 +366,28 @@ void InterfaceC::handleMouseClickEvent(APPLICATION_FUNCTIONS* functionType, int*
 				case 4:
 				case 8:
 				case 12:
+				case 16:
 					*iLooper = 0;
 					break;
 				case 1:
 				case 5:
 				case 9:
 				case 13:
+				case 17:
 					*iLooper = 1;
 					break;
 				case 2:
 				case 6:
 				case 10:
 				case 14:
+				case 18:
 					*iLooper = 2;
 					break;
 				case 3:
 				case 7:
 				case 11:
 				case 15:
+				case 19:
 					*iLooper = 3;
 					break;
 				default:
@@ -420,6 +425,8 @@ void InterfaceC::handleMouseClickEvent(APPLICATION_FUNCTIONS* functionType, int*
 				else if (button_container[i]->getName() == "Stop")
 				{
 					*functionType = APPLICATION_FUNCTIONS::STOP;
+					// if we stop set the play/pause button to play
+					button_container[i-4]->setActive(false);
 				}
 				else if (button_container[i]->getName() == "Loop")
 				{
@@ -445,24 +452,28 @@ void InterfaceC::handleMouseClickEvent(APPLICATION_FUNCTIONS* functionType, int*
 				case 4:
 				case 8:
 				case 12:
+				case 16:
 					*iLooper = 0;
 					break;
 				case 1:
 				case 5:
 				case 9:
 				case 13:
+				case 17:
 					*iLooper = 1;
 					break;
 				case 2:
 				case 6:
 				case 10:
 				case 14:
+				case 18:
 					*iLooper = 2;
 					break;
 				case 3:
 				case 7:
 				case 11:
 				case 15:
+				case 19:
 					*iLooper = 3;
 					break;
 				default:
