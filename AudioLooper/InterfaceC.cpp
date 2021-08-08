@@ -389,13 +389,10 @@ void InterfaceC::handleMouseClickEvent(APPLICATION_FUNCTIONS* functionType, int*
 			// Figure out which slider they're playing with for the controller
 			if (button_container[i]->getName() == "Record")
 			{
-				//TODO: safegaurds against something that is already playing??????????
-
 				*functionType = APPLICATION_FUNCTIONS::RECORD_TO_FILE;
 			}
 			else if (button_container[i]->getName() == "PlayPause")
 			{
-				// my crack at this, feel free to scrap if you had a different idea
 				if (button_container[i]->isActive())
 				{
 					*functionType = APPLICATION_FUNCTIONS::PAUSE;
@@ -413,20 +410,19 @@ void InterfaceC::handleMouseClickEvent(APPLICATION_FUNCTIONS* functionType, int*
 			}
 			else if (button_container[i]->getName() == "Loop")
 			{
+				*functionType = APPLICATION_FUNCTIONS::LOOP;
 				if (button_container[i]->isActive())
 				{
-					*functionType = APPLICATION_FUNCTIONS::NO_CHANGE; // not sure what state to set to stop looping?????
 					button_container[i]->setActive(false);
 				}
 				else
 				{
-					*functionType = APPLICATION_FUNCTIONS::LOOP;
 					button_container[i]->setActive(true);
 				}
 			}
 			else if (button_container[i]->getName() == "Reverse")
 			{
-				//*functionType = APPLICATION_FUNCTIONS::REVERSE; not sure what state to set to reverse the track???
+				*functionType = APPLICATION_FUNCTIONS::REVERSE; 
 			}
 
 

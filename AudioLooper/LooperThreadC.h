@@ -51,7 +51,7 @@ private:
 		switch (m_looperState)
 		{
 		case APPLICATION_FUNCTIONS::LOOP:
-			loopTrack(!(isLooping());
+			loopTrack(!(isLooping()));
 			break;
 		case APPLICATION_FUNCTIONS::SET_PITCH:
 			shiftPitch();
@@ -67,7 +67,7 @@ private:
 			break;
 		case APPLICATION_FUNCTIONS::PLAY:
 			if (!(m_recorder->isRecording())) {
-				if (isPlaying)
+				if (isPlaying())
 				{
 					pauseTrack();
 				}
