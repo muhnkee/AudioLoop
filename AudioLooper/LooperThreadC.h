@@ -105,6 +105,8 @@ private:
 			break;
 		case APPLICATION_FUNCTIONS::PREVIOUS:
 			break;
+		case APPLICATION_FUNCTIONS::REVERSE:
+			reverseTrack();
 		default:
 			break;
 		};
