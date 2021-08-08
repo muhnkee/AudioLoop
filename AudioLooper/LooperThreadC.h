@@ -51,6 +51,7 @@ private:
 		switch (m_looperState)
 		{
 		case APPLICATION_FUNCTIONS::LOOP:
+			loopTrack(!(isLooping());
 			break;
 		case APPLICATION_FUNCTIONS::SET_PITCH:
 			shiftPitch();
