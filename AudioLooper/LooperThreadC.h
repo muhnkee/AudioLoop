@@ -66,8 +66,15 @@ private:
 			break;
 		case APPLICATION_FUNCTIONS::PLAY:
 			if (!(m_recorder->isRecording())) {
-				setTrack(getAudioFile());
-				playTrack();
+				if (isPlaying)
+				{
+					pauseTrack();
+				}
+				else
+				{
+					setTrack(getAudioFile());
+					playTrack();
+				}
 			}
 			break;
 		case APPLICATION_FUNCTIONS::STOP:
