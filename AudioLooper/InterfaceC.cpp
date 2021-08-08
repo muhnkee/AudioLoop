@@ -325,136 +325,150 @@ void InterfaceC::handleMouseClickEvent(APPLICATION_FUNCTIONS* functionType, int*
 	// Sliders 8-11 are for Pan
 	// This allows for expansion based upon function, which is more likely
 	// than expansion based upon channel.
-	for (int i = 0; i < slider_container.size(); i++)
+	int iLoops = 0;
+	if (slider_container.size() > button_container.size())
 	{
-		sf::Sprite* slider_sprite = slider_container[i]->getSliderSprite();
-		// if mouse is on bounds of testSlider
-		if (slider_sprite->getGlobalBounds().contains(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y)
-			&& sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
-		{
-			slider_container[i]->followMouse();
-
-			// Figure out which slider they're playing with for the controller
-			if (slider_container[i]->getName() == "Pitch")
-			{
-				*functionType = APPLICATION_FUNCTIONS::SET_PITCH;
-			}
-			else if (slider_container[i]->getName() == "Volume")
-			{
-				*functionType = APPLICATION_FUNCTIONS::SET_VOLUME;
-			}
-			else if (slider_container[i]->getName() == "Pan")
-			{
-				*functionType = APPLICATION_FUNCTIONS::SET_PAN;
-			}
-			switch (i)
-			{
-			case 0:
-			case 4:
-			case 8:
-			case 12:
-				*iLooper = 0;
-				break;
-			case 1:
-			case 5:
-			case 9:
-			case 13:
-				*iLooper = 1;
-				break;
-			case 2:
-			case 6:
-			case 10:
-			case 14:
-				*iLooper = 2;
-				break;
-			case 3:
-			case 7:
-			case 11:
-			case 15:
-				*iLooper = 3;
-				break;
-			default:
-				*iLooper = 0;
-				break;
-			}
-			break;
-		}
+		iLoops = slider_container.size();
 	}
-	for (int i = 0; i < button_container.size(); i++)
+	else
 	{
-		sf::Sprite* button_sprite = button_container[i]->getButtonSprite();
-		//Will, again I'm follow your lead <----------------------
-		if (button_sprite->getGlobalBounds().contains(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y)
-			&& sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
+		iLoops = button_container.size();
+	}
+
+	for (int i = 0; i < iLoops; i++)
+	{
+		if (i < slider_container.size())
 		{
-			// Figure out which slider they're playing with for the controller
-			if (button_container[i]->getName() == "Record")
+			sf::Sprite* slider_sprite = slider_container[i]->getSliderSprite();
+			// if mouse is on bounds of testSlider
+			if (slider_sprite->getGlobalBounds().contains(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y)
+				&& sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
 			{
-				*functionType = APPLICATION_FUNCTIONS::RECORD_TO_FILE;
-			}
-			else if (button_container[i]->getName() == "PlayPause")
-			{
-				if (button_container[i]->isActive())
+				slider_container[i]->followMouse();
+
+				// Figure out which slider they're playing with for the controller
+				if (slider_container[i]->getName() == "Pitch")
 				{
-					*functionType = APPLICATION_FUNCTIONS::PAUSE;
-					button_container[i]->setActive(false);
+					*functionType = APPLICATION_FUNCTIONS::SET_PITCH;
 				}
-				else
+				else if (slider_container[i]->getName() == "Volume")
 				{
-					*functionType = APPLICATION_FUNCTIONS::PLAY;
-					button_container[i]->setActive(true);
+					*functionType = APPLICATION_FUNCTIONS::SET_VOLUME;
 				}
-			}
-			else if (button_container[i]->getName() == "Stop")
-			{
-				*functionType = APPLICATION_FUNCTIONS::STOP;
-			}
-			else if (button_container[i]->getName() == "Loop")
-			{
-				*functionType = APPLICATION_FUNCTIONS::LOOP;
-				if (button_container[i]->isActive())
+				else if (slider_container[i]->getName() == "Pan")
 				{
-					button_container[i]->setActive(false);
+					*functionType = APPLICATION_FUNCTIONS::SET_PAN;
 				}
-				else
+				switch (i)
 				{
-					button_container[i]->setActive(true);
+				case 0:
+				case 4:
+				case 8:
+				case 12:
+					*iLooper = 0;
+					break;
+				case 1:
+				case 5:
+				case 9:
+				case 13:
+					*iLooper = 1;
+					break;
+				case 2:
+				case 6:
+				case 10:
+				case 14:
+					*iLooper = 2;
+					break;
+				case 3:
+				case 7:
+				case 11:
+				case 15:
+					*iLooper = 3;
+					break;
+				default:
+					*iLooper = 0;
+					break;
 				}
+				break;
 			}
-			else if (button_container[i]->getName() == "Reverse")
+		}
+		if (i < button_container.size())
+		{
+			sf::Sprite* button_sprite = button_container[i]->getButtonSprite();
+			//Will, again I'm follow your lead <----------------------
+			if (button_sprite->getGlobalBounds().contains(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y)
+				&& sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
 			{
-				*functionType = APPLICATION_FUNCTIONS::REVERSE;
-			}
+				// Figure out which slider they're playing with for the controller
+				if (button_container[i]->getName() == "Record")
+				{
+					*functionType = APPLICATION_FUNCTIONS::RECORD_TO_FILE;
+				}
+				else if (button_container[i]->getName() == "PlayPause")
+				{
+					if (button_container[i]->isActive())
+					{
+						*functionType = APPLICATION_FUNCTIONS::PAUSE;
+						button_container[i]->setActive(false);
+					}
+					else
+					{
+						*functionType = APPLICATION_FUNCTIONS::PLAY;
+						button_container[i]->setActive(true);
+					}
+				}
+				else if (button_container[i]->getName() == "Stop")
+				{
+					*functionType = APPLICATION_FUNCTIONS::STOP;
+				}
+				else if (button_container[i]->getName() == "Loop")
+				{
+					*functionType = APPLICATION_FUNCTIONS::LOOP;
+					if (button_container[i]->isActive())
+					{
+						button_container[i]->setActive(false);
+					}
+					else
+					{
+						button_container[i]->setActive(true);
+					}
+				}
+				else if (button_container[i]->getName() == "Reverse")
+				{
+					*functionType = APPLICATION_FUNCTIONS::REVERSE;
+				}
 
 
-			switch (i)
-			{
-			case 0:
-			case 4:
-			case 8:
-			case 12:
-				*iLooper = 0;
-				break;
-			case 1:
-			case 5:
-			case 9:
-			case 13:
-				*iLooper = 1;
-				break;
-			case 2:
-			case 6:
-			case 10:
-			case 14:
-				*iLooper = 2;
-				break;
-			case 3:
-			case 7:
-			case 11:
-			case 15:
-				*iLooper = 3;
-				break;
-			default:
-				*iLooper = 0;
+				switch (i)
+				{
+				case 0:
+				case 4:
+				case 8:
+				case 12:
+					*iLooper = 0;
+					break;
+				case 1:
+				case 5:
+				case 9:
+				case 13:
+					*iLooper = 1;
+					break;
+				case 2:
+				case 6:
+				case 10:
+				case 14:
+					*iLooper = 2;
+					break;
+				case 3:
+				case 7:
+				case 11:
+				case 15:
+					*iLooper = 3;
+					break;
+				default:
+					*iLooper = 0;
+					break;
+				}
 				break;
 			}
 		}
