@@ -29,6 +29,8 @@ int ControllerC::run()
 		m_Looper[i].setSoundBuffer(soundBuffer);
 		// This should point everyone towards the same recorder/buffer.
 		m_Looper[i].setRecorder(recorder);
+
+		m_Looper[i].setMusicSeekBar(m_gui_interface.getMusicSeek(i));
 	}
 	int* iLooper;
 	iLooper = new int[sizeof(int)];

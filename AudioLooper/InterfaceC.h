@@ -29,6 +29,8 @@ public:
 	Slider* getPanSlider (int iChannel) { return m_PanSlider[iChannel]; };
 	void setPanSlider(Slider* slider, int iChannel) { m_PanSlider[iChannel] = slider; }
 
+	MusicSeek* getMusicSeek(int iChannel) { return m_MusicSeek[iChannel]; };
+
 	std::string getAudioFile(int iChannel) { return m_audioFile[iChannel];  }
 	void setAudioFile(std::string audioFile, int iChannel) { m_audioFile[iChannel] = audioFile; }
 
