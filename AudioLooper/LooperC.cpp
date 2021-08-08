@@ -10,6 +10,7 @@
 LooperC::LooperC()
 {
 	m_audioFile = "";
+	trackSet = false;
 
 }
 
@@ -46,6 +47,7 @@ void LooperC::setTrack(std::string fileName)
 	{
 		musicSeekBar->setMusicTrack(&audioTrack);
 	}
+	trackSet = true;
 }
 
 // track manipulation
@@ -105,6 +107,9 @@ bool LooperC::isLooping() {
 	return audioTrack.getLoop();
 }
 
+bool LooperC::isTrackSet() {
+	return trackSet;
+}
 
 /// <summary>
 /// Return the current pitch level of the track

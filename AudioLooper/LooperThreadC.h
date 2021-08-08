@@ -73,7 +73,10 @@ private:
 				}
 				else
 				{
-					setTrack(getAudioFile());
+					if (!(isTrackSet()))
+					{ 
+						setTrack(getAudioFile());
+					}
 					playTrack();
 				}
 			}

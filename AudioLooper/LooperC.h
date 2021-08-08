@@ -24,6 +24,8 @@ private:
 	ButtonC* loopButton;
 	ButtonC* reverseButton;
 
+	bool trackSet;
+
 public:
 	LooperC();
 	LooperC(std::string audioFile);
@@ -60,6 +62,7 @@ public:
 	bool isPaused();
 	bool isStopped();
 	bool isLooping();
+	bool isTrackSet();
 
 	void setAudioFile(int iLooper) { m_audioFile = "Samples/Looper_" + to_string(iLooper) + ".wav"; }
 	std::string getAudioFile() {
