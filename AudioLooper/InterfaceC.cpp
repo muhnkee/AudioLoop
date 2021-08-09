@@ -431,14 +431,6 @@ void InterfaceC::handleMouseClickEvent(APPLICATION_FUNCTIONS* functionType, int*
 				else if (button_container[i]->getName() == "Loop")
 				{
 					*functionType = APPLICATION_FUNCTIONS::LOOP;
-					if (button_container[i]->isActive())
-					{
-						button_container[i]->setActive(false);
-					}
-					else
-					{
-						button_container[i]->setActive(true);
-					}
 				}
 				else if (button_container[i]->getName() == "Reverse")
 				{
