@@ -238,7 +238,7 @@ void LooperC::shiftPan()
 
 void LooperC::reverseTrack()
 {
-	reverse(m_audioFile);
+	setTrack(reverse(m_audioFile));
 }
 
 void LooperC::setMusicSeekBar(MusicSeek* newMusicSeek)

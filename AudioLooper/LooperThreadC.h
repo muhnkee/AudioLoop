@@ -9,6 +9,7 @@ public:
 	LooperThreadC() :
 		m_thread(&LooperThreadC::Run, this)
 	{
+		m_bPlayingReversed = false;
 	}
 
 	void setSoundBuffer(sf::SoundBuffer* soundBuffer) 
@@ -45,6 +46,7 @@ private:
 	sf::Thread m_thread;
 	APPLICATION_FUNCTIONS m_looperState;
 	int m_iThreadNumber;
+	bool m_bPlayingReversed;
 
 	// Virtual function we override that handles everything the Looper thread needs to do.  
 	void Run() {
@@ -73,9 +75,10 @@ private:
 				}
 				else
 				{
-					if (!(isTrackSet()))
+					if ((!(isTrackSet())) || (m_bPlayingReversed))
 					{ 
 						setTrack(getAudioFile());
+						m_bPlayingReversed = false;
 					}
 					playTrack();
 				}
@@ -109,7 +112,9 @@ private:
 		case APPLICATION_FUNCTIONS::PREVIOUS:
 			break;
 		case APPLICATION_FUNCTIONS::REVERSE:
+			m_bPlayingReversed = true;
 			reverseTrack();
+			break;
 		default:
 			break;
 		};

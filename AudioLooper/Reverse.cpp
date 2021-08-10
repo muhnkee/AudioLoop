@@ -42,7 +42,7 @@ string reverse(string path)
     buffer.loadFromSamples(&reversedSamples[0], reversedSamples.size(), Channels, SampleRate);
 
     // make a new filename (adding an 'rvrsd' stamp for "reversed")
-    path.insert((path.length() - 4), " rvrsd");
+    path.insert((path.length() - 4), "_rvrsd");
 
     // ensure we have not totally just messed that up
     cout << "path: " << path << endl;

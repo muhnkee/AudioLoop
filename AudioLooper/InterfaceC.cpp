@@ -442,9 +442,17 @@ void InterfaceC::handleMouseClickEvent(APPLICATION_FUNCTIONS* functionType, int*
 				}
 				else if (button_container[i]->getName() == "Reverse")
 				{
-					*functionType = APPLICATION_FUNCTIONS::REVERSE;
+					if (button_container[i]->isActive())
+					{
+						*functionType = APPLICATION_FUNCTIONS::REVERSE;
+						button_container[i]->setActive(false);
+					}
+					else
+					{
+						*functionType = APPLICATION_FUNCTIONS::PLAY;
+						button_container[i]->setActive(true);
+					}
 				}
-
 
 				switch (i)
 				{
