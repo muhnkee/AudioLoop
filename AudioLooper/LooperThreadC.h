@@ -9,6 +9,7 @@ public:
 	LooperThreadC() :
 		m_thread(&LooperThreadC::Run, this)
 	{
+		m_bPlayingReversed = false;
 	}
 
 	void setSoundBuffer(sf::SoundBuffer* soundBuffer) 
@@ -45,12 +46,23 @@ private:
 	sf::Thread m_thread;
 	APPLICATION_FUNCTIONS m_looperState;
 	int m_iThreadNumber;
+	bool m_bPlayingReversed;
 
 	// Virtual function we override that handles everything the Looper thread needs to do.  
 	void Run() {
 		switch (m_looperState)
 		{
 		case APPLICATION_FUNCTIONS::LOOP:
+			bool toggle;
+			if (isLooping())
+			{
+				toggle = false;
+			}
+			else
+			{
+				toggle = true;
+			}
+			loopTrack(toggle);
 			break;
 		case APPLICATION_FUNCTIONS::SET_PITCH:
 			shiftPitch();
@@ -66,7 +78,19 @@ private:
 			break;
 		case APPLICATION_FUNCTIONS::PLAY:
 			if (!(m_recorder->isRecording())) {
-				playTrack();
+				if (isPlaying())
+				{
+					pauseTrack();
+				}
+				else
+				{
+					if ((!(isTrackSet())) || (m_bPlayingReversed))
+					{ 
+						setTrack(getAudioFile());
+						m_bPlayingReversed = false;
+					}
+					playTrack();
+				}
 			}
 			break;
 		case APPLICATION_FUNCTIONS::STOP:
@@ -74,7 +98,7 @@ private:
 			{
 				m_recorder->Stop();
 			}
-			else if (isPlaying())
+			else 
 			{
 				stopTrack();
 			}
@@ -95,6 +119,10 @@ private:
 		case APPLICATION_FUNCTIONS::NEXT:
 			break;
 		case APPLICATION_FUNCTIONS::PREVIOUS:
+			break;
+		case APPLICATION_FUNCTIONS::REVERSE:
+			m_bPlayingReversed = true;
+			reverseTrack();
 			break;
 		default:
 			break;

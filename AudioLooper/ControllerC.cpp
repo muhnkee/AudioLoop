@@ -29,6 +29,8 @@ int ControllerC::run()
 		m_Looper[i].setSoundBuffer(soundBuffer);
 		// This should point everyone towards the same recorder/buffer.
 		m_Looper[i].setRecorder(recorder);
+
+		m_Looper[i].setMusicSeekBar(m_gui_interface.getMusicSeek(i));
 	}
 	int* iLooper;
 	iLooper = new int[sizeof(int)];
@@ -61,12 +63,9 @@ int ControllerC::run()
 			{
 				m_Looper[*iLooper].setPanSlider(m_gui_interface.getPanSlider(*iLooper));
 			}
-			else if (applicationState == APPLICATION_FUNCTIONS::SET_TRACK)
+			else if ((applicationState == APPLICATION_FUNCTIONS::SET_TRACK) || (applicationState == APPLICATION_FUNCTIONS::PLAY))
 			{
-				if (m_gui_interface.getAudioFile(*iLooper) != "NONE")
-				{
-					m_Looper[*iLooper].setAudioFile(*iLooper);
-				}
+				m_Looper[*iLooper].setAudioFile(*iLooper);
 			}
 			else if (applicationState == APPLICATION_FUNCTIONS::RECORD_TO_FILE)
 			{

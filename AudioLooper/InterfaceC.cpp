@@ -323,147 +323,167 @@ void InterfaceC::handleMouseClickEvent(APPLICATION_FUNCTIONS* functionType, int*
 	// Sliders 0-3 are for Pitch
 	// Sliders 4-7 are for Volume
 	// Sliders 8-11 are for Pan
+	// Sliders 12-15 are for Seek
 	// This allows for expansion based upon function, which is more likely
 	// than expansion based upon channel.
-	for (int i = 0; i < slider_container.size(); i++)
+	int iLoops = 0;
+	if (slider_container.size() > button_container.size())
 	{
-		sf::Sprite* slider_sprite = slider_container[i]->getSliderSprite();
-		sf::Sprite* button_sprite = button_container[i]->getButtonSprite();
+		iLoops = slider_container.size();
+	}
+	else
+	{
+		iLoops = button_container.size();
+	}
 
-		// if mouse is on bounds of testSlider
-		if (slider_sprite->getGlobalBounds().contains(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y)
-			&& sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
+	for (int i = 0; i < iLoops; i++)
+	{
+		if (i < slider_container.size())
 		{
-			slider_container[i]->followMouse();
+			sf::Sprite* slider_sprite = slider_container[i]->getSliderSprite();
+			// if mouse is on bounds of testSlider
+			if (slider_sprite->getGlobalBounds().contains(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y)
+				&& sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
+			{
+				slider_container[i]->followMouse();
 
-			// Figure out which slider they're playing with for the controller
-			if (slider_container[i]->getName() == "Pitch")
-			{
-				*functionType = APPLICATION_FUNCTIONS::SET_PITCH;
+				// Figure out which slider they're playing with for the controller
+				if (slider_container[i]->getName() == "Pitch")
+				{
+					*functionType = APPLICATION_FUNCTIONS::SET_PITCH;
+				}
+				else if (slider_container[i]->getName() == "Volume")
+				{
+					*functionType = APPLICATION_FUNCTIONS::SET_VOLUME;
+				}
+				else if (slider_container[i]->getName() == "Pan")
+				{
+					*functionType = APPLICATION_FUNCTIONS::SET_PAN;
+				}
+				switch (i)
+				{
+				case 0:
+				case 4:
+				case 8:
+				case 12:
+				case 16:
+					*iLooper = 0;
+					break;
+				case 1:
+				case 5:
+				case 9:
+				case 13:
+				case 17:
+					*iLooper = 1;
+					break;
+				case 2:
+				case 6:
+				case 10:
+				case 14:
+				case 18:
+					*iLooper = 2;
+					break;
+				case 3:
+				case 7:
+				case 11:
+				case 15:
+				case 19:
+					*iLooper = 3;
+					break;
+				default:
+					*iLooper = 0;
+					break;
+				}
+				break;
 			}
-			else if (slider_container[i]->getName() == "Volume")
-			{
-				*functionType = APPLICATION_FUNCTIONS::SET_VOLUME;
-			}
-			else if (slider_container[i]->getName() == "Pan")
-			{
-				*functionType = APPLICATION_FUNCTIONS::SET_PAN;
-			}
-			switch (i)
-			{
-			case 0:
-			case 4:
-			case 8:
-			case 12:
-				*iLooper = 0;
-				break;
-			case 1:
-			case 5:
-			case 9:
-			case 13:
-				*iLooper = 1;
-				break;
-			case 2:
-			case 6:
-			case 10:
-			case 14:
-				*iLooper = 2;
-				break;
-			case 3:
-			case 7:
-			case 11:
-			case 15:
-				*iLooper = 3;
-				break;
-			default:
-				*iLooper = 0;
-				break;
-			}
-			break;
 		}
-
-		//Will, again I'm follow your lead <----------------------
-		else if (button_sprite->getGlobalBounds().contains(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y)
-			&& sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
+		if (i < button_container.size())
 		{
-			// Figure out which slider they're playing with for the controller
-			if (button_container[i]->getName() == "Record")
+			sf::Sprite* button_sprite = button_container[i]->getButtonSprite();
+			//Will, again I'm follow your lead <----------------------
+			if (button_sprite->getGlobalBounds().contains(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y)
+				&& sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
 			{
-				//TODO: safegaurds against something that is already playing??????????
-
-				*functionType = APPLICATION_FUNCTIONS::RECORD_TO_FILE;
-			}
-			else if (button_container[i]->getName() == "PlayPause")
-			{
-				// my crack at this, feel free to scrap if you had a different idea
-				if (button_container[i]->isActive())
+				// Figure out which slider they're playing with for the controller
+				if (button_container[i]->getName() == "Record")
 				{
-					*functionType = APPLICATION_FUNCTIONS::PAUSE;
-					button_container[i]->setActive(false);
+					*functionType = APPLICATION_FUNCTIONS::RECORD_TO_FILE;
 				}
-				else
+				else if (button_container[i]->getName() == "PlayPause")
 				{
-					*functionType = APPLICATION_FUNCTIONS::PLAY;
-					button_container[i]->setActive(true);
-				}	
-			}
-			else if (button_container[i]->getName() == "Stop")
-			{
-				*functionType = APPLICATION_FUNCTIONS::STOP;
-			}
-			else if (button_container[i]->getName() == "Loop")
-			{
-				if (button_container[i]->isActive())
-				{
-					*functionType = APPLICATION_FUNCTIONS::NO_CHANGE; // not sure what state to set to stop looping?????
-					button_container[i]->setActive(false);
+					if (button_container[i]->isActive())
+					{
+						*functionType = APPLICATION_FUNCTIONS::PAUSE;
+						button_container[i]->setActive(false);
+					}
+					else
+					{
+						*functionType = APPLICATION_FUNCTIONS::PLAY;
+						button_container[i]->setActive(true);
+					}
 				}
-				else
+				else if (button_container[i]->getName() == "Stop")
+				{
+					*functionType = APPLICATION_FUNCTIONS::STOP;
+					// if we stop set the play/pause button to play
+					button_container[i-4]->setActive(false);
+				}
+				else if (button_container[i]->getName() == "Loop")
 				{
 					*functionType = APPLICATION_FUNCTIONS::LOOP;
-					button_container[i]->setActive(true);
 				}
-			}
-			else if (button_container[i]->getName() == "Reverse")
-			{
-				//*functionType = APPLICATION_FUNCTIONS::REVERSE; not sure what state to set to reverse the track???
-			}
+				else if (button_container[i]->getName() == "Reverse")
+				{
+					if (button_container[i]->isActive())
+					{
+						*functionType = APPLICATION_FUNCTIONS::REVERSE;
+						button_container[i]->setActive(false);
+					}
+					else
+					{
+						*functionType = APPLICATION_FUNCTIONS::PLAY;
+						button_container[i]->setActive(true);
+					}
+				}
 
-
-			switch (i)
-			{
-			case 0:
-			case 4:
-			case 8:
-			case 12:
-				*iLooper = 0;
-				break;
-			case 1:
-			case 5:
-			case 9:
-			case 13:
-				*iLooper = 1;
-				break;
-			case 2:
-			case 6:
-			case 10:
-			case 14:
-				*iLooper = 2;
-				break;
-			case 3:
-			case 7:
-			case 11:
-			case 15:
-				*iLooper = 3;
-				break;
-			default:
-				*iLooper = 0;
+				switch (i)
+				{
+				case 0:
+				case 4:
+				case 8:
+				case 12:
+				case 16:
+					*iLooper = 0;
+					break;
+				case 1:
+				case 5:
+				case 9:
+				case 13:
+				case 17:
+					*iLooper = 1;
+					break;
+				case 2:
+				case 6:
+				case 10:
+				case 14:
+				case 18:
+					*iLooper = 2;
+					break;
+				case 3:
+				case 7:
+				case 11:
+				case 15:
+				case 19:
+					*iLooper = 3;
+					break;
+				default:
+					*iLooper = 0;
+					break;
+				}
 				break;
 			}
-			break;
 		}
 	}
-	
 }
 
 void InterfaceC::handleMouseReleaseEvent() 

@@ -98,8 +98,14 @@ void MusicSeek::draw(sf::RenderWindow& window) {
 
 		double percentage = (lowerBound / upperBound) * .95; // multiply by .95 so we don't run past the texture boundaries
 		double slide_position_x = bar_sprite_x_offset + (percentage * bar_sprite.getGlobalBounds().width);
-		double slide_position_y = bar_sprite.getPosition().y + bar_sprite.getGlobalBounds().height / 2 - slide_sprite.getGlobalBounds().height / 2;;
+		double slide_position_y = bar_sprite.getPosition().y + bar_sprite.getGlobalBounds().height / 2 - slide_sprite.getGlobalBounds().height / 2;
 		slide_sprite.setPosition(slide_position_x, slide_position_y);
+	}
+	else {
+		double slide_position_y = bar_sprite.getPosition().y + bar_sprite.getGlobalBounds().height / 2 - slide_sprite.getGlobalBounds().height / 2;
+		double bar_sprite_x_offset = bar_sprite.getPosition().x + slide_sprite.getGlobalBounds().width;
+
+		slide_sprite.setPosition(bar_sprite_x_offset, slide_position_y);
 	}
 	window.draw(slide_sprite);
 }

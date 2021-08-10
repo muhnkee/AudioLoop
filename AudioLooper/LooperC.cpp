@@ -10,6 +10,7 @@
 LooperC::LooperC()
 {
 	m_audioFile = "";
+	trackSet = false;
 
 }
 
@@ -20,7 +21,7 @@ LooperC::~LooperC()
 
 LooperC::LooperC(std::string audioFile)
 {
-	audioTrack.openFromFile(AUDIO_DIR + audioFile);
+	audioTrack.openFromFile(audioFile);
 
 	// set spacial audio properties for panning
 	audioTrack.setMinDistance(1.f);
@@ -35,7 +36,7 @@ LooperC::LooperC(std::string audioFile)
 
 void LooperC::setTrack(std::string fileName)
 {
-	audioTrack.openFromFile(AUDIO_DIR + fileName);
+	audioTrack.openFromFile(fileName);
 
 	// set spacial audio properties for panning
 	audioTrack.setMinDistance(1.f);
@@ -46,6 +47,7 @@ void LooperC::setTrack(std::string fileName)
 	{
 		musicSeekBar->setMusicTrack(&audioTrack);
 	}
+	trackSet = true;
 }
 
 // track manipulation
@@ -105,6 +107,9 @@ bool LooperC::isLooping() {
 	return audioTrack.getLoop();
 }
 
+bool LooperC::isTrackSet() {
+	return trackSet;
+}
 
 /// <summary>
 /// Return the current pitch level of the track
@@ -233,7 +238,7 @@ void LooperC::shiftPan()
 
 void LooperC::reverseTrack()
 {
-	reverse(m_audioFile);
+	setTrack(reverse(m_audioFile));
 }
 
 void LooperC::setMusicSeekBar(MusicSeek* newMusicSeek)
