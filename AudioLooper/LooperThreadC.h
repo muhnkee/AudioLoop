@@ -53,7 +53,16 @@ private:
 		switch (m_looperState)
 		{
 		case APPLICATION_FUNCTIONS::LOOP:
-			loopTrack(!(isLooping()));
+			bool toggle;
+			if (isLooping())
+			{
+				toggle = false;
+			}
+			else
+			{
+				toggle = true;
+			}
+			loopTrack(toggle);
 			break;
 		case APPLICATION_FUNCTIONS::SET_PITCH:
 			shiftPitch();
